@@ -10,49 +10,118 @@
 - they accept any liabilities with respect to them.
 --%>
 
-<%@page language="java" import="acme.framework.helpers.PrincipalHelper,acme.roles.Provider,acme.roles.Consumer"%>
+<%@page language="java"
+	import="acme.framework.helpers.PrincipalHelper,acme.roles.Inventor,acme.roles.Patron"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="acme" uri="urn:jsptagdir:/WEB-INF/tags"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
 <acme:menu-bar code="master.menu.home">
 	<acme:menu-left>
-		<acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
-			<acme:menu-suboption code="master.menu.anonymous.favourite-link" action="http://www.example.com/"/>
+
+		<!-- USER ACCOUNTS -->
+		<acme:menu-option code="master.menu.chirp">
+			<acme:menu-suboption code="master.menu.chirp.any.list"
+				action="/any/chirp/list-recent" />
+		</acme:menu-option>
+		<!-- CHIRPS -->
+		<acme:menu-option code="master.menu.accounts">
+			<acme:menu-suboption code="master.menu.accounts.any.list"
+				action="/any/user-account/list-enabled" />
+		</acme:menu-option>
+		<!-- ANNOUNCEMENTS -->
+		<acme:menu-option code="master.menu.announcements"
+			access="isAuthenticated()">
+			<acme:menu-suboption
+				code="master.menu.announcements.authenticated.list"
+				action="/authenticated/announcement/list" />
+		</acme:menu-option>
+		<!-- COMPONENTS -->
+		<acme:menu-option code="master.menu.components">
+			<acme:menu-suboption code="master.menu.components.any.list"
+				action="/any/item/list-component" />
+			<security:authorize access="hasRole('Inventor')">
+				<acme:menu-separator />
+				<acme:menu-suboption code="master.menu.components.inventor.list"
+					action="/inventor/item/list-mine-component" />
+			</security:authorize>
+		</acme:menu-option>
+		<!-- TOOLS -->
+		<acme:menu-option code="master.menu.tools">
+			<acme:menu-suboption code="master.menu.tools.any.list"
+				action="/any/item/list-tool" />
+			<security:authorize access="hasRole('Inventor')">
+				<acme:menu-separator />
+				<acme:menu-suboption code="master.menu.tools.inventor.list"
+					action="/inventor/item/list-mine-tool" />
+			</security:authorize>
+		</acme:menu-option>
+		<!-- TOOLKITS -->
+		<acme:menu-option code="master.menu.toolkits">
+			<acme:menu-suboption code="master.menu.toolkits.any.list"
+				action="/any/toolkit/list" />
+			<security:authorize access="hasRole('Inventor')">
+				<acme:menu-separator />
+				<acme:menu-suboption code="master.menu.toolkits.inventor.list"
+					action="/inventor/toolkit/list-mine" />
+			</security:authorize>
+		</acme:menu-option>
+		<!-- PATRONAGES -->
+		<acme:menu-option code="master.menu.patronage"
+			access="hasAnyRole('Inventor','Patron')">
+			<acme:menu-suboption code="master.menu.patronage.inventor.list"
+				access="hasRole('Inventor')" action="/inventor/patronage/list-mine" />
+			<acme:menu-suboption code="master.menu.patronage.patron.list"
+				access="hasRole('Patron')" action="/patron/patronage/list-mine" />
 		</acme:menu-option>
 
-		<acme:menu-option code="master.menu.administrator" access="hasRole('Administrator')">
-			<acme:menu-suboption code="master.menu.administrator.user-accounts" action="/administrator/user-account/list"/>
-			<acme:menu-separator/>
-			<acme:menu-suboption code="master.menu.administrator.populate-initial" action="/administrator/populate-initial"/>
-			<acme:menu-suboption code="master.menu.administrator.populate-sample" action="/administrator/populate-sample"/>			
-			<acme:menu-separator/>
-			<acme:menu-suboption code="master.menu.administrator.shut-down" action="/administrator/shut-down"/>
+		<acme:menu-option code="master.menu.administrator"
+			access="hasRole('Administrator')">
+			<acme:menu-suboption code="master.menu.administrator.user-accounts"
+				action="/administrator/user-account/list" />
+			<acme:menu-separator />
+			<acme:menu-suboption
+				code="master.menu.administrator.populate-initial"
+				action="/administrator/populate-initial" />
+			<acme:menu-suboption code="master.menu.administrator.populate-sample"
+				action="/administrator/populate-sample" />
+			<acme:menu-separator />
+			<acme:menu-suboption code="master.menu.administrator.shut-down"
+				action="/administrator/shut-down" />
+			<acme:menu-separator />
+			<acme:menu-suboption code="master.menu.administrator.config"
+				action="/administrator/configuration/show" />
 		</acme:menu-option>
 
-		<acme:menu-option code="master.menu.provider" access="hasRole('Provider')">
-			<acme:menu-suboption code="master.menu.provider.favourite-link" action="http://www.example.com/"/>
-		</acme:menu-option>
-
-		<acme:menu-option code="master.menu.consumer" access="hasRole('Consumer')">
-			<acme:menu-suboption code="master.menu.consumer.favourite-link" action="http://www.example.com/"/>
-		</acme:menu-option>
 	</acme:menu-left>
 
 	<acme:menu-right>
-		<acme:menu-option code="master.menu.sign-up" action="/anonymous/user-account/create" access="isAnonymous()"/>
-		<acme:menu-option code="master.menu.sign-in" action="/master/sign-in" access="isAnonymous()"/>
+		<acme:menu-option code="master.menu.sign-up"
+			action="/anonymous/user-account/create" access="isAnonymous()" />
+		<acme:menu-option code="master.menu.sign-in" action="/master/sign-in"
+			access="isAnonymous()" />
 
-		<acme:menu-option code="master.menu.user-account" access="isAuthenticated()">
-			<acme:menu-suboption code="master.menu.user-account.general-data" action="/authenticated/user-account/update"/>
-			<acme:menu-suboption code="master.menu.user-account.become-provider" action="/authenticated/provider/create" access="!hasRole('Provider')"/>
-			<acme:menu-suboption code="master.menu.user-account.provider" action="/authenticated/provider/update" access="hasRole('Provider')"/>
-			<acme:menu-suboption code="master.menu.user-account.become-consumer" action="/authenticated/consumer/create" access="!hasRole('Consumer')"/>
-			<acme:menu-suboption code="master.menu.user-account.consumer" action="/authenticated/consumer/update" access="hasRole('Consumer')"/>
+		<acme:menu-option code="master.menu.user-account"
+			access="isAuthenticated()">
+			<acme:menu-suboption code="master.menu.user-account.general-data"
+				action="/authenticated/user-account/update" />
+			<acme:menu-suboption code="master.menu.user-account.become-patron"
+				action="/authenticated/patron/create"
+				access="!hasRole('Patron')" />
+			<acme:menu-suboption code="master.menu.user-account.patron"
+				action="/authenticated/patron/update" access="hasRole('Patron')" />
+			<acme:menu-suboption code="master.menu.user-account.become-inventor"
+				action="/authenticated/inventor/create"
+				access="!hasRole('Inventor')" />
+			<acme:menu-suboption code="master.menu.user-account.inventor"
+				action="/authenticated/inventor/update" access="hasRole('Inventor')" />
 		</acme:menu-option>
 
-		<acme:menu-option code="master.menu.sign-out" action="/master/sign-out" access="isAuthenticated()"/>
+		<acme:menu-option code="master.menu.sign-out"
+			action="/master/sign-out" access="isAuthenticated()" />
 	</acme:menu-right>
 </acme:menu-bar>
 

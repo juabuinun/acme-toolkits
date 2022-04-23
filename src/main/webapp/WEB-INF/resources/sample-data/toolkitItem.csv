@@ -1,0 +1,10 @@
+key,key:item,quantity,key:toolkit
+toolkitItem-01,item-04,5,toolkit-01
+toolkitItem-02,item-05,4,toolkit-01
+toolkitItem-03,item-07,2,toolkit-01
+toolkitItem-04,item-01,1,toolkit-02
+toolkitItem-05,item-07,1,toolkit-02
+toolkitItem-06,item-04,2,toolkit-02
+toolkitItem-07,item-02,1,toolkit-03
+toolkitItem-08,item-06,5,toolkit-03
+toolkitItem-09,item-03,1,toolkit-03

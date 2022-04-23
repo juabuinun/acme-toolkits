@@ -1,0 +1,8 @@
+key,itemType,name,code,technology,description,price,key:owner,info
+item-01,TOOL,Vacuum pump,AAA-000,Hydraulic,Very loud and not powerful,EUR 80,inventor-01,https://google.com
+item-02,TOOL,Car jack,AAA-000-A,Hydraulic,Works,EUR 44.22,inventor-02,null
+item-03,TOOL,Torque wrench,AAB-000-B,Forged,Can break most nuts,EUR 38.01,inventor-03,null
+item-04,COMPONENT,Bolt,BBB-000,Aerospace grade,Industry standard,EUR 1.2,inventor-04,null
+item-05,COMPONENT,Nut,BBB-000-B,Forged,Very strong,EUR 0.5,inventor-05,null
+item-06,COMPONENT,Pin,BBB-000-C,Self-aligning,Good for trucks,EUR 5,inventor-03,https://atlastruckco.com/tech
+item-07,COMPONENT,Hose,CCC-000,Rubber,Good enough,EUR 2,inventor-01,null

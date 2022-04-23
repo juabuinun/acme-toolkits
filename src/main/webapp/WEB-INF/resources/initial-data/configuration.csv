@@ -1,0 +1,2 @@
+key,defaultCurrency,acceptedCurrencies,strongSpamThreshold,weakSpamThreshold
+configuration-01,EUR,"EUR, USD, GBP",10,25

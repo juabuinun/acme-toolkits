@@ -1,0 +1,15 @@
+key,key:configuration,word,strong,language
+spam-word-01,configuration-01,sex,true,en
+spam-word-02,configuration-01,hard core,true,en
+spam-word-03,configuration-01,viagra,true,en
+spam-word-04,configuration-01,cialis,true,en
+spam-word-05,configuration-01,sexo,true,es
+spam-word-06,configuration-01,hard core,true,es
+spam-word-07,configuration-01,viagra,true,es
+spam-word-08,configuration-01,tadalafilo ,true,es
+spam-word-09,configuration-01,sexy,false,en
+spam-word-10,configuration-01,you've won,false,en
+spam-word-11,configuration-01,one million,false,en
+spam-word-12,configuration-01,has ganado,false,es
+spam-word-13,configuration-01,sexy,false,es
+spam-word-14,configuration-01,un millon,false,es

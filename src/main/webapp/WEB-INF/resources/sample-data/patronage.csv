@@ -1,0 +1,3 @@
+key,status,code,legal,budget,creation_date,end_date,info,key:sponsor,key:sponsee
+patronage-01,ACCEPTED,MNM-333,Tepe fund is not a crime,EUR 808.3,2022-04-20T10:00,2023-04-20T16:20,https://google.com,patron-01,inventor-01
+patronage-02,DENIED,SRS-666-B,Illegal stuff,EUR 33003366.3,2022-01-01T06:16,2024-01-01T10:00,https://infocomcorp.com,patron-02,inventor-02

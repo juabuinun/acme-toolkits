@@ -1,0 +1,11 @@
+key,enabled,identity,password,username
+user-account-patron-01,true,"UserIdentity{name: 'Paco Pepe', surname: 'Saravia', email: 'patron@sevillitas.es'}",patron1,patron1
+user-account-patron-02,true,"UserIdentity{name: 'Justin', surname: 'Rolo', email: 'patron@venomskate.com'}",patron2,patron2
+user-account-patron-03,true,"UserIdentity{name: 'Rick', surname: 'Owens', email: 'dunkd@geobasket.com'}",patron3,patron3
+user-account-patron-04,true,"UserIdentity{name: 'Jaime', surname: 'Palumbo', email: 'info@ministry.com'}",patron4,patron4
+user-account-patron-05,false,"UserIdentity{name: 'Ted', surname: 'Kacho', email: 'twok@ultra.com'}",patron5,patron5
+user-account-inventor-01,true,"UserIdentity{name: 'Elona', surname: 'Musgo', email: 'em@espaciox.com'}",inventor1,inventor1
+user-account-inventor-02,true,"UserIdentity{name: 'David', surname: 'Mostaza', email: 'dm@megadef.com'}",inventor2,inventor2
+user-account-inventor-03,true,"UserIdentity{name: 'Juan', surname: 'Limon', email: 'jl@birels.com'}",inventor3,inventor3
+user-account-inventor-04,true,"UserIdentity{name: 'Roberto', surname: 'Aguas', email: 'ra@rosa.com'}",inventor4,inventor4
+user-account-inventor-05,false,"UserIdentity{name: 'Miguel Angel', surname: 'Rodriguez', email: 'mar@sevillitas.es'}",inventor5,inventor5

@@ -47,3 +47,38 @@ master.menu.user-account.provider = Datos de proveedor
 master.menu.user-account.become-provider = Hazte proveedor
 master.menu.user-account.consumer = Datos de consumidor
 master.menu.user-account.become-consumer = Hazte consumidor
+
+### CHIRP ####
+master.menu.chirp = Chirridos
+master.menu.chirp.any.list = Ver chirridos
+
+### ANNOUNCEMENT ###
+master.menu.announcements = Anuncios
+master.menu.announcements.authenticated.list = Ver anuncios
+
+### ACCOUNTS ###
+master.menu.accounts = Usuarios
+master.menu.accounts.any.list = Ver usuarios
+
+### COMPONENTS ###
+master.menu.components = Componentes
+master.menu.components.any.list = Ver componentes
+master.menu.components.inventor.list = Mis componentes
+
+### TOOLS ###
+master.menu.tools = Herramientas
+master.menu.tools.any.list = Ver Herramientas
+master.menu.tools.inventor.list = Mis herramientas
+
+### TOOLKITS ###
+master.menu.toolkits = Kits
+master.menu.toolkits.any.list = Ver kits
+master.menu.toolkits.inventor.list = Mis kits
+
+### PATRONAGE ###
+master.menu.patronage = Patrocinios
+master.menu.patronage.inventor.list = Mis patrocinios
+master.menu.patronage.patron.list = Mis patrocinios
+
+### CONFIG ###
+master.menu.administrator.config = Configuracion del sistema

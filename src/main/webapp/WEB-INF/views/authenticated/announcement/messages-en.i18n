@@ -1,0 +1,7 @@
+# i18n-en.i18n
+
+authenticated.announcement.title = Title
+authenticated.announcement.moment = Date
+authenticated.announcement.body = 
+authenticated.announcement.critical = Critical
+authenticated.announcement.link = Information

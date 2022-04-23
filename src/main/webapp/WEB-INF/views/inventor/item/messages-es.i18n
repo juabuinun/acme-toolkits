@@ -1,0 +1,13 @@
+inventor.item.list.code = Codigo
+inventor.item.list.name = Nombre
+inventor.item.list.tech = Tecnologia
+inventor.item.list.description = Descripcion
+inventor.item.list.price = Precio
+inventor.item.list.info = Informacion
+
+inventor.item.form.code = Codigo
+inventor.item.form.name = Nombre
+inventor.item.form.tech = Tecnologia
+inventor.item.form.description = Descripcion
+inventor.item.form.price = Precio
+inventor.item.form.info = Informacion
