@@ -1,5 +1,5 @@
 /*
- * AuthenticatedConsumerController.java
+ * AuthenticatedPatronController.java
  *
  * Copyright (C) 2012-2022 Rafael Corchuelo.
  *
@@ -10,7 +10,7 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.authenticated.consumer;
+package acme.features.authenticated.patron;
 
 import javax.annotation.PostConstruct;
 
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import acme.framework.controllers.AbstractController;
 import acme.framework.roles.Authenticated;
-import acme.roles.Consumer;
+import acme.roles.Patron;
 
 @Controller
-@RequestMapping("/authenticated/consumer/")
-public class AuthenticatedConsumerController extends AbstractController<Authenticated, Consumer> {
+@RequestMapping("/authenticated/Patron/")
+public class AuthenticatedPatronController extends AbstractController<Authenticated, Patron> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedConsumerCreateService	createService;
+	protected AuthenticatedPatronCreateService	createService;
 
 	@Autowired
-	protected AuthenticatedConsumerUpdateService	updateService;
+	protected AuthenticatedPatronUpdateService	updateService;
 
 	// Constructors -----------------------------------------------------------
 

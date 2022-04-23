@@ -1,5 +1,5 @@
 /*
- * AuthenticatedConsumerCreateService.java
+ * AuthenticatedProviderCreateService.java
  *
  * Copyright (C) 2012-2022 Rafael Corchuelo.
  *
@@ -10,7 +10,7 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.authenticated.consumer;
+package acme.features.authenticated.inventor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,60 +25,53 @@ import acme.framework.entities.UserAccount;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractCreateService;
-import acme.roles.Consumer;
+import acme.roles.Inventor;
 
 @Service
-public class AuthenticatedConsumerCreateService implements AbstractCreateService<Authenticated, Consumer> {
+public class AuthenticatedInventorCreateService implements AbstractCreateService<Authenticated, Inventor> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedConsumerRepository repository;
+	protected AuthenticatedInventorRepository repository;
 
-	// AbstractCreateService<Authenticated, Consumer> ---------------------------
+	// AbstractCreateService<Authenticated, Provider> interface ---------------
 
 
 	@Override
-	public boolean authorise(final Request<Consumer> request) {
+	public boolean authorise(final Request<Inventor> request) {
 		assert request != null;
-		
+
 		boolean result;
 		
-		result = !request.getPrincipal().hasRole(Consumer.class); 
+		result = !request.getPrincipal().hasRole(Inventor.class); 
 
 		return result;
 	}
 
 	@Override
-	public void validate(final Request<Consumer> request, final Consumer entity, final Errors errors) {
-		assert request != null;
-		assert entity != null;
-		assert errors != null;
-	}
-
-	@Override
-	public void bind(final Request<Consumer> request, final Consumer entity, final Errors errors) {
+	public void bind(final Request<Inventor> request, final Inventor entity, final Errors errors) {
 		assert request != null;
 		assert entity != null;
 		assert errors != null;
 
-		request.bind(entity, errors, "company", "sector");
+		request.bind(entity, errors, "company", "statement", "info");
 	}
 
 	@Override
-	public void unbind(final Request<Consumer> request, final Consumer entity, final Model model) {
+	public void unbind(final Request<Inventor> request, final Inventor entity, final Model model) {
 		assert request != null;
 		assert entity != null;
 		assert model != null;
 
-		request.unbind(entity, model, "company", "sector");
+		request.unbind(entity, model, "company", "sector", "info");
 	}
 
 	@Override
-	public Consumer instantiate(final Request<Consumer> request) {
+	public Inventor instantiate(final Request<Inventor> request) {
 		assert request != null;
 
-		Consumer result;
+		Inventor result;
 		Principal principal;
 		int userAccountId;
 		UserAccount userAccount;
@@ -87,14 +80,21 @@ public class AuthenticatedConsumerCreateService implements AbstractCreateService
 		userAccountId = principal.getAccountId();
 		userAccount = this.repository.findOneUserAccountById(userAccountId);
 
-		result = new Consumer();
+		result = new Inventor();
 		result.setUserAccount(userAccount);
 
 		return result;
 	}
 
 	@Override
-	public void create(final Request<Consumer> request, final Consumer entity) {
+	public void validate(final Request<Inventor> request, final Inventor entity, final Errors errors) {
+		assert request != null;
+		assert entity != null;
+		assert errors != null;
+	}
+
+	@Override
+	public void create(final Request<Inventor> request, final Inventor entity) {
 		assert request != null;
 		assert entity != null;
 
@@ -102,7 +102,7 @@ public class AuthenticatedConsumerCreateService implements AbstractCreateService
 	}
 
 	@Override
-	public void onSuccess(final Request<Consumer> request, final Response<Consumer> response) {
+	public void onSuccess(final Request<Inventor> request, final Response<Inventor> response) {
 		assert request != null;
 		assert response != null;
 

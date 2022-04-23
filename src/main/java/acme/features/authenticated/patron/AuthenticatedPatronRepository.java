@@ -1,5 +1,5 @@
 /*
- * AuthenticatedProviderRepository.java
+ * AuthenticatedPatronRepository.java
  *
  * Copyright (C) 2012-2022 Rafael Corchuelo.
  *
@@ -10,22 +10,22 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.authenticated.provider;
+package acme.features.authenticated.patron;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.framework.entities.UserAccount;
 import acme.framework.repositories.AbstractRepository;
-import acme.roles.Provider;
+import acme.roles.Patron;
 
 @Repository
-public interface AuthenticatedProviderRepository extends AbstractRepository {
-
-	@Query("select p from Provider p where p.userAccount.id = :id")
-	Provider findOneProviderByUserAccountId(int id);
+public interface AuthenticatedPatronRepository extends AbstractRepository {
 
 	@Query("select ua from UserAccount ua where ua.id = :id")
 	UserAccount findOneUserAccountById(int id);
+
+	@Query("select c from Patron c where c.userAccount.id = :id")
+	Patron findOnePatronByUserAccountId(int id);
 
 }

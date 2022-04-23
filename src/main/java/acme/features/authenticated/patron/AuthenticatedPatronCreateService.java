@@ -1,5 +1,5 @@
 /*
- * AuthenticatedProviderUpdateService.java
+ * AuthenticatedPatronCreateService.java
  *
  * Copyright (C) 2012-2022 Rafael Corchuelo.
  *
@@ -10,7 +10,7 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.authenticated.provider;
+package acme.features.authenticated.patron;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,72 +21,80 @@ import acme.framework.controllers.HttpMethod;
 import acme.framework.controllers.Request;
 import acme.framework.controllers.Response;
 import acme.framework.entities.Principal;
+import acme.framework.entities.UserAccount;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.Authenticated;
-import acme.framework.services.AbstractUpdateService;
-import acme.roles.Provider;
+import acme.framework.services.AbstractCreateService;
+import acme.roles.Patron;
 
 @Service
-public class AuthenticatedProviderUpdateService implements AbstractUpdateService<Authenticated, Provider> {
+public class AuthenticatedPatronCreateService implements AbstractCreateService<Authenticated, Patron> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedProviderRepository repository;
+	protected AuthenticatedPatronRepository repository;
 
-	// AbstractUpdateService<Authenticated, Provider> interface ---------------
+	// AbstractCreateService<Authenticated, Patron> ---------------------------
 
-
-	@Override
-	public boolean authorise(final Request<Provider> request) {
-		assert request != null;
-
-		return true;
-	}
 
 	@Override
-	public void bind(final Request<Provider> request, final Provider entity, final Errors errors) {
+	public boolean authorise(final Request<Patron> request) {
 		assert request != null;
-		assert entity != null;
-		assert errors != null;
-
-		request.bind(entity, errors, "company", "sector");
-	}
-
-	@Override
-	public void unbind(final Request<Provider> request, final Provider entity, final Model model) {
-		assert request != null;
-		assert entity != null;
-		assert model != null;
-
-		request.unbind(entity, model, "company", "sector");
-	}
-
-	@Override
-	public Provider findOne(final Request<Provider> request) {
-		assert request != null;
-
-		Provider result;
-		Principal principal;
-		int userAccountId;
-
-		principal = request.getPrincipal();
-		userAccountId = principal.getAccountId();
-
-		result = this.repository.findOneProviderByUserAccountId(userAccountId);
+		
+		boolean result;
+		
+		result = !request.getPrincipal().hasRole(Patron.class); 
 
 		return result;
 	}
 
 	@Override
-	public void validate(final Request<Provider> request, final Provider entity, final Errors errors) {
+	public void validate(final Request<Patron> request, final Patron entity, final Errors errors) {
 		assert request != null;
 		assert entity != null;
 		assert errors != null;
 	}
 
 	@Override
-	public void update(final Request<Provider> request, final Provider entity) {
+	public void bind(final Request<Patron> request, final Patron entity, final Errors errors) {
+		assert request != null;
+		assert entity != null;
+		assert errors != null;
+
+		request.bind(entity, errors, "company", "statement", "info");
+	}
+
+	@Override
+	public void unbind(final Request<Patron> request, final Patron entity, final Model model) {
+		assert request != null;
+		assert entity != null;
+		assert model != null;
+
+		request.unbind(entity, model, "company", "statement", "info");
+	}
+
+	@Override
+	public Patron instantiate(final Request<Patron> request) {
+		assert request != null;
+
+		Patron result;
+		Principal principal;
+		int userAccountId;
+		UserAccount userAccount;
+
+		principal = request.getPrincipal();
+		userAccountId = principal.getAccountId();
+		userAccount = this.repository.findOneUserAccountById(userAccountId);
+
+		result = new Patron();
+		result.setUserAccount(userAccount);
+
+		return result;
+	}
+
+	@Override
+	public void create(final Request<Patron> request, final Patron entity) {
 		assert request != null;
 		assert entity != null;
 
@@ -94,7 +102,7 @@ public class AuthenticatedProviderUpdateService implements AbstractUpdateService
 	}
 
 	@Override
-	public void onSuccess(final Request<Provider> request, final Response<Provider> response) {
+	public void onSuccess(final Request<Patron> request, final Response<Patron> response) {
 		assert request != null;
 		assert response != null;
 
