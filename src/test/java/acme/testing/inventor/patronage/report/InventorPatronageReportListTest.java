@@ -1,0 +1,36 @@
+
+package acme.testing.inventor.patronage.report;
+
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+
+import acme.testing.TestHarness;
+
+public class InventorPatronageReportListTest extends TestHarness {
+
+	@ParameterizedTest
+	@CsvFileSource(resources = "/inventor/patronage/report/list-patronage-report.csv", encoding = "utf-8", numLinesToSkip = 1)
+	@Order(10)
+	public void checkListAllPatronageReportShow(final int reportIndex, final int recordIndex, final String creationDate, final String sequenceNumber,final String memorandum) {
+
+		super.signIn("inventor1", "inventor1");
+
+		super.navigateHome();
+
+		super.clickOnMenu("Patronages", "View mine");
+		this.clickOnListingRecord(reportIndex);
+		super.clickOnButton("View reports");
+
+		super.sortListing(1, "asc");
+	
+		super.checkColumnHasValue(recordIndex, 0, sequenceNumber);
+		super.checkColumnHasValue(recordIndex, 1, creationDate);
+		this.clickOnListingRecord(recordIndex);
+
+		super.checkFormExists();
+		super.checkInputBoxHasValue("memorandum", memorandum);
+
+		super.signOut();
+	}
+}

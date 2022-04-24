@@ -25,7 +25,7 @@
 			action="/any/user-account/show?id=${sponsorId}" />
 
 		<acme:button code="inventor.patronage.reports"
-			action="/inventor/patronage-report/list?masterId=${id}" />
+			action="/inventor/patronage-report/list?patronageId=${id}" />
 	</security:authorize>
 
 

@@ -24,8 +24,7 @@ import acme.framework.testing.AbstractTest;
 public abstract class TestHarness extends AbstractTest {
 	
 	DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-	// Business methods -------------------------------------------------------
-	
+
 	protected void signIn(final String username, final String password) {
 		assert !StringHelper.isBlank(username);
 		assert !StringHelper.isBlank(password);
