@@ -12,7 +12,7 @@ public class AnyToolkistHasItemListTest extends TestHarness {
 	@ParameterizedTest
 	@CsvFileSource(resources = "/any/toolkit/list-toolkit-with-item.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void positiveListToolkitWithItemTest(final int itemIndex,final int toolkitIndex, final String code, final String itemCode, final String itemType, final String title, final String description) {
+	public void anyToolkitsWithItemList(final int itemIndex,final int toolkitIndex, final String code, final String itemCode, final String itemType, final String title, final String description) {
 
 			super.navigateHome();
 			super.clickOnMenu("Components", String.format("View %s", itemType));

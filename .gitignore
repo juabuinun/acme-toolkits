@@ -32,3 +32,9 @@ mvnw\.cmd
 
 ### logs ###
 *.log
+/logs/performance-requests.csv
+/logs/performance-tests.csv
+/reports/lint report.docx
+/reports/performance report.docx
+/reports/planning report.docx
+/reports/progress report.docx

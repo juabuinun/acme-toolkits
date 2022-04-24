@@ -12,7 +12,7 @@ public class AnyToolkitListTest extends TestHarness {
 	@ParameterizedTest
 	@CsvFileSource(resources = "/any/toolkit/list-toolkit.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void positiveListToolkitsTest(final int toolkitIndex, final String code, final String title, final String price) {
+	public void anyToolkitsList(final int toolkitIndex, final String code, final String title, final String price) {
 
 		super.navigateHome();
 		super.clickOnMenu("Toolkits", "View toolkits");

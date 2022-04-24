@@ -12,7 +12,7 @@ public class InventorPatronageReportListTest extends TestHarness {
 	@ParameterizedTest
 	@CsvFileSource(resources = "/inventor/patronage/report/list-patronage-report.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void checkListAllPatronageReportShow(final int reportIndex, final int recordIndex, final String creationDate, final String sequenceNumber,final String memorandum) {
+	public void inventorPatronageReportList(final int reportIndex, final int recordIndex, final String creationDate, final String sequenceNumber,final String memorandum) {
 
 		super.signIn("inventor1", "inventor1");
 
