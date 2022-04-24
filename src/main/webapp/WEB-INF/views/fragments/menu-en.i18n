@@ -84,3 +84,7 @@ master.menu.patronage.patron.list = View mine
 ### CONFIG ###
 master.menu.administrator.config = System configuration
 
+### DASHBOARDS ###
+master.menu.patron.dashboard = View patron dashboard
+master.menu.admin.dashboard = View admin dashboard
+

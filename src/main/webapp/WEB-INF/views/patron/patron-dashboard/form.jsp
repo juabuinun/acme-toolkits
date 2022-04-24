@@ -3,88 +3,165 @@
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="acme" uri="urn:jsptagdir:/WEB-INF/tags"%>
 
-<h2>
-	<acme:message code="patron.dashboard.form.title.general-indicators"/>
-</h2>
 
-<table class="table table-sm">
-	<tr>
-		<th scope="row">
-			<acme:message code="patron.dashboard.form.label.numPatronageProposed"/>
-		</th>
-		<td>
-			<acme:print value="${numPatronageProposed}"/>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row">
-			<acme:message code="patron.dashboard.form.label.numPatronageAccepted"/>
-		</th>
-		<td>
-			<acme:print value="${numPatronageAccepted}"/>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row">
-			<acme:message code="patron.dashboard.form.label.numPatronageDenied"/>
-		</th>
-		<td>
-			<acme:print value="${numPatronageDenied}"/>
-		</td>
-	</tr>	
-</table>
+<form>
+	<div class="form-group">
+		<label><acme:message code="patron.dashboard.accepted" /></label>
+		<div>
+			<label> <acme:message code="patron.dashboard.num" />
+			</label> <input value="<acme:print value="${numAccepted}"/>" type="text"
+				class="form-control" readonly />
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.min" /></label>
+			</div>
+			<jstl:forEach items="${minAccepted}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.max" /></label>
+			</div>
+			<jstl:forEach items="${maxAccepted}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.avg" /></label>
+			</div>
+			<jstl:forEach items="${avgAccepted}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.stdev" /></label>
+			</div>
+			<jstl:forEach items="${stdevAccepted}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+	</div>
 
-<h2>
-	<acme:message code="patron.dashboard.form.title.application-statuses"/>
-</h2>
 
-<div>
-	<canvas id="canvas"></canvas>
-</div>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		var data = {
-			labels : [
-					"PROPOSED", "ACCEPTED", "DENIED"
-			],
-			datasets : [
-				{
-					data : [
-						<jstl:out value="${numPatronageProposed}"/>, 
-						<jstl:out value="${numPatronageAccepted}"/>, 
-						<jstl:out value="${numPatronageDenied}"/>
-					]
-				}
-			]
-		};
-		var options = {
-			scales : {
-				yAxes : [
-					{
-						ticks : {
-							suggestedMin : 0.0,
-							suggestedMax : "${maximo}"
-						}
-					}
-				]
-			},
-			legend : {
-				display : false
-			}
-		};
+	<div class="form-group">
+		<label><acme:message code="patron.dashboard.proposed" /></label>
+		<div>
+			<label> <acme:message code="patron.dashboard.num" />
+			</label> <input value="<acme:print value="${numProposed}"/>" type="text"
+				class="form-control" readonly />
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.min" /></label>
+			</div>
+			<jstl:forEach items="${minProposed}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.max" /></label>
+			</div>
+			<jstl:forEach items="${maxProposed}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.avg" /></label>
+			</div>
+			<jstl:forEach items="${avgProposed}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.stdev" /></label>
+			</div>
+			<jstl:forEach items="${stdevProposed}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+	</div>
 	
-		var canvas, context;
-	
-		canvas = document.getElementById("canvas");
-		context = canvas.getContext("2d");
-		new Chart(context, {
-			type : "bar",
-			data : data,
-			options : options
-		});
-	});
-</script>
-
-<acme:return/>
-
+	<div class="form-group">
+		<label><acme:message code="patron.dashboard.denied" /></label>
+		<div>
+			<label> <acme:message code="patron.dashboard.num" />
+			</label> <input value="<acme:print value="${numDenied}"/>" type="text"
+				class="form-control" readonly />
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.min" /></label>
+			</div>
+			<jstl:forEach items="${minDenied}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.max" /></label>
+			</div>
+			<jstl:forEach items="${maxDenied}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.avg" /></label>
+			</div>
+			<jstl:forEach items="${avgDenied}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+		<div class="col">
+			<div class="row">
+				<label> <acme:message code="patron.dashboard.stdev" /></label>
+			</div>
+			<jstl:forEach items="${stdevDenied}" var="var">
+				<div class="row">
+					<input value="<acme:print value="${var}"/>" type="text"
+						class="form-control" readonly />
+				</div>
+			</jstl:forEach>
+		</div>
+	</div>
+</form>

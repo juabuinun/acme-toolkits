@@ -8,11 +8,15 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-patron.dashboard.form.title.general-indicators = Indicadores generales
-patron.dashboard.form.title.application-statuses = Estados de solicitud
+patron.dashboard.accepted = ACEPTADOS
+patron.dashboard.denied = DENEGADOS
+patron.dashboard.proposed = PROPUESTOS
 
-patron.dashboard.form.label.numPatronageProposed =  Numero de patrocinios propuestos
-patron.dashboard.form.label.numPatronageAccepted =  Numero de patrocinios aceptados
-patron.dashboard.form.label.numPatronageDenied = Numero de patrocinios denegados
+patron.dashboard.num = Cantidad
+patron.dashboard.min = Min. presupuesto
+patron.dashboard.max = Max. presupuesto
+patron.dashboard.avg = Presupuesto medio
+patron.dashboard.stdev = Desviacion std.
+
 
 

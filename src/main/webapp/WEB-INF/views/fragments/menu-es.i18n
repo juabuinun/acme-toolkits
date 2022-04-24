@@ -82,3 +82,7 @@ master.menu.patronage.patron.list = Mis patrocinios
 
 ### CONFIG ###
 master.menu.administrator.config = Configuracion del sistema
+
+### DASHBOARDS ###
+master.menu.patron.dashboard = Ver tablero patrocinador
+master.menu.admin.dashboard = Ver tablero administrador

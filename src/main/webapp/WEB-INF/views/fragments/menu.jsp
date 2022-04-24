@@ -76,10 +76,13 @@
 				access="hasRole('Inventor')" action="/inventor/patronage/list-mine" />
 			<acme:menu-suboption code="master.menu.patronage.patron.list"
 				access="hasRole('Patron')" action="/patron/patronage/list-mine" />
+
+
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator"
 			access="hasRole('Administrator')">
+			<!-- DEFAULT STUFF -->
 			<acme:menu-suboption code="master.menu.administrator.user-accounts"
 				action="/administrator/user-account/list" />
 			<acme:menu-separator />
@@ -92,8 +95,10 @@
 			<acme:menu-suboption code="master.menu.administrator.shut-down"
 				action="/administrator/shut-down" />
 			<acme:menu-separator />
+			<!-- CONFIG -->
 			<acme:menu-suboption code="master.menu.administrator.config"
 				action="/administrator/configuration/show" />
+
 		</acme:menu-option>
 
 	</acme:menu-left>
@@ -106,18 +111,31 @@
 
 		<acme:menu-option code="master.menu.user-account"
 			access="isAuthenticated()">
+			<!-- GENERAL DATA -->
 			<acme:menu-suboption code="master.menu.user-account.general-data"
 				action="/authenticated/user-account/update" />
+			<!-- PATRON -->
 			<acme:menu-suboption code="master.menu.user-account.become-patron"
-				action="/authenticated/patron/create"
-				access="!hasRole('Patron')" />
+				action="/authenticated/patron/create" access="!hasRole('Patron')" />
 			<acme:menu-suboption code="master.menu.user-account.patron"
 				action="/authenticated/patron/update" access="hasRole('Patron')" />
+			<!-- INVENTOR -->
 			<acme:menu-suboption code="master.menu.user-account.become-inventor"
 				action="/authenticated/inventor/create"
 				access="!hasRole('Inventor')" />
 			<acme:menu-suboption code="master.menu.user-account.inventor"
 				action="/authenticated/inventor/update" access="hasRole('Inventor')" />
+			<!-- DASHBOARD -->
+			<security:authorize access="hasRole('Administrator')">
+				<acme:menu-separator />
+				<acme:menu-suboption code="master.menu.admin.dashboard"
+					action="/administrator/admin-dashboard/show" />
+			</security:authorize>
+			<security:authorize access="hasRole('Patron')">
+				<acme:menu-separator />
+				<acme:menu-suboption code="master.menu.patron.dashboard"
+					action="/patron/patron-dashboard/show" />
+			</security:authorize>
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.sign-out"
