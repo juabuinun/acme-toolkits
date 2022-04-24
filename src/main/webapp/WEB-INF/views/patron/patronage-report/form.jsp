@@ -4,10 +4,8 @@
 <%@taglib prefix="acme" uri="urn:jsptagdir:/WEB-INF/tags"%>
 
 <acme:form readonly="true">
-	<acme:input-textbox code="patron.patronage-report.form.label.patronageId" path="patronageId"/> 
-	<acme:input-textbox code="patron.patronage-report.form.label.moment" path="moment"/>
-	<acme:input-textbox code="patron.patronage-report.form.label.memorandum" path="memorandum"/>
-	<acme:input-textbox code="patron.patronage-report.form.label.info" path="info"/>
-	<acme:input-textbox code="patron.patronage-report.form.label.sequenceNumber" path="sequenceNumber"/>
-
+<acme:input-textbox code="patron.patronage.report.sequence" path="sequenceNumber"/>
+	<acme:input-textbox code="patron.patronage.report.date" path="creationDate"/>
+	<acme:input-textbox code="patron.patronage.report.memorandum" path="memorandum"/>
+	<acme:input-textbox code="patron.patronage.report.info" path="info"/>
 </acme:form>

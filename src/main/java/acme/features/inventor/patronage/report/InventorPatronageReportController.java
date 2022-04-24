@@ -1,5 +1,5 @@
 
-package acme.features.patron.patronage.report;
+package acme.features.inventor.patronage.report;
 
 import javax.annotation.PostConstruct;
 
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Controller;
 
 import acme.entities.patronage.report.PatronageReport;
 import acme.framework.controllers.AbstractController;
-import acme.roles.Patron;
+import acme.roles.Inventor;
 
 @Controller
-public class PatronPatronageReportController extends AbstractController<Patron, PatronageReport> {
+public class InventorPatronageReportController extends AbstractController<Inventor,PatronageReport> {
 
 	@Autowired
-	protected PatronPatronageReportListService	listService;
+	protected InventorPatronageReportListService	listService;
 	@Autowired
-	protected PatronPatronageReportShowService	showService;
+	protected InventorPatronageReportShowService	showService;
 
 
 	@PostConstruct

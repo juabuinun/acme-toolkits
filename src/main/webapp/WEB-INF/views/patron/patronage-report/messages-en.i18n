@@ -8,8 +8,10 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-preport.sequence = Sequence
-preport.date = Date
+patron.patronage.report.sequence = Sequence
+patron.patronage.report.date = Date
+patron.patronage.report.memorandum = Memorandum
+patron.patronage.report.info = Info
 
 
 

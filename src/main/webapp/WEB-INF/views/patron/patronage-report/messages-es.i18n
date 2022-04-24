@@ -8,7 +8,9 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-preport.sequence = Codigo
-preport.date = Fecha
+patron.patronage.report.sequence = Codigo
+patron.patronage.report.date = Fecha
+patron.patronage.report.memorandum = Memorandum
+patron.patronage.report.info = Informacion
 
 

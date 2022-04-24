@@ -3,8 +3,8 @@ package acme.entities.patronage.report;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -40,7 +40,6 @@ public class PatronageReport extends AbstractEntity {
 
 
 	@NotNull
-	@Column(unique = true)
 	protected Long				serialNumber;
 
 
@@ -52,7 +51,7 @@ public class PatronageReport extends AbstractEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch=FetchType.EAGER)
 	protected Patronage patronage;
 
 }
