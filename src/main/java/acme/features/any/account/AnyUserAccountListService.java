@@ -17,23 +17,16 @@ import acme.framework.entities.UserAccount;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractListService;
 import acme.repositories.UserAccountRepository;
+import acme.services.AbstractAcmeAuthoriseAllService;
 
 @Service
-@Transactional
-public class AnyUserAccountListService implements AbstractListService<Any, UserAccount> {
+public class AnyUserAccountListService extends AbstractAcmeAuthoriseAllService<Any, UserAccount, UserAccountRepository> implements AbstractListService<Any, UserAccount> {
 
 	@Autowired
-	UserAccountRepository	repo;
-
-	@Autowired
-	ModelMapper					modelMapper;
-
-
-	@Override
-	public boolean authorise(final Request<UserAccount> request) {
-		assert request != null;
-		return true;
+	protected AnyUserAccountListService(final UserAccountRepository repo, final ModelMapper mapper) {
+		super(repo, mapper);
 	}
+	
 
 	@Override
 	@Transactional
@@ -41,7 +34,7 @@ public class AnyUserAccountListService implements AbstractListService<Any, UserA
 //		final Collection<UserAccount> res= this.repo.findAllEnabled();
 //		res.forEach(u -> u.getRoles().size());
 //		return res;
-		return this.repo.findAll(Specifications.userAccountIsEnabledAndNotSystem());
+		return this.findBySpecification(Specifications.userAccountIsEnabledAndNotSystem());
 	}
 
 	@Override
@@ -50,7 +43,7 @@ public class AnyUserAccountListService implements AbstractListService<Any, UserA
 		assert request != null;
 		assert entity != null;
 		assert model != null;
-		final UserAccountDto dto = this.modelMapper.map(entity, UserAccountDto.class);
+		final UserAccountDto dto = this.mapper.map(entity, UserAccountDto.class);
 
 		request.unbind(dto, model, "id" ,"username", "identity.fullName", "authorityString");
 	}

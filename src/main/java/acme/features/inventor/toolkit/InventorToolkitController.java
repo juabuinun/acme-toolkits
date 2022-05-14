@@ -6,12 +6,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import acme.components.custom.controllers.AcmeAbstractController;
 import acme.entities.toolkit.Toolkit;
-import acme.framework.controllers.AbstractController;
 import acme.roles.Inventor;
 
 @Controller
-public class InventorToolkitController extends AbstractController<Inventor, Toolkit> {
+public class InventorToolkitController extends AcmeAbstractController<Inventor, Toolkit> {
 
 	@Autowired
 	protected InventorToolkitListService listService;

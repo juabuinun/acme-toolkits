@@ -18,13 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import acme.framework.controllers.AbstractController;
+import acme.components.custom.controllers.AcmeAbstractController;
 import acme.framework.roles.Authenticated;
 import acme.roles.Patron;
 
 @Controller
 @RequestMapping("/authenticated/Patron/")
-public class AuthenticatedPatronController extends AbstractController<Authenticated, Patron> {
+public class AuthenticatedPatronController extends AcmeAbstractController<Authenticated, Patron> {
 
 	// Internal state ---------------------------------------------------------
 

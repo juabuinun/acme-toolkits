@@ -27,11 +27,11 @@ public class ToolkitItem extends AbstractEntity {
 	@Positive
 	protected Integer			quantity;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@NotNull
 	protected Item				item;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@NotNull
 	protected Toolkit			toolkit;
 

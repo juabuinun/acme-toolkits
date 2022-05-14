@@ -1,37 +1,29 @@
+
 package acme.features.authenticated.announcement;
 
-import java.util.Optional;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.announcement.Announcement;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
-import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractShowService;
 import acme.repositories.AnnouncementRepository;
+import acme.services.AbstractAcmeAuthoriseAllService;
 
 @Service
-public class AuthenticatedAnnouncementShowService implements AbstractShowService<Authenticated,Announcement>{
+public class AuthenticatedAnnouncementShowService extends AbstractAcmeAuthoriseAllService<Authenticated, Announcement, AnnouncementRepository> implements AbstractShowService<Authenticated, Announcement> {
 
 	@Autowired
-	protected AnnouncementRepository repo;
-	
-	@Override
-	public boolean authorise(final Request<Announcement> request) {
-		return !PrincipalHelper.get().isAnonymous();
+	protected AuthenticatedAnnouncementShowService(final AnnouncementRepository repo, final ModelMapper mapper) {
+		super(repo, mapper);
 	}
 
 	@Override
 	public Announcement findOne(final Request<Announcement> request) {
-		final Optional<Announcement> res = this.repo.findById(request.getModel().getInteger("id"));
-		if(res.isPresent()) {
-			return res.get();
-		}else {
-			return null;
-		}
+		return this.findById(request);
 	}
 
 	@Override

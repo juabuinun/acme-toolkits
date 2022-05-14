@@ -1,22 +1,30 @@
-package acme.features.any.item;
+package acme.services.toolkit.item;
 
 import java.util.Collection;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.components.Specifications;
 import acme.entities.item.Item;
+import acme.entities.item.Item.Type;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractListService;
 import acme.repositories.ItemRepository;
+import acme.services.AbstractCrudServiceImpl;
 
 
-public abstract class AbstractAnyItemListService implements AbstractListService<Any,Item>{
+public abstract class AbstractAnyItemListService extends AbstractCrudServiceImpl<Item, ItemRepository> implements AbstractListService<Any,Item>{
 
+	Type itemType;
+	
 	@Autowired
-	ItemRepository repo;
+	protected AbstractAnyItemListService(final ItemRepository repo, final ModelMapper mapper, final Type itemType) {
+		super(repo, mapper);
+		this.itemType = itemType;
+	}
 	
 	@Override
 	public boolean authorise(final Request<Item> request) {
@@ -25,7 +33,7 @@ public abstract class AbstractAnyItemListService implements AbstractListService<
 
 	@Override
 	public Collection<Item> findMany(final Request<Item> request) {
-		return this.repo.findAll(Specifications.itemIsOfType(this.getItemType()));
+		return this.findBySpecification(Specifications.itemIsOfType(this.itemType));
 	}
 	
 	@Override
@@ -33,5 +41,4 @@ public abstract class AbstractAnyItemListService implements AbstractListService<
 		request.unbind(entity, model, "code","name","technology","price");
 	}
 
-	protected abstract Item.Type getItemType();
 }

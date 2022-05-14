@@ -1,7 +1,6 @@
 package acme.features.any.item;
 
-import java.util.Optional;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,26 +10,19 @@ import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractShowService;
 import acme.repositories.ItemRepository;
+import acme.services.AbstractAcmeAuthoriseAllService;
 
 @Service
-public class AnyItemShowService implements AbstractShowService<Any,Item>{
+public class AnyItemShowService extends AbstractAcmeAuthoriseAllService<Any,Item,ItemRepository> implements AbstractShowService<Any,Item>{
 
 	@Autowired
-	protected ItemRepository repo;
-	
-	@Override
-	public boolean authorise(final Request<Item> request) {
-		return true;
+	protected AnyItemShowService(final ItemRepository repo, final ModelMapper mapper) {
+		super(repo, mapper);
 	}
 
 	@Override
 	public Item findOne(final Request<Item> request) {
-		final Optional<Item> res = this.repo.findById(request.getModel().getInteger("id"));
-		if(res.isPresent()) {
-			return res.get();
-		}else {
-			return null;
-		}
+		return this.findById(request);
 	}
 
 	@Override

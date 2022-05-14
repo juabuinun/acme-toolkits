@@ -2,22 +2,25 @@ package acme.features.patron.patronage;
 
 import java.util.Collection;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.components.Specifications;
 import acme.entities.patronage.Patronage;
-import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractListService;
 import acme.repositories.PatronageRepository;
 import acme.roles.Patron;
+import acme.services.patronage.AbstractPatronageListUnbindService;
 
 @Service
-public class PatronPatronageListService implements AbstractListService<Patron, Patronage> {
+public class PatronPatronageListService extends AbstractPatronageListUnbindService<Patron> implements AbstractListService<Patron, Patronage> {
 
 	@Autowired
-	protected PatronageRepository repo;
+	protected PatronPatronageListService(final PatronageRepository repo, final ModelMapper mapper) {
+		super(repo, mapper);
+	}
 	
 	@Override
 	public boolean authorise(final Request<Patronage> request) {
@@ -26,12 +29,7 @@ public class PatronPatronageListService implements AbstractListService<Patron, P
 
 	@Override
 	public Collection<Patronage> findMany(final Request<Patronage> request) {
-		return this.repo.findAll(Specifications.patronagePrincipalIsSponsor());
-	}
-
-	@Override
-	public void unbind(final Request<Patronage> request, final Patronage entity, final Model model) {
-		request.unbind(entity, model, "code","status","creationDate","endDate","budget","patronage.sponsor");
+		return this.findBySpecification(Specifications.patronagePrincipalIsSponsor());
 	}
 
 }

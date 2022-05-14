@@ -56,7 +56,7 @@ public class Toolkit extends AbstractEntity {
 	@URL
 	protected String			info;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "toolkit")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "toolkit")
 	protected List<ToolkitItem>	items;
 
 

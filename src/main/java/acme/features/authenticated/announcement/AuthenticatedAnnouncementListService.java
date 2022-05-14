@@ -1,29 +1,28 @@
+
 package acme.features.authenticated.announcement;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.announcement.Announcement;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
-import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractListService;
 import acme.repositories.AnnouncementRepository;
+import acme.services.AbstractAcmeAuthoriseAllService;
 
 @Service
-public class AuthenticatedAnnouncementListService implements AbstractListService<Authenticated,Announcement>{
+public class AuthenticatedAnnouncementListService extends AbstractAcmeAuthoriseAllService<Authenticated, Announcement, AnnouncementRepository> implements AbstractListService<Authenticated, Announcement> {
 
 	@Autowired
-	protected AnnouncementRepository repo;
-	
-	@Override
-	public boolean authorise(final Request<Announcement> request) {
-		return !PrincipalHelper.get().isAnonymous();
+	protected AuthenticatedAnnouncementListService(final AnnouncementRepository repo, final ModelMapper mapper) {
+		super(repo, mapper);
 	}
 
 	@Override

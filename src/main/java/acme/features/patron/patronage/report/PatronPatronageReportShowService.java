@@ -1,27 +1,24 @@
 package acme.features.patron.patronage.report;
 
-import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.patronage.report.PatronageReport;
-import acme.form.patronage.report.PatronageReportDto;
-import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
 import acme.repositories.PatronageReportRepository;
 import acme.roles.Patron;
+import acme.services.patronage.report.AbstractPatronageReportUnbindService;
 
 @Service
-public class PatronPatronageReportShowService implements AbstractShowService<Patron,PatronageReport>{
+public class PatronPatronageReportShowService extends AbstractPatronageReportUnbindService<Patron> implements AbstractShowService<Patron,PatronageReport>{
 
 	@Autowired
-	protected ModelMapper mapper;
-	
-	@Autowired
-	protected PatronageReportRepository repo;
+	protected PatronPatronageReportShowService(final PatronageReportRepository repo, final ModelMapper mapper) {
+		super(repo, mapper);
+	}
+
 	
 	@Override
 	public boolean authorise(final Request<PatronageReport> request) {
@@ -30,14 +27,7 @@ public class PatronPatronageReportShowService implements AbstractShowService<Pat
 
 	@Override
 	public PatronageReport findOne(final Request<PatronageReport> request) {
-		final Optional<PatronageReport> report = this.repo.findById(request.getModel().getInteger("id"));
-		return report.isPresent() ? report.get() : null;
-	}
-
-	@Override
-	public void unbind(final Request<PatronageReport> request, final PatronageReport entity, final Model model) {
-		final PatronageReportDto dto = this.mapper.map(entity, PatronageReportDto.class);
-		request.unbind(dto, model, "id","version","creationDate","memorandum","info","sequenceNumber","patronageId");
+		return this.findById(request);
 	}
 
 }

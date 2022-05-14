@@ -2,6 +2,7 @@ package acme.features.inventor.item;
 
 import java.util.Collection;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +17,13 @@ import acme.roles.Inventor;
 public class InventorToolListService extends AbstractInventorItemListService implements AbstractListService<Inventor,Item>{
 
 	@Autowired
-	protected ItemRepository repo;
-	
-
+	protected InventorToolListService(final ItemRepository repo, final ModelMapper mapper) {
+		super(repo, mapper);
+	}
 
 	@Override
 	public Collection<Item> findMany(final Request<Item> request) {
-		return this.repo.findAll(Specifications.itemIsOfTypeAndPrincipalIsOwner(Item.Type.TOOL));
+		return this.findBySpecification(Specifications.itemIsOfTypeAndPrincipalIsOwner(Item.Type.TOOL));
 	}
 
 

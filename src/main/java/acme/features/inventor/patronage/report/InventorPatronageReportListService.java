@@ -11,21 +11,21 @@ import org.springframework.stereotype.Service;
 import acme.components.Specifications;
 import acme.entities.patronage.Patronage;
 import acme.entities.patronage.report.PatronageReport;
-import acme.form.patronage.report.PatronageReportDto;
-import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractListService;
 import acme.repositories.PatronageReportRepository;
 import acme.repositories.PatronageRepository;
 import acme.roles.Inventor;
+import acme.services.patronage.report.AbstractPatronageReportListUnbindService;
 
 @Service
-public class InventorPatronageReportListService implements AbstractListService<Inventor,PatronageReport>{
+public class InventorPatronageReportListService extends AbstractPatronageReportListUnbindService<Inventor> implements AbstractListService<Inventor,PatronageReport>{
 
 	@Autowired
-	protected ModelMapper mapper;
-	@Autowired
-	protected PatronageReportRepository repo;
+	protected InventorPatronageReportListService(final PatronageReportRepository repo, final ModelMapper mapper) {
+		super(repo, mapper);
+	}
+	
 	@Autowired
 	protected PatronageRepository patronageRepo;
 	
@@ -42,12 +42,6 @@ public class InventorPatronageReportListService implements AbstractListService<I
 			res = this.repo.findAll(Specifications.patronageReportByPatronage(patronage.get()));
 		}
 		return res;
-	}
-
-	@Override
-	public void unbind(final Request<PatronageReport> request, final PatronageReport entity, final Model model) {
-		final PatronageReportDto dto = this.mapper.map(entity, PatronageReportDto.class);
-		request.unbind(dto, model, "id","version","creationDate","memorandum","info","sequenceNumber","patronageId");
 	}
 
 }
