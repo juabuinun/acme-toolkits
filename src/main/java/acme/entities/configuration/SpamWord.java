@@ -3,7 +3,6 @@ package acme.entities.configuration;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import acme.framework.entities.AbstractEntity;
 import lombok.Data;
@@ -21,9 +20,8 @@ public class SpamWord extends AbstractEntity{
 	
 	@NotBlank
 	protected String word;
-	
-	@NotNull
-	protected Boolean strong;
+
+	protected boolean strong;
 	
 	protected String language;
 

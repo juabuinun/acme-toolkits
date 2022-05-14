@@ -15,3 +15,5 @@ any.chirp.list.title = Title
 any.chirp.list.author = Author
 any.chirp.list.body = Body
 any.chirp.list.email = Email
+
+any.chirp.create = Create

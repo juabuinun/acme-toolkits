@@ -52,6 +52,7 @@ master.menu.user-account.become-inventor = Become an inventor
 ### CHIRP ####
 master.menu.chirp = Chirps
 master.menu.chirp.any.list = View chirps
+master.menu.chirp.any.create = Create chirp
 
 ### ANNOUNCEMENT ###
 master.menu.announcements = Announcement

@@ -51,6 +51,7 @@ master.menu.user-account.become-consumer = Hazte inventor
 ### CHIRP ####
 master.menu.chirp = Chirridos
 master.menu.chirp.any.list = Ver chirridos
+master.menu.chirp.any.create = Crear chirrido
 
 ### ANNOUNCEMENT ###
 master.menu.announcements = Anuncios

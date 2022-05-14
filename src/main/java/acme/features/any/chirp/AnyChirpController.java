@@ -13,11 +13,15 @@ import acme.framework.roles.Any;
 public class AnyChirpController extends AcmeAbstractController<Any, Chirp> {
 
 	@Autowired
-	protected AnyChirpListService service;
+	protected AnyChirpListService listService;
+	
+	@Autowired
+	protected AnyChirpCreateService createService;
 
 
 	@PostConstruct
 	protected void initialise() {
-		super.addCommand("list-recent", "list", this.service);
+		super.addCommand("list-recent", "list", this.listService);
+		super.addCommand("create", this.createService);
 	}
 }

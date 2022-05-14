@@ -22,12 +22,14 @@
 <acme:menu-bar code="master.menu.home">
 	<acme:menu-left>
 
-		<!-- USER ACCOUNTS -->
+		<!--CHIRPS -->
 		<acme:menu-option code="master.menu.chirp">
 			<acme:menu-suboption code="master.menu.chirp.any.list"
 				action="/any/chirp/list-recent" />
+			<acme:menu-suboption code="master.menu.chirp.any.create"
+				action="/any/chirp/create" />
 		</acme:menu-option>
-		<!-- CHIRPS -->
+		<!-- USER ACCOUNTS -->
 		<acme:menu-option code="master.menu.accounts">
 			<acme:menu-suboption code="master.menu.accounts.any.list"
 				action="/any/user-account/list-enabled" />
