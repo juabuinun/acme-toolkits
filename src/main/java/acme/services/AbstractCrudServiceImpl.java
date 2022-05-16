@@ -59,7 +59,7 @@ public abstract class AbstractCrudServiceImpl<E extends AbstractEntity, R extend
 		if(opt.isPresent()) {
 			final E persisted = opt.get();
 			this.mapper.map(entity, persisted);
-			return this.repo.save(persisted);
+			return this.save(persisted);
 		}else {
 			AbstractCrudServiceImpl.logger.warn("Couldnt find entity with id={}", id);
 			return null;

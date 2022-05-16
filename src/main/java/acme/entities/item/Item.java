@@ -69,6 +69,8 @@ public class Item extends AbstractEntity{
 	@URL
 	protected String info;
 	
+	protected boolean published;
+	
 	@OneToMany(mappedBy="item", fetch=FetchType.LAZY)
 	protected List<ToolkitItem> toolkits;
 }

@@ -1,10 +1,7 @@
 package acme.features.any.chirp;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,20 +10,17 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractListService;
-import acme.repositories.ChirpRepository;
-import acme.services.AbstractAcmeAuthoriseAllService;
+import acme.services.chirp.ChirpService;
 
 @Service
-public class AnyChirpListService extends AbstractAcmeAuthoriseAllService<Any,Chirp, ChirpRepository> implements AbstractListService<Any, Chirp> {
+public class AnyChirpListService implements AbstractListService<Any, Chirp> {
 
 	@Autowired
-	protected AnyChirpListService(final ChirpRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
-	}
+	protected ChirpService service;
 
 	@Override
 	public Collection<Chirp> findMany(final Request<Chirp> request) {
-		return this.repo.findByCreationDateAfter(LocalDateTime.now().minus(1, ChronoUnit.MONTHS));
+		return this.service.findRecent();
 	}
 
 	@Override
@@ -36,6 +30,11 @@ public class AnyChirpListService extends AbstractAcmeAuthoriseAllService<Any,Chi
 		assert model != null;
 
 		request.unbind(entity, model, "creationDate", "title", "author", "body", "email");
+	}
+
+	@Override
+	public boolean authorise(final Request<Chirp> request) {
+		return true;
 	}
 
 }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import acme.components.custom.controllers.AcmeAbstractController;
-import acme.entities.patronage.report.PatronageReport;
+import acme.entities.patronagereport.PatronageReport;
 import acme.roles.Patron;
 
 @Controller

@@ -24,6 +24,7 @@ import acme.framework.entities.Principal;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractUpdateService;
+import acme.repositories.PatronRepository;
 import acme.roles.Patron;
 
 @Service
@@ -32,7 +33,7 @@ public class AuthenticatedPatronUpdateService implements AbstractUpdateService<A
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedPatronRepository repository;
+	protected PatronRepository repository;
 
 	// AbstractUpdateService<Authenticated, Patron> interface -----------------
 

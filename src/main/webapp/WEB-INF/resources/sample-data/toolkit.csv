@@ -1,4 +1,7 @@
-key,code,title,description,notes,key:owner,info
-toolkit-01,ZZZ-000,Extras for vacuum kit,"Nuts, bolts and pins",Repeated stuff,inventor-04,http://www.yourtoolkit1.com
-toolkit-02,ZZZ-000-A,Vacuum kit,For pulling vacuum,Goodluck,inventor-05,null
-toolkit-03,YYY-000,Car jacking,For jacking up your car,Don't go underneath,inventor-02,http://www.yourtoolkit3.com
+key,code,title,description,notes,key:owner,info,published
+toolkit-01,ZZZ-000,Extras for vacuum kit,"Nuts, bolts and pins",Repeated stuff,inventor-04,http://www.yourtoolkit1.com,true
+toolkit-02,ZZZ-000-A,Vacuum kit,For pulling vacuum,Goodluck,inventor-05,null,true
+toolkit-03,YYY-000,Car jacking,For jacking up your car,Don't go underneath,inventor-02,http://www.yourtoolkit3.com,true
+toolkit-04,SED-000-A,Slingshot,WIP,Buy rocks,inventor-01,null,false
+toolkit-05,DEC-011-A,Hydraulic press,Very strong and good for breaking stuff,Complicated build,inventor-01,null,false
+toolkit-06,DEC-011-B,Secondary pump,For hydraulic press,In case you need more,inventor-01,null,false

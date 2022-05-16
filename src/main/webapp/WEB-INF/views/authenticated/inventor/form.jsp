@@ -20,6 +20,6 @@
 	<acme:input-textbox code="inventor.statement" path="statement"/>
 	<acme:input-textbox code="inventor.info" path="info"/>
 	
-	<acme:submit test="${command == 'create'}" code="authenticated.provider.form.button.create" action="/authenticated/provider/create"/>
-	<acme:submit test="${command == 'update'}" code="authenticated.provider.form.button.update" action="/authenticated/provider/update"/>
+	<acme:submit test="${command == 'create'}" code="authenticated.provider.form.button.create" action="/authenticated/inventor/create"/>
+	<acme:submit test="${command == 'update'}" code="authenticated.provider.form.button.update" action="/authenticated/inventor/update"/>
 </acme:form>

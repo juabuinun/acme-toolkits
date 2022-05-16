@@ -1,5 +1,5 @@
 
-package acme.entities.patronage.report;
+package acme.entities.patronagereport;
 
 import java.time.LocalDateTime;
 

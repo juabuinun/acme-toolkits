@@ -4,6 +4,7 @@ package acme.components.spam;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +32,9 @@ public class SpamFilter {
 
 	public SpamFilter() {
 		this.mapper = new ModelMapper();
+		this.spamWords = new ArrayList<>();
+		this.strongSpamThreshold = 0;
+		this.weakSpamThreshold = 0;
 	}
 	
 	public void updateSpamWordCache(final List<SpamWord> spamWords) {

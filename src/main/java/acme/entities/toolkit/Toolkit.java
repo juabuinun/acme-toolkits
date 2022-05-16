@@ -59,7 +59,8 @@ public class Toolkit extends AbstractEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "toolkit")
 	protected List<ToolkitItem>	items;
 
-
+	protected boolean published;
+	
 	@Transient
 	public Double getPrice() {
 		//currencies can differ, not worth checking. what would even be done if they differ?

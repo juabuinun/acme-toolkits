@@ -1,32 +1,32 @@
 
 package acme.features.authenticated.announcement;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import acme.entities.announcement.Announcement;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractShowService;
-import acme.repositories.AnnouncementRepository;
-import acme.services.AbstractAcmeAuthoriseAllService;
+import acme.services.AuthoriseAll;
+import acme.services.announcement.AnnouncementService;
 
 @Service
-public class AuthenticatedAnnouncementShowService extends AbstractAcmeAuthoriseAllService<Authenticated, Announcement, AnnouncementRepository> implements AbstractShowService<Authenticated, Announcement> {
+public class AuthenticatedAnnouncementShowService extends AuthoriseAll<Authenticated, Announcement> implements AbstractShowService<Authenticated, Announcement> {
 
 	@Autowired
-	protected AuthenticatedAnnouncementShowService(final AnnouncementRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
-	}
+	protected AnnouncementService service;
 
 	@Override
+	@Transactional
 	public Announcement findOne(final Request<Announcement> request) {
-		return this.findById(request);
+		return this.service.findById(request);
 	}
 
 	@Override
+	@Transactional
 	public void unbind(final Request<Announcement> request, final Announcement entity, final Model model) {
 		request.unbind(entity, model, "title", "moment", "body", "critical", "link");
 	}

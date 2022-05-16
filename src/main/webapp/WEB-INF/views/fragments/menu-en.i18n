@@ -52,7 +52,7 @@ master.menu.user-account.become-inventor = Become an inventor
 ### CHIRP ####
 master.menu.chirp = Chirps
 master.menu.chirp.any.list = View chirps
-master.menu.chirp.any.create = Create chirp
+master.menu.chirp.any.create = Create
 
 ### ANNOUNCEMENT ###
 master.menu.announcements = Announcement
@@ -66,11 +66,13 @@ master.menu.accounts.any.list = View users
 master.menu.components = Components
 master.menu.components.any.list = View components
 master.menu.components.inventor.list = View mine
+master.menu.components.inventor.create = Create
 
 ### TOOLS ###
 master.menu.tools = Tools
 master.menu.tools.any.list = View tools
 master.menu.tools.inventor.list = View mine
+master.menu.tools.inventor.create = Create
 
 ### TOOLKITS ###
 master.menu.toolkits = Toolkits

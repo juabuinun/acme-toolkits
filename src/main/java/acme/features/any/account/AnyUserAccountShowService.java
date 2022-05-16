@@ -1,6 +1,8 @@
 
 package acme.features.any.account;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -17,16 +19,15 @@ import acme.framework.services.AbstractShowService;
 import acme.repositories.UserAccountRepository;
 import acme.roles.Inventor;
 import acme.roles.Patron;
-import acme.services.AbstractAcmeAuthoriseAllService;
 
 @Service
-public class AnyUserAccountShowService extends AbstractAcmeAuthoriseAllService<Any, UserAccount, UserAccountRepository> implements AbstractShowService<Any, UserAccount> {
+public class AnyUserAccountShowService implements AbstractShowService<Any, UserAccount> {
 
 	@Autowired
-	protected AnyUserAccountShowService(final UserAccountRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
+	protected UserAccountRepository	repo;
+	@Autowired
+	protected ModelMapper			mapper;
 
-	}
 
 	@Override
 	public boolean authorise(final Request<UserAccount> request) {
@@ -36,15 +37,12 @@ public class AnyUserAccountShowService extends AbstractAcmeAuthoriseAllService<A
 	@Override
 	@Transactional
 	public UserAccount findOne(final Request<UserAccount> request) {
-//		UserAccount res = null;
-//		final Optional<UserAccount> user = this.repo.findById(request.getModel().getInteger("id"));
-//		if (user.isPresent()) {
-//			res = user.get();
-//			//force initialize lazy
-//			res.getRoles().size();
-//		}
-//		return res;
-		return this.findById(request);
+		final Optional<UserAccount> opt = this.repo.findById(request.getModel().getInteger("id"));
+		if(opt.isPresent()) {
+			return opt.get();
+		}else {
+			return null;
+		}
 	}
 
 	@Override

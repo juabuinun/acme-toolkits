@@ -1,8 +1,11 @@
-key,itemType,name,code,technology,description,price,key:owner,info
-item-01,TOOL,Vacuum pump,AAA-000,Hydraulic,Very loud and not powerful,EUR 80,inventor-01,https://google.com
-item-02,TOOL,Car jack,AAA-000-A,Hydraulic,Works,EUR 44.22,inventor-02,null
-item-03,TOOL,Torque wrench,AAB-000-B,Forged,Can break most nuts,EUR 38.01,inventor-03,null
-item-04,COMPONENT,Bolt,BBB-000,Aerospace grade,Industry standard,EUR 1.2,inventor-04,null
-item-05,COMPONENT,Nut,BBB-000-B,Forged,Very strong,EUR 0.5,inventor-05,null
-item-06,COMPONENT,Pin,BBB-000-C,Self-aligning,Good for trucks,EUR 5,inventor-03,https://atlastruckco.com/tech
-item-07,COMPONENT,Hose,CCC-000,Rubber,Good enough,EUR 2,inventor-01,null
+key,itemType,name,code,technology,description,price,key:owner,info,published
+item-01,TOOL,Vacuum pump,AAA-000,Hydraulic,Very loud and not powerful,EUR 80,inventor-01,https://google.com,true
+item-02,TOOL,Car jack,AAA-000-A,Hydraulic,Works,EUR 44.22,inventor-02,null,true
+item-03,TOOL,Torque wrench,AAB-000-B,Forged,Can break most nuts,EUR 38.01,inventor-03,null,true
+item-04,COMPONENT,Bolt,BBB-000,Aerospace grade,Industry standard,EUR 1.2,inventor-04,null,true
+item-05,COMPONENT,Nut,BBB-000-B,Forged,Very strong,EUR 0.5,inventor-05,null,true
+item-06,COMPONENT,Pin,BBB-000-C,Self-aligning,Good for trucks,EUR 5,inventor-03,https://atlastruckco.com/tech,true
+item-07,COMPONENT,Hose,CCC-000,Rubber,Good enough,EUR 2,inventor-01,null,true
+item-08,COMPONENT,Rubber,TTT-616,Band,Elastic :0,EUR 0.1,inventor-01,null,false
+item-09,TOOL,Piece,YKW-555,You know,Jams,EUR 2000,inventor-01,null,false
+item-10,COMPONENT,Cord,CAC-055,2m,Useless,EUR 4,inventor-01,null,false

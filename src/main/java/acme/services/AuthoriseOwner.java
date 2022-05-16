@@ -4,22 +4,22 @@ package acme.services;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.framework.controllers.Request;
-import acme.framework.entities.AbstractEntity;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.UserRole;
 import acme.framework.services.AuthoriseMethod;
 import acme.repositories.GenericJpaRepository;
 
-public abstract class AbstractAcmeServiceAuthoriseOwnerService<U extends UserRole, S extends GenericJpaRepository<U>,E extends AbstractEntity, R extends GenericJpaRepository<E>> extends AbstractCrudServiceImpl<E, R> implements AuthoriseMethod<U, E> {
+public abstract class AuthoriseOwner<U extends UserRole, S extends GenericJpaRepository<U>,E> implements AuthoriseMethod<U, E> {
 
 	protected String ownerFieldName;
-	
+
 	protected S roleRepo;
 
-	protected AbstractAcmeServiceAuthoriseOwnerService(final S roleRepo, final R repo, final ModelMapper mapper, final String ownerFieldName) {
-		super(repo, mapper);
+	@Autowired
+	protected AuthoriseOwner(final S roleRepo, final ModelMapper mapper, final String ownerFieldName) {
 		this.ownerFieldName = ownerFieldName;
 		this.roleRepo = roleRepo;
 	}
@@ -34,7 +34,6 @@ public abstract class AbstractAcmeServiceAuthoriseOwnerService<U extends UserRol
 			if(ownerId == null || principalId != ownerId) {
 				res = false;
 			}
-
 		} catch (final Exception e) {
 			res = false;
 		}

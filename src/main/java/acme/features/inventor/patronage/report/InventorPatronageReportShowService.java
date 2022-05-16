@@ -1,23 +1,21 @@
 package acme.features.inventor.patronage.report;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.patronage.report.PatronageReport;
+import acme.entities.patronagereport.PatronageReport;
+import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
-import acme.repositories.PatronageReportRepository;
 import acme.roles.Inventor;
-import acme.services.patronage.report.AbstractPatronageReportUnbindService;
+import acme.services.AuthoriseAll;
+import acme.services.patronagereport.PatronageReportService;
 
 @Service
-public class InventorPatronageReportShowService extends AbstractPatronageReportUnbindService<Inventor> implements AbstractShowService<Inventor,PatronageReport>{
+public class InventorPatronageReportShowService extends AuthoriseAll<Inventor,PatronageReport> implements AbstractShowService<Inventor,PatronageReport>{
 
 	@Autowired
-	protected InventorPatronageReportShowService(final PatronageReportRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
-	}
+	protected PatronageReportService service;
 
 	@Override
 	public boolean authorise(final Request<PatronageReport> request) {
@@ -26,7 +24,12 @@ public class InventorPatronageReportShowService extends AbstractPatronageReportU
 
 	@Override
 	public PatronageReport findOne(final Request<PatronageReport> request) {
-		return this.findById(request);
+		return this.service.findById(request);
+	}
+
+	@Override
+	public void unbind(final Request<PatronageReport> request, final PatronageReport entity, final Model model) {
+		this.service.unbind(request, entity, model);
 	}
 
 }

@@ -3,13 +3,13 @@
 <%@taglib prefix="acme" uri="urn:jsptagdir:/WEB-INF/tags"%>
 
 <acme:list>
-	<acme:list-column code="inventor.component.list.code" path="code"
+	<acme:list-column code="inventor.item.list.code" path="code"
 		width="20%" />
-	<acme:list-column code="inventor.component.list.name" path="name"
+	<acme:list-column code="inventor.item.list.name" path="name"
 		width="20%" />
-	<acme:list-column code="inventor.component.list.tech" path="technology"
+	<acme:list-column code="inventor.item.list.tech" path="technology"
 		width="20%" />
-	<acme:list-column code="inventor.component.list.price" path="price"
+	<acme:list-column code="inventor.item.list.price" path="price"
 		width="20%" />
 </acme:list>
 

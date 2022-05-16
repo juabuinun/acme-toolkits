@@ -17,24 +17,20 @@ import acme.framework.entities.UserAccount;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractListService;
 import acme.repositories.UserAccountRepository;
-import acme.services.AbstractAcmeAuthoriseAllService;
 
 @Service
-public class AnyUserAccountListService extends AbstractAcmeAuthoriseAllService<Any, UserAccount, UserAccountRepository> implements AbstractListService<Any, UserAccount> {
+public class AnyUserAccountListService implements AbstractListService<Any, UserAccount> {
 
 	@Autowired
-	protected AnyUserAccountListService(final UserAccountRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
-	}
+	protected UserAccountRepository repo;
+	@Autowired
+	protected ModelMapper mapper;
 	
 
 	@Override
 	@Transactional
 	public Collection<UserAccount> findMany(final Request<UserAccount> request) {
-//		final Collection<UserAccount> res= this.repo.findAllEnabled();
-//		res.forEach(u -> u.getRoles().size());
-//		return res;
-		return this.findBySpecification(Specifications.userAccountIsEnabledAndNotSystem());
+		return this.repo.findAll(Specifications.userAccountIsEnabledAndNotSystem());
 	}
 
 	@Override
@@ -46,6 +42,11 @@ public class AnyUserAccountListService extends AbstractAcmeAuthoriseAllService<A
 		final UserAccountDto dto = this.mapper.map(entity, UserAccountDto.class);
 
 		request.unbind(dto, model, "id" ,"username", "identity.fullName", "authorityString");
+	}
+
+	@Override
+	public boolean authorise(final Request<UserAccount> request) {
+		return true;
 	}
 
 }

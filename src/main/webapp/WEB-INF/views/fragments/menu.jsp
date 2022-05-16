@@ -49,6 +49,8 @@
 				<acme:menu-separator />
 				<acme:menu-suboption code="master.menu.components.inventor.list"
 					action="/inventor/item/list-mine-component" />
+				<acme:menu-suboption code="master.menu.components.inventor.create"
+					action="/inventor/item/create-component" />
 			</security:authorize>
 		</acme:menu-option>
 		<!-- TOOLS -->
@@ -59,6 +61,8 @@
 				<acme:menu-separator />
 				<acme:menu-suboption code="master.menu.tools.inventor.list"
 					action="/inventor/item/list-mine-tool" />
+				<acme:menu-suboption code="master.menu.tools.inventor.create"
+					action="/inventor/item/create-tool" />
 			</security:authorize>
 		</acme:menu-option>
 		<!-- TOOLKITS -->

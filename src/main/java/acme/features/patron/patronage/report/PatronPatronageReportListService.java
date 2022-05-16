@@ -2,48 +2,45 @@ package acme.features.patron.patronage.report;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import acme.components.Specifications;
 import acme.entities.patronage.Patronage;
-import acme.entities.patronage.report.PatronageReport;
+import acme.entities.patronagereport.PatronageReport;
+import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractListService;
-import acme.repositories.PatronageReportRepository;
-import acme.repositories.PatronageRepository;
 import acme.roles.Patron;
-import acme.services.patronage.report.AbstractPatronageReportListUnbindService;
+import acme.services.AuthoriseAll;
+import acme.services.patronage.PatronageService;
+import acme.services.patronagereport.PatronageReportService;
 
 @Service
-public class PatronPatronageReportListService extends AbstractPatronageReportListUnbindService<Patron> implements AbstractListService<Patron,PatronageReport>{
+public class PatronPatronageReportListService extends AuthoriseAll<Patron,PatronageReport> implements AbstractListService<Patron,PatronageReport>{
 
 	@Autowired
-	protected PatronPatronageReportListService(final PatronageReportRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
-	}
-
-	@Autowired
-	protected PatronageRepository patronageRepo;
+	protected PatronageReportService service;
 	
+	@Autowired
+	protected PatronageService patronageService;
+
 	@Override
-	public boolean authorise(final Request<PatronageReport> request) {
-		assert request != null;
-		
-		return true;
+	@Transactional
+	public Collection<PatronageReport> findMany(final Request<PatronageReport> request) {
+		final Patronage patronage = this.patronageService.findById(request.getModel().getInteger("patronageId"));
+		if(patronage != null) {
+			return patronage.getReports();
+		}else {
+			return new ArrayList<>();
+		}
 	}
 
 	@Override
-	public Collection<PatronageReport> findMany(final Request<PatronageReport> request) {
-		Collection<PatronageReport> res = new ArrayList<>();
-		final Optional<Patronage> patronage = this.patronageRepo.findById(request.getModel().getInteger("patronageId"));
-		if(patronage.isPresent()) {
-			res = this.findBySpecification(Specifications.patronageReportByPatronage(patronage.get()));
-		}
-		return res;
+	@Transactional
+	public void unbind(final Request<PatronageReport> request, final PatronageReport entity, final Model model) {
+		this.service.unbindListingRecord(request, entity, model);
 	}
 
 }

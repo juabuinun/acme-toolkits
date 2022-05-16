@@ -13,7 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import acme.entities.item.Item;
 import acme.entities.patronage.Patronage;
-import acme.entities.patronage.report.PatronageReport;
+import acme.entities.patronagereport.PatronageReport;
 import acme.entities.toolkit.Toolkit;
 import acme.entities.toolkit.item.ToolkitItem;
 import acme.framework.entities.Principal;
@@ -45,7 +45,7 @@ public class Specifications {
 
 	// ######################## ITEMS
 
-	public static Specification<Item> itemIsOfType(final Item.Type itemType) {
+	public static Specification<Item> itemIsOfType(final Item.Type itemType, final Boolean published) {
 		return new Specification<Item>() {
 
 			private static final long serialVersionUID = 2L;
@@ -53,7 +53,7 @@ public class Specifications {
 
 			@Override
 			public Predicate toPredicate(final Root<Item> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
-				return cb.equal(root.get("itemType"), cb.literal(itemType));
+				return cb.and(cb.equal(root.get("itemType"), cb.literal(itemType)),cb.equal(root.get("published"), published != null ? cb.literal(published): cb.and()));
 			}
 
 		};
@@ -75,7 +75,7 @@ public class Specifications {
 		};
 	}
 
-	public static Specification<Item> itemIsOfTypeByToolkit(final Item.Type itemType, final Toolkit kit) {
+	public static Specification<Item> itemIsOfTypeByToolkit(final Item.Type itemType, final Toolkit kit, final Boolean published) {
 		return new Specification<Item>() {
 
 			private static final long serialVersionUID = 33L;
@@ -84,27 +84,25 @@ public class Specifications {
 			@Override
 			public Predicate toPredicate(final Root<Item> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
 				final Join<Item, ToolkitItem> joinToolkitItem = root.join("toolkits", JoinType.LEFT);
-				return cb.and(cb.equal(root.get("itemType"), cb.literal(itemType)), cb.equal(joinToolkitItem.get("toolkit"), kit));
+				return cb.and(cb.equal(root.get("itemType"), cb.literal(itemType)), cb.equal(joinToolkitItem.get("toolkit"), kit),cb.equal(root.get("published"), published != null ? cb.literal(published): cb.and()));
 			}
 
 		};
 	}
 
 	// ######################## TOOLKITS
-
-	public static Specification<Toolkit> toolkitHasItem(final Item item) {
+	
+	public static Specification<Toolkit> toolkitHasItem(final Item item, final Boolean published) {
 		return new Specification<Toolkit>() {
 
 			private static final long serialVersionUID = 4L;
-
 
 			@Override
 			public Predicate toPredicate(final Root<Toolkit> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
 				final Join<Toolkit, ToolkitItem> joinToolkitItem = root.join("items", JoinType.LEFT);
 				final Join<ToolkitItem, Item> joinItem = joinToolkitItem.join("item", JoinType.LEFT);
-				return cb.literal(item).in(joinItem);
+				return cb.and(cb.literal(item).in(joinItem),cb.equal(root.get("published"), published != null ? cb.literal(published): cb.and()));
 			}
-
 		};
 	}
 

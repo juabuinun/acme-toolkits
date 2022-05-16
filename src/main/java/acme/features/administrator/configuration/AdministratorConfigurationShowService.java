@@ -9,13 +9,13 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Administrator;
 import acme.framework.services.AbstractShowService;
-import acme.repositories.ConfigurationRepository;
+import acme.services.config.AcmeConfigurationService;
 
 @Service
 public class AdministratorConfigurationShowService implements AbstractShowService<Administrator, Configuration> {
 
 	@Autowired
-	protected ConfigurationRepository repo;
+	protected AcmeConfigurationService service;
 
 
 	@Override
@@ -25,7 +25,7 @@ public class AdministratorConfigurationShowService implements AbstractShowServic
 
 	@Override
 	public Configuration findOne(final Request<Configuration> request) {
-		return this.repo.findFirstByOrderByIdAsc();
+		return this.service.findOne();
 	}
 
 	@Override

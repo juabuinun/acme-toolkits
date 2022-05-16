@@ -1,5 +1,6 @@
 package acme.entities.configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -21,6 +22,14 @@ public class Configuration extends AbstractEntity{
 	// Serialisation identifier -----------------------------------------------
 
 		protected static final long	serialVersionUID	= 1L;
+		
+		public Configuration(){
+			this.defaultCurrency = "";
+			this.acceptedCurrencies = "";
+			this.strongSpamThreshold = 0;
+			this.weakSpamThreshold = 0;
+			this.spamWords = new ArrayList<>();
+		}
 
 		// Attributes -------------------------------------------------------------
 		@NotBlank

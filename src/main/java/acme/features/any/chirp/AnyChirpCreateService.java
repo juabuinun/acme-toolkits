@@ -3,27 +3,22 @@ package acme.features.any.chirp;
 
 import java.time.LocalDateTime;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.components.spam.SpamFilter;
 import acme.entities.chirp.Chirp;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractCreateService;
-import acme.repositories.ChirpRepository;
-import acme.services.AbstractCrudServiceWithSpamFilter;
+import acme.services.chirp.ChirpService;
 
 @Service
-public class AnyChirpCreateService extends AbstractCrudServiceWithSpamFilter<Chirp, ChirpRepository> implements AbstractCreateService<Any, Chirp> {
+public class AnyChirpCreateService implements AbstractCreateService<Any, Chirp> {
 
 	@Autowired
-	protected AnyChirpCreateService(final ChirpRepository repo, final ModelMapper mapper, final SpamFilter spamFilter) {
-		super(repo, mapper, spamFilter);
-	}
+	protected ChirpService service;
 
 	@Override
 	public boolean authorise(final Request<Chirp> request) {
@@ -50,12 +45,12 @@ public class AnyChirpCreateService extends AbstractCrudServiceWithSpamFilter<Chi
 
 	@Override
 	public void validate(final Request<Chirp> request, final Chirp entity, final Errors errors) {
-		this.spamFilter.filter(request, entity, errors);
+		this.service.validate(request, entity, errors);
 	}
 
 	@Override
 	public void create(final Request<Chirp> request, final Chirp entity) {
-		this.save(entity);
+		this.service.save(entity);
 	}
 
 }

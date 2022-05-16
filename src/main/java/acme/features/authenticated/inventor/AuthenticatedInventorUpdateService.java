@@ -24,6 +24,7 @@ import acme.framework.entities.Principal;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractUpdateService;
+import acme.repositories.InventorRepository;
 import acme.roles.Inventor;
 
 @Service
@@ -32,7 +33,7 @@ public class AuthenticatedInventorUpdateService implements AbstractUpdateService
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedInventorRepository repository;
+	protected InventorRepository repository;
 
 	// AbstractUpdateService<Authenticated, Inventor> interface ---------------
 

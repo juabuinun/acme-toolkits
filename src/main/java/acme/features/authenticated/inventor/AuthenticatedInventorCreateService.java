@@ -25,6 +25,7 @@ import acme.framework.entities.UserAccount;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractCreateService;
+import acme.repositories.InventorRepository;
 import acme.roles.Inventor;
 
 @Service
@@ -33,7 +34,7 @@ public class AuthenticatedInventorCreateService implements AbstractCreateService
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedInventorRepository repository;
+	protected InventorRepository repository;
 
 	// AbstractCreateService<Authenticated, Provider> interface ---------------
 

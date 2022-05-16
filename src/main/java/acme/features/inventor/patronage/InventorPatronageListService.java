@@ -3,35 +3,35 @@ package acme.features.inventor.patronage;
 
 import java.util.Collection;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import acme.components.Specifications;
 import acme.entities.patronage.Patronage;
+import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractListService;
-import acme.repositories.PatronageRepository;
 import acme.roles.Inventor;
-import acme.services.patronage.AbstractPatronageListUnbindService;
+import acme.services.AuthoriseAll;
+import acme.services.patronage.PatronageService;
 
 @Service
-public class InventorPatronageListService extends AbstractPatronageListUnbindService<Inventor> implements AbstractListService<Inventor, Patronage> {
+public class InventorPatronageListService extends AuthoriseAll<Inventor,Patronage> implements AbstractListService<Inventor, Patronage> {
 
 	@Autowired
-	protected InventorPatronageListService(final PatronageRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
-	}
+	protected PatronageService service;
 
 	@Override
-	public boolean authorise(final Request<Patronage> request) {
-		assert request != null;
-		return true;
-	}
-
-	@Override
+	@Transactional
 	public Collection<Patronage> findMany(final Request<Patronage> request) {
-		return this.findBySpecification(Specifications.patronagePrincipalIsSponsee());
+		return this.service.findBySpecification(Specifications.patronagePrincipalIsSponsee());
+	}
+
+	@Override
+	@Transactional
+	public void unbind(final Request<Patronage> request, final Patronage entity, final Model model) {
+		this.service.unbindListingRecord(request, entity, model);
 	}
 
 }

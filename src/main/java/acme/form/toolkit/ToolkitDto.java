@@ -23,4 +23,5 @@ public class ToolkitDto implements Serializable {
 	protected String			notes;
 	protected String			info;
 	protected Double			price;
+	protected boolean			published;
 }

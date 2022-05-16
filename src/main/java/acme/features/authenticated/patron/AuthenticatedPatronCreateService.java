@@ -25,6 +25,7 @@ import acme.framework.entities.UserAccount;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractCreateService;
+import acme.repositories.PatronRepository;
 import acme.roles.Patron;
 
 @Service
@@ -33,7 +34,7 @@ public class AuthenticatedPatronCreateService implements AbstractCreateService<A
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedPatronRepository repository;
+	protected PatronRepository repository;
 
 	// AbstractCreateService<Authenticated, Patron> ---------------------------
 

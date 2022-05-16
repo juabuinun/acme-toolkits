@@ -51,7 +51,7 @@ master.menu.user-account.become-consumer = Hazte inventor
 ### CHIRP ####
 master.menu.chirp = Chirridos
 master.menu.chirp.any.list = Ver chirridos
-master.menu.chirp.any.create = Crear chirrido
+master.menu.chirp.any.create = Crear
 
 ### ANNOUNCEMENT ###
 master.menu.announcements = Anuncios
@@ -65,11 +65,13 @@ master.menu.accounts.any.list = Ver usuarios
 master.menu.components = Componentes
 master.menu.components.any.list = Ver componentes
 master.menu.components.inventor.list = Mis componentes
+master.menu.tools.inventor.create = Crear
 
 ### TOOLS ###
 master.menu.tools = Herramientas
 master.menu.tools.any.list = Ver Herramientas
 master.menu.tools.inventor.list = Mis herramientas
+master.menu.tools.inventor.create = Crear
 
 ### TOOLKITS ###
 master.menu.toolkits = Kits
