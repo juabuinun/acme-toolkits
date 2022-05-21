@@ -1,7 +1,6 @@
 
 package acme.features.inventor.toolkit;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import acme.components.util.BindHelper;
 import acme.entities.item.Item.Type;
 import acme.entities.toolkit.Toolkit;
-import acme.entities.toolkititem.ToolkitItem;
 import acme.form.toolkit.DetailToolkitDto;
 import acme.form.toolkit.SaveToolkitDto;
 import acme.form.toolkititem.ToolkitItemDto;
@@ -31,8 +29,6 @@ import acme.services.toolkit.ToolkitService;
 @Transactional
 public class InventorToolkitUpdateService extends AuthoriseOwner<Inventor, Toolkit> implements AbstractUpdateService<Inventor, Toolkit> {
 
-	List<ToolkitItem> items = new ArrayList<>();
-	
 	@Autowired
 	protected ToolkitService			service;
 
@@ -56,21 +52,25 @@ public class InventorToolkitUpdateService extends AuthoriseOwner<Inventor, Toolk
 
 	@Override
 	public void bind(final Request<Toolkit> request, final Toolkit entity, final Errors errors) {
-		request.bind(entity, errors,BindHelper.getAllFieldNames(SaveToolkitDto.class));
-		final List<ToolkitItem> toolkitItems = new ArrayList<>();
+		request.bind(entity, errors, BindHelper.getAllFieldNames(SaveToolkitDto.class));
+		entity.getItems().clear();
 		try {
-			this.items.addAll(this.service.jsonArrayToToolkitItemList(entity,request.getModel().getString("binded_components_input"),"component_"));
-			this.items.addAll(this.service.jsonArrayToToolkitItemList(entity,request.getModel().getString("binded_tools_input"),"tool_"));
-		}catch(final Exception e) {
-			
+			this.service.addToolkitItems(entity, request.getModel().getString("binded_components_input"), "component_");
+
+		} catch (final Exception e) {
+			errors.state(request, false, "*", "errors.toolkit.components");
 		}
-		entity.setItems(toolkitItems);
+		try {
+			this.service.addToolkitItems(entity, request.getModel().getString("binded_tools_input"), "tool_");
+		} catch (final Exception e) {
+			errors.state(request, false, "*", "errors.toolkit.tools");
+		}
 	}
 
 	@Override
 	public void unbind(final Request<Toolkit> request, final Toolkit entity, final Model model) {
 		final DetailToolkitDto dto = this.mapper.map(entity, DetailToolkitDto.class);
-		
+
 		dto.setAvailableComponents(this.service.findAvaliableItems(entity, Type.COMPONENT));
 		dto.setBindedComponents(this.mapper.map(entity.getItems().stream().filter(i -> i.getItem().getItemType().equals(Type.COMPONENT)).collect(Collectors.toList()), new TypeToken<List<ToolkitItemDto>>() {
 		}.getType()));
@@ -92,11 +92,12 @@ public class InventorToolkitUpdateService extends AuthoriseOwner<Inventor, Toolk
 	@Override
 	public void validate(final Request<Toolkit> request, final Toolkit entity, final Errors errors) {
 		this.configService.filter(request, entity, errors);
+		
 	}
 
 	@Override
 	public void update(final Request<Toolkit> request, final Toolkit entity) {
-		entity.setItems(this.items);
+		
 		this.service.save(entity);
 	}
 

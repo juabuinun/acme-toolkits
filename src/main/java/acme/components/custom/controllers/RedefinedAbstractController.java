@@ -561,6 +561,7 @@ public abstract class RedefinedAbstractController<R extends UserRole, E> impleme
 		return result;
 	}
 
+	
 
 	protected ModelAndView buildPanicView(final Request<E> request, final Response<E> response, final Throwable oops) {
 		ModelAndView result;

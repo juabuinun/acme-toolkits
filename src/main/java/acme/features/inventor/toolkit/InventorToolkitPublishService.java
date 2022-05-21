@@ -19,17 +19,20 @@ import acme.form.toolkititem.ToolkitItemDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
-import acme.framework.helpers.PrincipalHelper;
-import acme.framework.services.AbstractCreateService;
-import acme.repositories.InventorRepository;
+import acme.framework.services.AbstractUpdateService;
 import acme.roles.Inventor;
-import acme.services.AuthoriseAll;
+import acme.services.AuthoriseOwner;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.toolkit.ToolkitService;
 
 @Service
 @Transactional
-public class InventorToolkitCreateService extends AuthoriseAll<Inventor, Toolkit> implements AbstractCreateService<Inventor, Toolkit> {
+public class InventorToolkitPublishService extends AuthoriseOwner<Inventor, Toolkit> implements AbstractUpdateService<Inventor, Toolkit> {
+
+	protected InventorToolkitPublishService() {
+		super("owner");
+	}
+
 
 	@Autowired
 	protected ToolkitService			service;
@@ -40,8 +43,12 @@ public class InventorToolkitCreateService extends AuthoriseAll<Inventor, Toolkit
 	@Autowired
 	protected AcmeConfigurationService	configService;
 
-	@Autowired
-	protected InventorRepository inventorRepo;
+
+	@Override
+	public boolean authorise(final Request<Toolkit> request) {
+		this.entity = this.service.findById(request);
+		return super.authorise(request) && this.entity != null && !this.entity.isPublished();
+	}
 
 	@Override
 	public void bind(final Request<Toolkit> request, final Toolkit entity, final Errors errors) {
@@ -66,15 +73,13 @@ public class InventorToolkitCreateService extends AuthoriseAll<Inventor, Toolkit
 	}
 
 	@Override
-	public Toolkit instantiate(final Request<Toolkit> request) {
-		return new Toolkit();
+	public Toolkit findOne(final Request<Toolkit> request) {
+		return this.entity;
 	}
 
 	@Override
 	public void validate(final Request<Toolkit> request, final Toolkit entity, final Errors errors) {
 		this.configService.filter(request, entity, errors);
-		
-
 		try {
 			this.service.addToolkitItems(entity, request.getModel().getString("binded_components_input"), "component_");
 
@@ -89,9 +94,8 @@ public class InventorToolkitCreateService extends AuthoriseAll<Inventor, Toolkit
 	}
 
 	@Override
-	public void create(final Request<Toolkit> request, final Toolkit entity) {
-		entity.setOwner(this.inventorRepo.findOneInventorByUserAccountId(PrincipalHelper.get().getAccountId()));
+	public void update(final Request<Toolkit> request, final Toolkit entity) {
+		entity.setPublished(true);
 		this.service.save(entity);
 	}
-
 }

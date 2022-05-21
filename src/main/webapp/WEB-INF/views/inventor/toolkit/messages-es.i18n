@@ -31,3 +31,8 @@ inventor.toolkit.item.tech = Tecnologia
 inventor.toolkit.item.price = Precio
 
 inventor.toolkit.item.quantity = Cntd.
+
+inventor.toolkit.update = Actualizar
+inventor.toolkit.create = Crear
+inventor.toolkit.delete = Borrar
+inventor.toolkit.publish = Publicar

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -18,8 +19,10 @@ import acme.entities.item.Item;
 import acme.entities.item.Item.Type;
 import acme.entities.toolkit.Toolkit;
 import acme.entities.toolkititem.ToolkitItem;
+import acme.form.toolkititem.BasicToolkitItemDto;
 import acme.form.toolkititem.ToolkitItemDto;
 import acme.framework.controllers.Request;
+import acme.repositories.ToolkitItemRepository;
 import acme.repositories.ToolkitRepository;
 import acme.services.AbstractCrudServiceImpl;
 import acme.services.item.ItemService;
@@ -31,10 +34,13 @@ public class ToolkitService extends AbstractCrudServiceImpl<Toolkit, ToolkitRepo
 	//	private static final Logger	logger	= LoggerFactory.getLogger(ToolkitService.class);
 
 	@Autowired
-	protected ItemService	itemService;
+	protected ItemService			itemService;
 
 	@Autowired
-	protected ModelMapper	mapper;
+	protected ModelMapper			mapper;
+
+	@Autowired
+	protected ToolkitItemRepository	toolkitItemRepo;
 
 
 	@Autowired
@@ -60,32 +66,34 @@ public class ToolkitService extends AbstractCrudServiceImpl<Toolkit, ToolkitRepo
 	}
 
 	public List<ToolkitItemDto> findAvaliableItems(final Toolkit entity, final Type itemType) {
-		final List<Item> avaliableComponents = this.itemService.findBySpecification(Specifications.itemIsOfType(itemType, true)).stream()
-			.filter(i -> entity.getItems().stream().map(ToolkitItem::getItem).mapToInt(Item::getId).noneMatch(j -> j == i.getId())).collect(Collectors.toList());
+		final List<Item> avaliableComponents = this.itemService.findBySpecification(Specifications.itemIsOfType(itemType, true)).stream().filter(i -> entity.getItems().stream().map(ToolkitItem::getItem).mapToInt(Item::getId).noneMatch(j -> j == i.getId()))
+			.collect(Collectors.toList());
 		return this.mapper.map(avaliableComponents.stream().map(ToolkitItem::new).collect(Collectors.toList()), new TypeToken<List<ToolkitItemDto>>() {
 		}.getType());
 	}
 
-	public List<ToolkitItem> jsonArrayToToolkitItemList(final Toolkit toolkit, final String jsonArrayStr, final String prefix) {
-		ArrayList<ToolkitItem> res = new ArrayList<>();
-		try {
-			final JSONArray jsonArr = new JSONArray(jsonArrayStr);
-			for (int i = 0; i < jsonArr.length(); i++) {
-				final JSONObject jsonObj = jsonArr.getJSONObject(i);
-				final ToolkitItem toolkitItem = new ToolkitItem();
-				toolkitItem.setQuantity(jsonObj.getInt("quantity"));
-				final String idStr = jsonObj.getString("id").replace(prefix, "");
-				final Item item = this.itemService.findById(Integer.valueOf(idStr));
-				if(item != null) {
-					toolkitItem.setToolkit(toolkit);
-					toolkitItem.setItem(item);
-					res.add(toolkitItem);
-				}
-			}
-		} catch (final Exception e) {
-			res = null;
+	public void addToolkitItems(final Toolkit toolkit, final String jsonArrayStr, final String prefix) throws JSONException {
+		final ArrayList<BasicToolkitItemDto> toolkitItems = new ArrayList<>();
+
+		final JSONArray jsonComponentArray = new JSONArray(jsonArrayStr);
+		for (int i = 0; i < jsonComponentArray.length(); i++) {
+			final JSONObject jsonObj = jsonComponentArray.getJSONObject(i);
+			final BasicToolkitItemDto toolkitItem = new BasicToolkitItemDto();
+			toolkitItem.setQuantity(jsonObj.getInt("quantity"));
+			toolkitItem.setId(Integer.valueOf(jsonObj.getString("id").replace(prefix, "")));
+			toolkitItems.add(toolkitItem);
 		}
-		return res;
+
+		
+		for (final BasicToolkitItemDto toolkitItem : toolkitItems) {
+			final ToolkitItem item  = new ToolkitItem();
+			item.setQuantity(toolkitItem.getQuantity());
+			item.setItem(this.itemService.findById(toolkitItem.getId()));
+			item.setToolkit(toolkit);
+
+			toolkit.getItems().add(item);
+		}
+
 	}
 
 }

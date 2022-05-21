@@ -13,7 +13,6 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.controllers.Response;
-import acme.framework.helpers.PrincipalHelper;
 import acme.framework.services.AbstractDeleteService;
 import acme.repositories.InventorRepository;
 import acme.repositories.PatronRepository;
@@ -55,9 +54,9 @@ public class PatronPatronageDeleteService extends AuthoriseOwner<Patron, Patrona
 
 	@Override
 	public void bind(final Request<Patronage> request, final Patronage entity, final Errors errors) {
-		entity.setSponsor(this.patronRepo.findOnePatronByUserAccountId(PrincipalHelper.get().getAccountId()));
-		entity.setSponsee(this.inventorRepo.findOneInventorByUserAccountId(request.getModel().getInteger("sponseeId")));
-		request.bind(entity, errors, BindHelper.getAllFieldNames(PatronageDto.class));
+//		entity.setSponsor(this.patronRepo.findOnePatronByUserAccountId(PrincipalHelper.get().getAccountId()));
+//		entity.setSponsee(this.inventorRepo.findOneInventorByUserAccountId(request.getModel().getInteger("sponseeId")));
+//		request.bind(entity, errors, BindHelper.getAllFieldNames(PatronageDto.class));
 	}
 
 	@Override

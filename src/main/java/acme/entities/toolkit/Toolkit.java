@@ -36,14 +36,13 @@ public class Toolkit extends AbstractEntity {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6936012221192441560L;
-
+	private static final long	serialVersionUID	= -6936012221192441560L;
 
 	public Toolkit() {
 		this.items = new ArrayList<>();
+		this.published = false;
 	}
-
-
+	
 	@Column(unique = true)
 	@NotNull
 	@Pattern(regexp = "^[A-Z]{3}-[0-9]{3}(-[A-Z])?$")
@@ -68,11 +67,15 @@ public class Toolkit extends AbstractEntity {
 	@URL
 	protected String			info;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "toolkit", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "toolkit", cascade = CascadeType.ALL, orphanRemoval = true)
 	protected List<ToolkitItem>	items;
 
-	protected boolean			published = false;
+	protected boolean			published;
 
+	@SuppressWarnings("unused")
+	private void setItems(final List<ToolkitItem> items) {
+		this.items = items;
+	}
 
 	@Transient
 	public String getPrice() {

@@ -21,6 +21,10 @@ public class InventorToolkitController extends AcmeAbstractController<Inventor, 
 	protected InventorToolkitUpdateService updateService;
 	@Autowired
 	protected InventorToolkitCreateService createService;
+	@Autowired
+	protected InventorToolkitDeleteService deleteService;
+	@Autowired
+	protected InventorToolkitUpdateService publishService;
 
 	@PostConstruct
 	protected void initialise() {
@@ -28,6 +32,8 @@ public class InventorToolkitController extends AcmeAbstractController<Inventor, 
 		super.addCommand("show", this.showService);
 		super.addCommand("update", this.updateService);
 		super.addCommand("create", this.createService);
+		super.addCommand("delete", this.deleteService);
+		super.addCommand("publish", "update", this.publishService);
 	}
 
 }

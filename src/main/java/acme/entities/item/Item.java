@@ -1,9 +1,9 @@
 
 package acme.entities.item;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,6 +31,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Item extends AbstractEntity {
 
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -5776904326587526514L;
+	
 	public enum Type {
 
 		COMPONENT("item.component"), TOOL("item.tool");
@@ -56,12 +61,11 @@ public class Item extends AbstractEntity {
 			return null;
 		}
 	}
-
-
-	/**
-	 * 
-	 */
-	private static final long	serialVersionUID	= -5776904326587526514L;
+	
+	public Item() {
+		this.toolkits = new ArrayList<>();
+		this.published = false;
+	}
 
 	@Length(min = 1, max = 100)
 	@NotBlank
@@ -95,8 +99,8 @@ public class Item extends AbstractEntity {
 	@URL
 	protected String			info;
 
-	protected boolean			published = false;
+	protected boolean			published;
 
-	@OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
 	protected List<ToolkitItem>	toolkits;
 }

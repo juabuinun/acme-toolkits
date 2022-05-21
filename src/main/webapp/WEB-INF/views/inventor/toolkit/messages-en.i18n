@@ -35,3 +35,6 @@ inventor.toolkit.item.price = Price
 inventor.toolkit.item.quantity = Qnty
 
 inventor.toolkit.update = Update
+inventor.toolkit.create = Create
+inventor.toolkit.delete = Delete
+inventor.toolkit.publish = Publish

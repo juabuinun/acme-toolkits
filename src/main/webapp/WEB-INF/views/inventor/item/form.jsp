@@ -9,7 +9,7 @@
 		readonly="true" />
 	<acme:input-textbox code="inventor.item.form.code" path="code"
 		placeholder="code.placeholder"
-		readonly="${command !='create'}"/>
+		readonly="${command !='create-component' && command != 'create-tool'}"/>
 	<acme:input-textbox code="inventor.item.form.name" path="name" />
 	<acme:input-textbox code="inventor.item.form.tech" path="technology" />
 	<acme:input-textbox code="inventor.item.form.description"
@@ -60,3 +60,4 @@
 	</jstl:choose>
 
 </acme:form>
+

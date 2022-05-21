@@ -4,6 +4,7 @@
 <%@taglib prefix="acme" uri="urn:jsptagdir:/WEB-INF/tags"%>
 
 <acme:form readonly="${command != 'create'}">
+	<acme:hidden-data path="patronageId" />
 	<acme:input-textbox code="inventor.patronage.report.sequence"
 		path="sequenceNumber" readonly="true" />
 	<acme:input-textbox code="inventor.patronage.report.date"

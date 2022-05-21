@@ -9,8 +9,7 @@
 <acme:form readonly="${draftMode == false}">
 
 	<acme:input-textbox code="inventor.toolkit.code" path="code"
-		placeholder="code.placeholder"
-		readonly="${command != 'create'}" />
+		placeholder="code.placeholder" readonly="${command != 'create'}" />
 	<acme:input-textbox code="inventor.toolkit.name" path="title" />
 	<acme:input-textbox code="inventor.toolkit.description"
 		path="description" />
@@ -55,7 +54,8 @@
 													code="inventor.toolkit.item.quantity" />:&nbsp;<input
 												id="component_${component.item.id}_qty"
 												name="component_${component.item.id}_qty" type="text"
-												class="form-control" style="width: 60px" />
+												class="form-control qty-input" style="width: 60px"
+												value="${component.quantity}">
 											</label>
 										</div>
 									</jstl:forEach>
@@ -65,7 +65,8 @@
 						<div class="col-2">
 							<div class="row">
 								<div class="col text-center m-1 ">
-									<button id="btn-bind-all-components" type="button" class="btn btn-light">
+									<button id="btn-bind-all-components" type="button"
+										class="btn btn-light">
 										<span class="fa fa-angle-double-right"></span>
 									</button>
 								</div>
@@ -88,7 +89,8 @@
 							</div>
 							<div class="row">
 								<div class="col text-center m-1 ">
-									<button id="btn-unbind-all-components" type="button" class="btn btn-light">
+									<button id="btn-unbind-all-components" type="button"
+										class="btn btn-light">
 										<span class="fa fa-angle-double-left"></span>
 									</button>
 								</div>
@@ -116,7 +118,8 @@
 													code="inventor.toolkit.item.quantity" />:&nbsp;<input
 												id="component_${component.item.id}_qty"
 												name="component_${component.item.id}_qty" type="text"
-												class="form-control" style="width: 60px" />
+												class="form-control qty-input" readonly style="width: 60px"
+												value="${component.quantity}" />
 											</label>
 										</div>
 									</jstl:forEach>
@@ -160,7 +163,8 @@
 													code="inventor.toolkit.item.quantity" />:&nbsp;<input
 												id="tool_${tool.item.id}_qty"
 												name="tool_${tool.item.id}_qty" type="text"
-												class="form-control" style="width: 60px" />
+												class="form-control qty-input" style="width: 60px"
+												value="${tool.quantity}" />
 											</label>
 										</div>
 									</jstl:forEach>
@@ -170,7 +174,8 @@
 						<div class="col-2">
 							<div class="row">
 								<div class="col text-center m-1 ">
-									<button id="btn-bind-all-tools" type="button" class="btn btn-light">
+									<button id="btn-bind-all-tools" type="button"
+										class="btn btn-light">
 										<span class="fa fa-angle-double-right"></span>
 									</button>
 								</div>
@@ -193,7 +198,8 @@
 							</div>
 							<div class="row">
 								<div class="col text-center m-1 ">
-									<button id="btn-unbind-all-tools" type="button" class="btn btn-light">
+									<button id="btn-unbind-all-tools" type="button"
+										class="btn btn-light">
 										<span class="fa fa-angle-double-left"></span>
 									</button>
 								</div>
@@ -220,7 +226,8 @@
 													code="inventor.toolkit.item.quantity" />:&nbsp;<input
 												id="tool_${tool.item.id}_qty"
 												name="tool_${tool.item.id}_qty" type="text"
-												class="form-control" style="width: 60px" />
+												class="form-control qty-input" readonly style="width: 60px"
+												value="${tool.quantity}" />
 											</label>
 										</div>
 									</jstl:forEach>
@@ -236,8 +243,14 @@
 					test="${command == 'show' || command=='publish' || command=='delete'}">
 					<acme:submit code="inventor.toolkit.update"
 						action="/inventor/toolkit/update" />
+					<acme:submit code="inventor.toolkit.publish"
+						action="/inventor/toolkit/publish" />
+					<acme:submit code="inventor.toolkit.delete"
+						action="/inventor/toolkit/delete" />
 				</jstl:when>
 				<jstl:when test="${command == 'create'}">
+					<acme:submit code="inventor.toolkit.create"
+						action="/inventor/toolkit/create" />
 				</jstl:when>
 			</jstl:choose>
 		</jstl:when>

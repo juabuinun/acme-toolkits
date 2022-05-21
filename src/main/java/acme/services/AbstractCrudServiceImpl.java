@@ -52,7 +52,7 @@ public abstract class AbstractCrudServiceImpl<E extends AbstractEntity, R extend
 	@Override
 	@Transactional
 	public E save(final E entity) {
-		return this.repo.save(entity);
+		return this.repo.saveAndFlush(entity);
 	}
 
 	@Override
