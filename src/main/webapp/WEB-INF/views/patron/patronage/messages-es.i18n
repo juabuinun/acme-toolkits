@@ -8,13 +8,21 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-inventor.patronage.code = Codigo
-inventor.patronage.creationDate = Fecha inicio
-inventor.patronage.endDate= Fecha fin
-inventor.patronage.status = Estado
-inventor.patronage.sponsee = Ver patrocinado
-inventor.patronage.reports = Ver informes
-inventor.patronage.sponsor = Ver patrocinador
-inventor.patronage.legal = Texto legal
-inventor.patronage.budget = Presupuesto
-inventor.patronage.info = Informacion
+patron.patronage.code = Codigo
+patron.patronage.creationDate = Fecha inicio
+patron.patronage.endDate= Fecha fin
+patron.patronage.status = Estado
+patron.patronage.sponsee = Ver patrocinado
+patron.patronage.reports = Ver informes
+patron.patronage.sponsor = Ver patrocinador
+patron.patronage.legal = Texto legal
+patron.patronage.budget = Presupuesto
+patron.patronage.info = Informacion
+patron.patronage.published = Publicado
+
+patron.patronage.code.placeholder = ABC-123(-A)
+
+patron.patronage.create = Crear
+patron.patronage.publish = Publicar
+patron.patronage.update = Actualizar
+patron.patronage.delete = Borrar

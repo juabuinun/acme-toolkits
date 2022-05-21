@@ -16,3 +16,5 @@ account.roles = Roles
 account.company = Compania
 account.statement = Declaracion
 account.info = Info
+
+account.patronage.create = Patrocinar

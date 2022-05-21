@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import acme.components.util.BindHelper;
 import acme.entities.patronage.Patronage;
 import acme.entities.patronagereport.PatronageReport;
+import acme.form.patronagereport.PatronageReportDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractListService;
@@ -40,7 +42,7 @@ public class PatronPatronageReportListService extends AuthoriseAll<Patron,Patron
 	@Override
 	@Transactional
 	public void unbind(final Request<PatronageReport> request, final PatronageReport entity, final Model model) {
-		this.service.unbindListingRecord(request, entity, model);
+		request.unbind(entity, model, BindHelper.getAllFieldNames(PatronageReportDto.class));
 	}
 
 }

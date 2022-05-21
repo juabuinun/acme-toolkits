@@ -1,16 +1,10 @@
 package acme.form.account;
 
-import java.io.Serializable;
-
 import lombok.Data;
 
 @Data
-public class UserAccountDto implements Serializable{
+public class UserAccountDto{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8148117901368307173L;
 	
 	public UserAccountDto() {
 		this.professionalProfile = new ProfessionalProfileDto();

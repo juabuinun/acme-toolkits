@@ -18,7 +18,7 @@ public class AnyChirpListTest extends TestHarness {
 	@ParameterizedTest
 	@CsvFileSource(resources = "/any/chirp/list-chirp.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void positiveChirpTest(final int recordIndex, final String creationDate, final String title, final String author, final String body, final String email) {
+	public void anyChirpList(final int recordIndex, final String creationDate, final String title, final String author, final String body, final String email) {
 
 		if (LocalDateTime.parse(creationDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME).plus(1,ChronoUnit.MONTHS).isAfter(LocalDateTime.now())) {
 

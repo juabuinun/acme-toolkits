@@ -11,3 +11,11 @@ inventor.item.form.tech = Tecnologia
 inventor.item.form.description = Descripcion
 inventor.item.form.price = Precio
 inventor.item.form.info = Informacion
+inventor.item.form.type = Tipo
+
+inventor.item.form.create = Crear
+inventor.item.form.update = Actualizar
+inventor.item.form.publish = Publicar
+inventor.item.form.delete = Borrar
+
+inventor.item.list.published = Publicado

@@ -1,27 +1,25 @@
 
 package acme.services;
 
-import java.util.Optional;
+import java.lang.reflect.Field;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.framework.controllers.Request;
+import acme.framework.entities.UserAccount;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.UserRole;
 import acme.framework.services.AuthoriseMethod;
-import acme.repositories.GenericJpaRepository;
 
-public abstract class AuthoriseOwner<U extends UserRole, S extends GenericJpaRepository<U>,E> implements AuthoriseMethod<U, E> {
+public abstract class AuthoriseOwner<U extends UserRole,E> implements AuthoriseMethod<U, E> {
 
 	protected String ownerFieldName;
-
-	protected S roleRepo;
+	
+	protected E entity;
 
 	@Autowired
-	protected AuthoriseOwner(final S roleRepo, final ModelMapper mapper, final String ownerFieldName) {
+	protected AuthoriseOwner(final String ownerFieldName) {
 		this.ownerFieldName = ownerFieldName;
-		this.roleRepo = roleRepo;
 	}
 
 	@Override
@@ -29,9 +27,11 @@ public abstract class AuthoriseOwner<U extends UserRole, S extends GenericJpaRep
 		boolean res = true;
 		try {
 			final int principalId = PrincipalHelper.get().getAccountId();
-			final Optional<U> role = this.roleRepo.findById(request.getModel().getInteger(this.ownerFieldName));
-			final Integer ownerId = role.isPresent() ? role.get().getUserAccount().getId() : null;
-			if(ownerId == null || principalId != ownerId) {
+			final Class<?> clazz = this.entity.getClass();
+			final Field field = clazz.getDeclaredField(this.ownerFieldName);
+			field.setAccessible(true);
+			final UserAccount user = ((UserRole) field.get(this.entity)).getUserAccount();
+			if(user == null || principalId != user.getId()) {
 				res = false;
 			}
 		} catch (final Exception e) {

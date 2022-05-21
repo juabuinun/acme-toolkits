@@ -1,9 +1,12 @@
 package acme.features.inventor.patronage.report;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import acme.components.util.BindHelper;
 import acme.entities.patronagereport.PatronageReport;
+import acme.form.patronagereport.PatronageReportDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
@@ -16,11 +19,9 @@ public class InventorPatronageReportShowService extends AuthoriseAll<Inventor,Pa
 
 	@Autowired
 	protected PatronageReportService service;
-
-	@Override
-	public boolean authorise(final Request<PatronageReport> request) {
-		return true;
-	}
+	
+	@Autowired
+	protected ModelMapper mapper;
 
 	@Override
 	public PatronageReport findOne(final Request<PatronageReport> request) {
@@ -29,7 +30,7 @@ public class InventorPatronageReportShowService extends AuthoriseAll<Inventor,Pa
 
 	@Override
 	public void unbind(final Request<PatronageReport> request, final PatronageReport entity, final Model model) {
-		this.service.unbind(request, entity, model);
+		request.unbind(entity, model, BindHelper.getAllFieldNames(PatronageReportDto.class));
 	}
 
 }

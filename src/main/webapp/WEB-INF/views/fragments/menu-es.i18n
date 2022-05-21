@@ -56,6 +56,7 @@ master.menu.chirp.any.create = Crear
 ### ANNOUNCEMENT ###
 master.menu.announcements = Anuncios
 master.menu.announcements.authenticated.list = Ver anuncios
+master.menu.announcements.admin.create = Crear
 
 ### ACCOUNTS ###
 master.menu.accounts = Usuarios
@@ -77,6 +78,7 @@ master.menu.tools.inventor.create = Crear
 master.menu.toolkits = Kits
 master.menu.toolkits.any.list = Ver kits
 master.menu.toolkits.inventor.list = Mis kits
+master.menu.toolkits.inventor.create = Crear
 
 ### PATRONAGE ###
 master.menu.patronage = Patrocinios

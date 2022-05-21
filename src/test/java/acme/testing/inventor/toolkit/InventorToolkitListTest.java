@@ -10,20 +10,20 @@ import acme.testing.TestHarness;
 public class InventorToolkitListTest extends TestHarness {
 
 	@ParameterizedTest
-	@CsvFileSource(resources = "/any/toolkit/list-toolkit.csv", encoding = "utf-8", numLinesToSkip = 1)
+	@CsvFileSource(resources = "/inventor/toolkit/list-toolkit.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void inventorToolkitsList(final int toolkitIndex, final String code, final String title, final String price, final String published) {
+	public void inventorToolkitsList(final int index, final String code, final String title, final String published) {
 
 		super.navigateHome();
-		super.clickOnMenu("Toolkits", "View toolkits");
+		super.signIn("inventor1", "inventor1");
+		super.clickOnMenu("Toolkits", "View mine");
 
 		super.checkListingExists();
 		super.sortListing(0, "asc");
 
-		super.checkColumnHasValue(toolkitIndex, 0, code);
-		super.checkColumnHasValue(toolkitIndex, 1, title);
-		super.checkColumnHasValue(toolkitIndex, 2, price);
-		super.checkColumnHasValue(toolkitIndex, 3, published);
+		super.checkColumnHasValue(index, 0, code);
+		super.checkColumnHasValue(index, 1, title);
+		super.checkColumnHasValue(index, 3, published);
 	}
 
 }

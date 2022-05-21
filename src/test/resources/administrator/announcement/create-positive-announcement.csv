@@ -1,0 +1,4 @@
+title,body,critial,link
+test-title-1,test-body1,true,thisalink.com
+test-title-2,test-body1,true,
+test-title-2,we add a bunch of words and then the spam filter does not care that it says SEX,false,thisalink.com

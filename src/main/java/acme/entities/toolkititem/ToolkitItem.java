@@ -1,5 +1,5 @@
 
-package acme.entities.toolkit.item;
+package acme.entities.toolkititem;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,9 +12,11 @@ import acme.entities.toolkit.Toolkit;
 import acme.framework.entities.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ToolkitItem extends AbstractEntity {
 
@@ -22,6 +24,11 @@ public class ToolkitItem extends AbstractEntity {
 	 * 
 	 */
 	private static final long	serialVersionUID	= 7542796390341916652L;
+	
+	public ToolkitItem(final Item item) {
+		this.item = item;
+		this.quantity = 1;
+	}
 
 	@NotNull
 	@Positive

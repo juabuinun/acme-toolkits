@@ -1,1 +1,5 @@
-errors.spam = Palabras spam detectadas
+errors.spam = Spam detected
+errors.unique = Must be unique
+errors.patronage.date = Must be at least a month from now
+errors.money.positive = Must be positive
+errors.money.currency = Currency not valid

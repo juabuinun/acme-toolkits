@@ -4,6 +4,7 @@ package acme.entities.patronage;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -35,7 +37,26 @@ public class Patronage extends AbstractEntity {
 
 
 	public enum Status {
-		PROPOSED, ACCEPTED, DENIED
+		PROPOSED("patronage.status.proposed"), ACCEPTED("patronage.status.accepted"), DENIED("patronage.status.denied"), UNLISTED("patronage.status.unlisted");
+		
+		private String label;
+		
+		Status(final String label) {
+			this.label = label;
+		}
+		
+		public String getLabel() {
+			return this.label;
+		}
+		
+		public static Status of(final String label) {
+	        for (final Status b : Status.values()) {
+	            if (b.label.equalsIgnoreCase(label)) {
+	                return b;
+	            }
+	        }
+	        return null;
+	    }
 	}
 
 
@@ -72,7 +93,12 @@ public class Patronage extends AbstractEntity {
 	@ManyToOne(optional = false)
 	protected Inventor		sponsee;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patronage")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patronage",cascade=CascadeType.REMOVE)
 	protected List<PatronageReport> reports;
+	
+	@Transient
+	public boolean isPublished() {
+		return !this.getStatus().equals(Status.UNLISTED);
+	}
 
 }

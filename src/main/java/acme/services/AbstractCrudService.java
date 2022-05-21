@@ -15,8 +15,6 @@ public interface  AbstractCrudService<E extends AbstractEntity> {
 	
 	E save(final E entity);
 	
-	E update(final int id, E entity);
-	
 	void delete(final int id);
 	
 	//lists

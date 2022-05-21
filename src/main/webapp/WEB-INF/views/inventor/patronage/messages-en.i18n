@@ -18,3 +18,8 @@ inventor.patronage.sponsor = View sponsor
 inventor.patronage.legal = Legal stuff
 inventor.patronage.budget = Budget
 inventor.patronage.info = Info
+
+inventor.patronage.deny = Deny
+inventor.patronage.accept = Accept
+
+inventor.patronage.reports.create = Create report

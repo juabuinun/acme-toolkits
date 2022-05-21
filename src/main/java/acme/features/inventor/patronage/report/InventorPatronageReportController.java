@@ -17,11 +17,14 @@ public class InventorPatronageReportController extends AcmeAbstractController<In
 	protected InventorPatronageReportListService	listService;
 	@Autowired
 	protected InventorPatronageReportShowService	showService;
+	@Autowired
+	protected InventorPatronageReportCreateService createService;
 
 
 	@PostConstruct
 	protected void initialise() {
 		super.addCommand("list", this.listService);
 		super.addCommand("show", this.showService);
+		super.addCommand("create", this.createService);
 	}
 }

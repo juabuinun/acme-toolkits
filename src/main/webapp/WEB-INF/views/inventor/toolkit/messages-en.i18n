@@ -24,3 +24,14 @@ inventor.toolkit.published = Published
 
 inventor.toolkit.tools = View tools
 inventor.toolkit.components = View components
+
+inventor.toolkit.item.component = Components
+inventor.toolkit.item.tool = Tools
+inventor.toolkit.item.available = Available
+inventor.toolkit.item.binded = Added
+inventor.toolkit.item.tech = Technology
+inventor.toolkit.item.price = Price
+
+inventor.toolkit.item.quantity = Qnty
+
+inventor.toolkit.update = Update

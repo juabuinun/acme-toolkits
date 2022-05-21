@@ -1,0 +1,9 @@
+patronage.status.accepted = Aceptado
+patronage.status.denied = Denegado
+patronage.status.proposed = Propuesto
+patronage.status.unlisted = Sin listar
+
+item.tool = Herramienta
+item.component = Componente
+
+code.placeholder = ABC-123(-A)

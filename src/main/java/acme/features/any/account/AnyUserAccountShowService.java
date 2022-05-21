@@ -52,11 +52,12 @@ public class AnyUserAccountShowService implements AbstractShowService<Any, UserA
 		if (entity.hasRole(Inventor.class)) {
 			dto.setProfessionalProfile(this.mapper.map(entity.getRole(Inventor.class), ProfessionalProfileDto.class));
 			model.setAttribute("displayProfessional", true);
+			model.setAttribute("inventor", true);
 		} else if (entity.hasRole(Patron.class)) {
 			dto.setProfessionalProfile(this.mapper.map(entity.getRole(Patron.class), ProfessionalProfileDto.class));
 			model.setAttribute("displayProfessional", true);
 		}
-		request.unbind(dto, model, "username", "identity.name", "identity.surname", "identity.email", "professionalProfile.company", "professionalProfile.statement", "professionalProfile.info");
+		request.unbind(dto, model, "id","username", "identity.name", "identity.surname", "identity.email", "professionalProfile.company", "professionalProfile.statement", "professionalProfile.info");
 		model.setAttribute("readonly", true);
 	}
 

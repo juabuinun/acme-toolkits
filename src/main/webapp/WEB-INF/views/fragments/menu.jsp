@@ -40,6 +40,11 @@
 			<acme:menu-suboption
 				code="master.menu.announcements.authenticated.list"
 				action="/authenticated/announcement/list" />
+			<security:authorize access="hasRole('Administrator')">
+				<acme:menu-separator />
+				<acme:menu-suboption code="master.menu.announcements.admin.create"
+					action="/administrator/announcement/create" />
+			</security:authorize>
 		</acme:menu-option>
 		<!-- COMPONENTS -->
 		<acme:menu-option code="master.menu.components">
@@ -73,6 +78,8 @@
 				<acme:menu-separator />
 				<acme:menu-suboption code="master.menu.toolkits.inventor.list"
 					action="/inventor/toolkit/list-mine" />
+				<acme:menu-suboption code="master.menu.toolkits.inventor.create"
+					action="/inventor/toolkit/create" />
 			</security:authorize>
 		</acme:menu-option>
 		<!-- PATRONAGES -->

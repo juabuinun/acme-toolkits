@@ -57,6 +57,7 @@ master.menu.chirp.any.create = Create
 ### ANNOUNCEMENT ###
 master.menu.announcements = Announcement
 master.menu.announcements.authenticated.list = View announcements
+master.menu.announcements.admin.create = Create
 
 ### ACCOUNTS ###
 master.menu.accounts = Users
@@ -78,11 +79,13 @@ master.menu.tools.inventor.create = Create
 master.menu.toolkits = Toolkits
 master.menu.toolkits.any.list = View toolkits
 master.menu.toolkits.inventor.list = View mine
+master.menu.toolkits.inventor.create = Create
 
 ### PATRONAGE ###
 master.menu.patronage = Patronages
 master.menu.patronage.inventor.list = View mine
 master.menu.patronage.patron.list = View mine
+
 
 ### CONFIG ###
 master.menu.administrator.config = System configuration

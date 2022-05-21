@@ -3,13 +3,16 @@ package acme.features.any.item.tool;
 
 import java.util.Collection;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import acme.components.Specifications;
+import acme.components.util.BindHelper;
 import acme.entities.item.Item;
 import acme.entities.item.Item.Type;
+import acme.form.item.BasicItemDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
@@ -22,6 +25,9 @@ public class AnyToolListService extends AuthoriseAll<Any,Item> implements Abstra
 
 	@Autowired
 	protected ItemService service;
+	
+	@Autowired
+	protected ModelMapper mapper;
 
 	@Override
 	@Transactional
@@ -32,7 +38,7 @@ public class AnyToolListService extends AuthoriseAll<Any,Item> implements Abstra
 	@Override
 	@Transactional
 	public void unbind(final Request<Item> request, final Item entity, final Model model) {
-		this.service.unbindListingRecord(request, entity, model);
+		request.unbind(this.mapper.map(entity, BasicItemDto.class), model, BindHelper.getAllFieldNames(BasicItemDto.class));
 	}
 
 

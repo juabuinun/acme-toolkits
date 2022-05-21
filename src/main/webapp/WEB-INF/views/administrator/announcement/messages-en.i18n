@@ -1,0 +1,7 @@
+# i18n-en.i18n
+
+admin.announcement.title = Title
+admin.announcement.moment = Date
+admin.announcement.body = Message
+admin.announcement.critical = Critical
+admin.announcement.link = Information

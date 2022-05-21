@@ -7,7 +7,11 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
-<acme:form>
+
+<%@page language="java"
+	import="acme.entities.patronage.Patronage.Status"%>
+
+<acme:form readonly="true">
 
 	<acme:input-textbox code="inventor.patronage.code" path="code"
 		readonly="true" />
@@ -20,14 +24,24 @@
 	<acme:input-textarea code="inventor.patronage.budget" path="budget" />
 	<acme:input-textarea code="inventor.patronage.info" path="info" />
 
-	<security:authorize access="hasRole('Inventor')">
-		<acme:button code="inventor.patronage.sponsor"
-			action="/any/user-account/show?id=${sponsorId}" />
 
-		<acme:button code="inventor.patronage.reports"
-			action="/inventor/patronage-report/list?patronageId=${id}" />
-	</security:authorize>
+	<acme:button code="inventor.patronage.sponsor"
+		action="/any/user-account/show?id=${sponsorId}" />
 
+	<jstl:choose>
+		<jstl:when test="${status == 'ACCEPTED'}">
+			<acme:button code="inventor.patronage.reports"
+				action="/inventor/patronage-report/list?patronageId=${id}" />
+			<acme:button code="inventor.patronage.reports.create"
+				action="/inventor/patronage-report/create?patronageId=${id}" />
+		</jstl:when>
+		<jstl:when test="${status == 'PROPOSED'}">
+			<acme:submit code="inventor.patronage.accept"
+				action="/inventor/patronage/modify?id=${id}&state=patronage.status.accepted" />
+			<acme:submit code="inventor.patronage.deny"
+				action="/inventor/patronage/modify?id=${id}&state=patronage.status.denied" />
+		</jstl:when>
+	</jstl:choose>
 
 </acme:form>
 

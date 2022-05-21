@@ -30,4 +30,5 @@ public class PatronageDto {
 	protected int			sponsorId;
 
 	protected int			sponseeId;
+	
 }

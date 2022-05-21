@@ -13,6 +13,7 @@ import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractCreateService;
 import acme.services.chirp.ChirpService;
+import acme.services.config.AcmeConfigurationService;
 
 @Service
 public class AnyChirpCreateService implements AbstractCreateService<Any, Chirp> {
@@ -20,6 +21,9 @@ public class AnyChirpCreateService implements AbstractCreateService<Any, Chirp> 
 	@Autowired
 	protected ChirpService service;
 
+	@Autowired
+	protected AcmeConfigurationService configService;
+	
 	@Override
 	public boolean authorise(final Request<Chirp> request) {
 		assert request != null;
@@ -45,7 +49,7 @@ public class AnyChirpCreateService implements AbstractCreateService<Any, Chirp> 
 
 	@Override
 	public void validate(final Request<Chirp> request, final Chirp entity, final Errors errors) {
-		this.service.validate(request, entity, errors);
+		this.configService.filter(request, entity, errors);
 	}
 
 	@Override

@@ -5,7 +5,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import acme.components.util.BindHelper;
 import acme.entities.chirp.Chirp;
+import acme.form.chirp.ChirpDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
@@ -29,7 +31,7 @@ public class AnyChirpListService implements AbstractListService<Any, Chirp> {
 		assert entity != null;
 		assert model != null;
 
-		request.unbind(entity, model, "creationDate", "title", "author", "body", "email");
+		request.unbind(entity, model, BindHelper.getAllFieldNames(ChirpDto.class));
 	}
 
 	@Override

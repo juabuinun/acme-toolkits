@@ -3,7 +3,9 @@ package acme.features.patron.patronage.report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import acme.components.util.BindHelper;
 import acme.entities.patronagereport.PatronageReport;
+import acme.form.patronagereport.PatronageReportDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
@@ -24,7 +26,7 @@ public class PatronPatronageReportShowService extends AuthoriseAll<Patron,Patron
 
 	@Override
 	public void unbind(final Request<PatronageReport> request, final PatronageReport entity, final Model model) {
-		this.service.unbind(request, entity, model);
+		request.unbind(entity, model, BindHelper.getAllFieldNames(PatronageReportDto.class));
 	}
 
 }

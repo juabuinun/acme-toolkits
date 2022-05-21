@@ -1,7 +1,6 @@
 
 package acme.form.patron;
 
-import java.io.Serializable;
 import java.util.List;
 
 import acme.datatypes.CustomMoney;
@@ -10,9 +9,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PatronDashboard implements Serializable {
+public class PatronDashboard {
 
-	private static final long	serialVersionUID	= -869910348310097983L;
 
 	Long						numProposed;
 	List<CustomMoney>			maxProposed;

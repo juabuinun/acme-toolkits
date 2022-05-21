@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -46,7 +47,7 @@ public class Configuration extends AbstractEntity{
 		@NotNull
 		protected Integer weakSpamThreshold;
 		
-		@OneToMany
+		@OneToMany(mappedBy="configuration", fetch=FetchType.LAZY)
 		protected List<SpamWord> spamWords;
 		
 }

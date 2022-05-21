@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import acme.components.util.BindHelper;
 import acme.entities.item.Item;
+import acme.form.item.ItemDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
@@ -27,7 +29,8 @@ public class InventorItemShowService extends AuthoriseAll<Inventor,Item> impleme
 	@Override
 	@Transactional
 	public void unbind(final Request<Item> request, final Item entity, final Model model) {
-		this.service.unbind(request, entity, model);
+		request.unbind(entity, model, BindHelper.getAllFieldNames(ItemDto.class));
+		model.setAttribute("draftMode", !entity.isPublished());
 	}
 
 }

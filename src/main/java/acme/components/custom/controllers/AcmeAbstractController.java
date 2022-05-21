@@ -152,7 +152,9 @@ public abstract class AcmeAbstractController<R extends UserRole, E> extends Rede
 				this.commitTransaction();
 			}
 			result = this.buildPanicView(request, response, oops);
+			oops.printStackTrace();
 			AcmeAbstractController.logger.error("Error on custom controller", oops);
+//			throw new RuntimeException("Error on custom controller",oops);
 		}
 
 		// HINT: must always return a 'ModelAndView' object, be it the user-defined one or a panic one.

@@ -2,6 +2,6 @@
 
 authenticated.announcement.title = Title
 authenticated.announcement.moment = Date
-authenticated.announcement.body = 
+authenticated.announcement.body = Message
 authenticated.announcement.critical = Critical
 authenticated.announcement.link = Information

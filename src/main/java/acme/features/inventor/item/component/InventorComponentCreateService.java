@@ -2,45 +2,21 @@ package acme.features.inventor.item.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import acme.entities.item.Item;
-import acme.framework.components.models.Model;
-import acme.framework.controllers.Errors;
-import acme.framework.controllers.Request;
-import acme.framework.services.AbstractCreateService;
-import acme.roles.Inventor;
-import acme.services.AuthoriseAll;
+import acme.entities.item.Item.Type;
+import acme.features.inventor.item.AbstractInventorItemCreateService;
+import acme.repositories.InventorRepository;
+import acme.services.config.AcmeConfigurationService;
 import acme.services.item.ItemService;
 
 @Service
-public class InventorComponentCreateService extends AuthoriseAll<Inventor,Item> implements AbstractCreateService<Inventor,Item>{
+@Transactional
+public class InventorComponentCreateService extends AbstractInventorItemCreateService{
 
 	@Autowired
-	protected ItemService service;
-
-	@Override
-	public void create(final Request<Item> request, final Item entity) {
-		this.service.save(entity);
-	}
-
-	@Override
-	public void bind(final Request<Item> request, final Item entity, final Errors errors) {
-		this.service.bind(request, entity, errors);
-	}
-
-	@Override
-	public void unbind(final Request<Item> request, final Item entity, final Model model) {
-		this.service.unbind(request, entity, model);
-	}
-
-	@Override
-	public Item instantiate(final Request<Item> request) {
-		return new Item();
-	}
-
-	@Override
-	public void validate(final Request<Item> request, final Item entity, final Errors errors) {
-		this.service.validate(request, entity, errors);
+	public InventorComponentCreateService(final ItemService service, final AcmeConfigurationService configService, final InventorRepository inventorRepo) {
+		super(Type.COMPONENT, service, configService, inventorRepo);
 	}
 
 }

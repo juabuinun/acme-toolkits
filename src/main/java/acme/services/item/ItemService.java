@@ -4,19 +4,14 @@ package acme.services.item;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import acme.components.spam.SpamFilter;
 import acme.entities.item.Item;
 import acme.entities.item.Item.Type;
 import acme.entities.toolkit.Toolkit;
-import acme.entities.toolkit.item.ToolkitItem;
-import acme.form.item.ItemDto;
-import acme.framework.components.models.Model;
-import acme.framework.controllers.Errors;
+import acme.entities.toolkititem.ToolkitItem;
 import acme.framework.controllers.Request;
 import acme.framework.helpers.PrincipalHelper;
 import acme.repositories.InventorRepository;
@@ -34,36 +29,10 @@ public class ItemService extends AbstractCrudServiceImpl<Item, ItemRepository> {
 	@Autowired
 	protected ToolkitService		toolkitService;
 
-	@Autowired
-	protected SpamFilter			spamFilter;
-
 
 	@Autowired
-	protected ItemService(final ItemRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
-	}
-
-	@Transactional
-	public void validate(final Request<Item> request, final Item entity, final Errors errors) {
-		this.spamFilter.filter(request, entity, errors);
-		//TODO: VALIDATE MONEY
-	}
-
-	@Transactional
-	public void unbindListingRecord(final Request<Item> request, final Item entity, final Model model) {
-		request.unbind(entity, model, "code", "name", "technology", "price");
-	}
-
-	@Transactional
-	public void unbind(final Request<Item> request, final Item entity, final Model model) {
-		final ItemDto dto = this.mapper.map(entity, ItemDto.class);
-		request.unbind(dto, model, "id", "version", "code", "name", "technology", "description", "price", "info");
-	}
-
-	@Transactional
-	public void bind(final Request<Item> request, final Item entity, final Errors errors) {
-		request.bind(entity, errors, "id", "version", "code", "name", "technology", "description", "price", "info");
-		this.setPrincipalAsOwner(entity);
+	protected ItemService(final ItemRepository repo) {
+		super(repo);
 	}
 
 	@Transactional

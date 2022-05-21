@@ -1,1 +1,5 @@
-errors.spam = Spam words detected
+errors.spam = Spam detectedo
+errors.unique = Debe ser unico
+errors.patronage.date = Debe ser al menos un mes desde hoy
+errors.money.positive = Debe ser positivo
+errors.money.currency = Divisa no es valida

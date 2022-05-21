@@ -16,11 +16,14 @@ public class InventorPatronageController extends AcmeAbstractController<Inventor
 	protected InventorPatronageListService listService;
 	@Autowired
 	protected InventorPatronageShowService showService;
+	@Autowired
+	protected InventorPatronageModifyService modifyService;
 	
 	@PostConstruct
 	protected void initialise() {
 		super.addCommand("list-mine", "list", this.listService);
 		super.addCommand("show", this.showService);
+		super.addCommand("modify", "update",this.modifyService);
 	}
 
 }

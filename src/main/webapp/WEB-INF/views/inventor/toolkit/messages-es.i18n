@@ -22,3 +22,12 @@ inventor.toolkit.published = Publicado
 
 inventor.toolkit.tools = Ver herramientas
 inventor.toolkit.components = Ver componentes
+
+inventor.toolkit.item.component = Componentes
+inventor.toolkit.item.tool = Herramientos
+inventor.toolkit.item.available = Disponibles
+inventor.toolkit.item.binded = Anadidas
+inventor.toolkit.item.tech = Tecnologia
+inventor.toolkit.item.price = Precio
+
+inventor.toolkit.item.quantity = Cntd.

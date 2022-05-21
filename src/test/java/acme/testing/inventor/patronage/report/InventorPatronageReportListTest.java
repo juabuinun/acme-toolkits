@@ -14,11 +14,12 @@ public class InventorPatronageReportListTest extends TestHarness {
 	@Order(10)
 	public void inventorPatronageReportList(final int reportIndex, final int recordIndex, final String creationDate, final String sequenceNumber,final String memorandum) {
 
-		super.signIn("inventor1", "inventor1");
+		super.signIn("inventor2", "inventor2");
 
 		super.navigateHome();
 
 		super.clickOnMenu("Patronages", "View mine");
+		super.sortListing(0, "desc");
 		this.clickOnListingRecord(reportIndex);
 		super.clickOnButton("View reports");
 

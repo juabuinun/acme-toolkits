@@ -1,52 +1,127 @@
 
 package acme.services.config;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import acme.components.spam.SpamFilter;
+import acme.components.util.ConfigCache;
+import acme.components.util.ConfigCache.CacheStatus;
 import acme.entities.configuration.Configuration;
+import acme.form.SpamWordDto;
+import acme.framework.controllers.Errors;
+import acme.framework.controllers.Request;
+import acme.framework.datatypes.Money;
 import acme.repositories.ConfigurationRepository;
 import acme.services.AbstractCrudServiceImpl;
 
 @Service
 @Scope("application")
+@Transactional
 public class AcmeConfigurationService extends AbstractCrudServiceImpl<Configuration, ConfigurationRepository> {
 
-	@Autowired
-	private ApplicationContext context;
-	
-	protected Configuration configuration;
+	private static final Logger	logger	= LoggerFactory.getLogger(AcmeConfigurationService.class);
+
+	protected ConfigCache		cache;
 
 	@Autowired
-	protected AcmeConfigurationService(final ConfigurationRepository repo, final ModelMapper mapper) {
-		super(repo, mapper);
+	protected ModelMapper		mapper;
+
+
+	@Autowired
+	protected AcmeConfigurationService(final ConfigurationRepository repo) {
+		super(repo);
+		this.cache = new ConfigCache();
 	}
 
 	public Configuration findOne() {
-		if(this.configuration==null) {
-			final Optional<Configuration> config = this.repo.findFirstByOrderByIdAsc();
-			if(config.isPresent()) {
-				this.configuration = config.get();
-			}else {
-				this.configuration = new Configuration();
-			}
+		Configuration res = new Configuration();
+		final Optional<Configuration> config = this.repo.findFirstByOrderByIdAsc();
+		if (config.isPresent()) {
+			res = config.get();
 		}
-		return this.configuration;
+		return res;
+	}
+	
+	public String getDefaultCurrency() {
+		if (!this.cache.getStatus().equals(CacheStatus.LIVE))
+			this.load();
+		return this.cache.getDefaultCurrency();
 	}
 
 	@Override
 	public Configuration save(final Configuration entity) {
-		this.configuration = super.save(entity);
-		this.context.getBean(SpamFilter.class).updateSpamWordCache(entity.getSpamWords());
-		this.context.getBean(SpamFilter.class).updateStrongSpamThresholdCache(entity.getStrongSpamThreshold());
-		this.context.getBean(SpamFilter.class).updateWeakSpamThresholdCache(entity.getWeakSpamThreshold());
-		return this.configuration;
+		this.cache.setStatus(CacheStatus.RELOAD);
+		return super.save(entity);
 	}
-	
+
+
+	public void load() {
+		final Configuration config = this.findOne();
+		this.mapper.map(config, this.cache);
+		this.cache.setStatus(CacheStatus.LIVE);
+	}
+
+
+	public void checkMoney(final Request<?> request, final Errors errors, final Money money, final String fieldName) {
+		if (!this.cache.getStatus().equals(CacheStatus.LIVE))
+			this.load();
+		if (money != null) {
+			errors.state(request, money.getAmount() >= 0, fieldName == null ? "*" : fieldName, "errors.money.positive");
+			errors.state(request, Arrays.asList(this.cache.getAcceptedCurrencies().split("\\s*,\\s*")).contains(money.getCurrency().toUpperCase()), fieldName == null ? "*" : fieldName, "errors.money.currency");
+		}
+	}
+
+
+	public void filter(final Request<?> request, final Object object, final Errors errors) {
+		if (!this.cache.getStatus().equals(CacheStatus.LIVE))
+			this.load();
+		Integer wordCount = 0;
+		Integer weakSpamWordCount = 0;
+		Integer strongSpamWordCount = 0;
+
+		BeanInfo beanInfo;
+		try {
+			beanInfo = Introspector.getBeanInfo(object.getClass());
+
+			for (final PropertyDescriptor propertyDesc : beanInfo.getPropertyDescriptors()) {
+				final Object value = propertyDesc.getReadMethod().invoke(object);
+
+				if (value instanceof String && !((String) value).isEmpty()) {
+					final List<String> words = Arrays.asList(((String) value).split("\\s+"));
+					wordCount += words.size();
+					for (final String word : words) {
+						for (final SpamWordDto spamWord : this.cache.getSpamWords()) {
+							if (word.toUpperCase().contains(spamWord.getWord().toUpperCase())) {
+								if (spamWord.isStrong()) {
+									strongSpamWordCount++;
+								} else {
+									weakSpamWordCount++;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			AcmeConfigurationService.logger.info("SpamFilterService  - Word count: {}", wordCount);
+			AcmeConfigurationService.logger.info("SpamFilterService  - Spam word count: (weak:{}, strong:{})", weakSpamWordCount, strongSpamWordCount);
+
+			errors.state(request, (strongSpamWordCount / (wordCount * 1.0)) < (this.cache.getStrongSpamThreshold() / 100.0), "*", "errors.spam");
+			errors.state(request, (weakSpamWordCount / (wordCount * 1.0)) < (this.cache.getWeakSpamThreshold() / 100.0), "*", "errors.spam");
+		} catch (final Exception e) {
+			AcmeConfigurationService.logger.error("Error running spam filter", e);
+		}
+	}
 }

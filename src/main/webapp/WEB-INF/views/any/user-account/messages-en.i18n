@@ -17,6 +17,8 @@ account.company = Company
 account.statement = Statement
 account.info = Info
 
+account.patronage.create = Sponsor
+
 
 
 

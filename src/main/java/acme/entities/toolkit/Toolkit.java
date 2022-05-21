@@ -1,8 +1,13 @@
 
 package acme.entities.toolkit;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +21,8 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
-import acme.entities.toolkit.item.ToolkitItem;
+import acme.entities.toolkititem.ToolkitItem;
+import acme.framework.datatypes.Money;
 import acme.framework.entities.AbstractEntity;
 import acme.roles.Inventor;
 import lombok.Data;
@@ -30,7 +36,13 @@ public class Toolkit extends AbstractEntity {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= -6936012221192441560L;
+	private static final long serialVersionUID = -6936012221192441560L;
+
+
+	public Toolkit() {
+		this.items = new ArrayList<>();
+	}
+
 
 	@Column(unique = true)
 	@NotNull
@@ -56,14 +68,31 @@ public class Toolkit extends AbstractEntity {
 	@URL
 	protected String			info;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "toolkit")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "toolkit", cascade = CascadeType.ALL)
 	protected List<ToolkitItem>	items;
 
-	protected boolean published;
-	
+	protected boolean			published = false;
+
+
 	@Transient
-	public Double getPrice() {
-		//currencies can differ, not worth checking. what would even be done if they differ?
-		return this.items.stream().mapToDouble(ti -> ti.getItem().getPrice().getAmount() * ti.getQuantity()).sum();
+	public String getPrice() {
+		String res;
+		try {
+			final Map<String, Double> prices = new HashMap<>();
+			this.items.stream().forEach(i -> {
+				final Money price = i.getItem().getPrice();
+				price.setAmount(price.getAmount() * i.getQuantity());
+				if (prices.containsKey(price.getCurrency())) {
+					prices.put(price.getCurrency(), prices.get(price.getCurrency()) + price.getAmount());
+				} else {
+					prices.put(price.getCurrency(), price.getAmount());
+				}
+			});
+
+			res = prices.entrySet().stream().map(e -> String.format("%s %.2f", e.getKey(), e.getValue())).collect(Collectors.joining(", "));
+		} catch (final Exception e) {
+			res = "";
+		}
+		return res;
 	}
 }

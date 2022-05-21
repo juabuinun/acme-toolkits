@@ -1,7 +1,9 @@
+
 package acme.entities.item;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,7 +19,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
-import acme.entities.toolkit.item.ToolkitItem;
+import acme.entities.toolkititem.ToolkitItem;
 import acme.framework.datatypes.Money;
 import acme.framework.entities.AbstractEntity;
 import acme.roles.Inventor;
@@ -26,51 +28,75 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
-public class Item extends AbstractEntity{
+@EqualsAndHashCode(callSuper = true)
+public class Item extends AbstractEntity {
 
-	public enum Type{
-		COMPONENT, TOOL
+	public enum Type {
+
+		COMPONENT("item.component"), TOOL("item.tool");
+
+
+		private String label;
+
+
+		Type(final String label) {
+			this.label = label;
+		}
+
+		public String getLabel() {
+			return this.label;
+		}
+
+		public static Type of(final String label) {
+			for (final Type b : Type.values()) {
+				if (b.label.equalsIgnoreCase(label)) {
+					return b;
+				}
+			}
+			return null;
+		}
 	}
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5776904326587526514L;
+	private static final long	serialVersionUID	= -5776904326587526514L;
 
-	@Length(min=1,max=100)
+	@Length(min = 1, max = 100)
 	@NotBlank
-	protected String name;
-	
+	protected String			name;
+
 	@Pattern(regexp = "[A-Z]{3}-[0-9]{3}(-[A-Z])?$")
 	@NotNull
 	@Column(unique = true)
-	protected String code;
-	
+	protected String			code;
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	protected Type itemType;
-	
+	protected Type				itemType;
+
 	@NotBlank
-	@Length(min=1,max=100)
-	protected String technology;
-	
+	@Length(min = 1, max = 100)
+	protected String			technology;
+
 	@NotBlank
-	@Length(min=1,max=255)
-	protected String description;
-	
+	@Length(min = 1, max = 255)
+	protected String			description;
+
 	@Valid
 	@NotNull
-	protected  Money price;
-	
-	@ManyToOne(optional=false)
+	protected Money				price;
+
+	@ManyToOne(optional = false)
 	@NotNull
-	protected Inventor owner;
-	
+	protected Inventor			owner;
+
 	@URL
-	protected String info;
-	
-	protected boolean published;
-	
-	@OneToMany(mappedBy="item", fetch=FetchType.LAZY)
-	protected List<ToolkitItem> toolkits;
+	protected String			info;
+
+	protected boolean			published = false;
+
+	@OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	protected List<ToolkitItem>	toolkits;
 }
