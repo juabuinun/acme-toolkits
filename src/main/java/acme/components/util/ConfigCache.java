@@ -3,7 +3,7 @@ package acme.components.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import acme.form.SpamWordDto;
+import acme.form.spamword.SpamWordDto;
 import lombok.Data;
 
 @Data

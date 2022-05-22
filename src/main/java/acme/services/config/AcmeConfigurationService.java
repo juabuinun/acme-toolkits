@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import acme.components.util.ConfigCache;
 import acme.components.util.ConfigCache.CacheStatus;
 import acme.entities.configuration.Configuration;
-import acme.form.SpamWordDto;
+import acme.form.spamword.SpamWordDto;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.datatypes.Money;

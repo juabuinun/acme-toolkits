@@ -6,12 +6,12 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 import acme.testing.TestHarness;
 
-public class PatronPatronagePublishTest extends TestHarness{
+public class PatronPatronageDeleteTest extends TestHarness{
 
 	@ParameterizedTest
-	@CsvFileSource(resources = "/patron/patronage/publish-patronage.csv", encoding = "utf-8", numLinesToSkip = 1)
+	@CsvFileSource(resources = "/patron/patronage/delete-patronage.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void positivePatronPatronagePublish(final int index,  final String end, final String legal, final String budget, final String info) {
+	public void patronPatronageDelete(final int index,  final String end, final String legal, final String budget, final String info) {
 		super.signIn("patron4", "patron4");
 
 		super.navigateHome();
@@ -23,14 +23,8 @@ public class PatronPatronagePublishTest extends TestHarness{
 		super.optionalValue("budget", budget, (i,v)-> super.fillInputBoxIn(i, v));
 		super.optionalValue("info", info, (i,v)-> super.fillInputBoxIn(i, v));
 
-		super.clickOnSubmit("Publish");
-		
-		super.clickOnMenu("Patronages", "View mine");
-		super.checkListingExists();
-		super.sortListing(0, "desc");
-		super.checkColumnHasValue(index, 1, "patronage.status.proposed");
-		super.optionalValue(index, 3, end, (r,c,v) -> super.checkColumnHasValue(r, c, v));
-		super.optionalValue(index, 4, budget, (r,c,v) -> super.checkColumnHasValue(r, c, v));
+		super.clickOnSubmit("Delete");
+		super.checkNotErrorsExist();
 		
 		super.signOut();
 	}

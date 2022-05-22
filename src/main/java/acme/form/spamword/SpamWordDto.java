@@ -1,4 +1,4 @@
-package acme.form;
+package acme.form.spamword;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

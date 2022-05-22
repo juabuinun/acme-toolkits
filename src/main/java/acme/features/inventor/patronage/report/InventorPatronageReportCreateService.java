@@ -2,6 +2,7 @@
 package acme.features.inventor.patronage.report;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class InventorPatronageReportCreateService extends AuthoriseAll<Inventor,
 		request.bind(entity, errors, BindHelper.getAllFieldNames(SavePatronageReportDto.class));
 		entity.setPatronage(this.patronage);
 		entity.setSerialNumber(this.service.getNextSerialNumber(this.patronage.getCode()));
-		entity.setCreationDate(LocalDateTime.now());
+		entity.setCreationDate(LocalDateTime.now().minus(1,ChronoUnit.SECONDS));
 	}
 
 	@Override
@@ -69,6 +70,8 @@ public class InventorPatronageReportCreateService extends AuthoriseAll<Inventor,
 		final PatronageReportDto dto = this.mapper.map(entity, PatronageReportDto.class);
 		dto.setPatronageId(this.patronage.getId());
 		request.unbind(dto, model, BindHelper.getAllFieldNames(PatronageReportDto.class));
+		
+		model.setAttribute("confirmation", false);
 	}
 
 	@Override
@@ -78,7 +81,8 @@ public class InventorPatronageReportCreateService extends AuthoriseAll<Inventor,
 
 	@Override
 	public void validate(final Request<PatronageReport> request, final PatronageReport entity, final Errors errors) {
-		//do nothing
+		final boolean confirmation = request.getModel().getBoolean("confirmation");
+		errors.state(request, confirmation, "confirmation", "javax.validation.constraints.AssertTrue.message");
 	}
 
 	@Override

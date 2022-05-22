@@ -19,6 +19,8 @@ public class AuthenticatedAnnouncementListTest extends TestHarness{
 	@Order(10)
 	public void authenticatedAnnouncementList(final String title, final String creationDate, final String body) {
 
+		super.signIn("patron1", "patron1");
+		
 		if (LocalDateTime.parse(creationDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME).plus(1,ChronoUnit.MONTHS).isAfter(LocalDateTime.now())) {
 
 			super.navigateHome();
@@ -35,5 +37,6 @@ public class AuthenticatedAnnouncementListTest extends TestHarness{
 			this.actualIndex++;
 		}
 
+		super.signOut();
 	}
 }

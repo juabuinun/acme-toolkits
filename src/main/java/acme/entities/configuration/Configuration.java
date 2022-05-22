@@ -3,6 +3,7 @@ package acme.entities.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -47,7 +48,7 @@ public class Configuration extends AbstractEntity{
 		@NotNull
 		protected Integer weakSpamThreshold;
 		
-		@OneToMany(mappedBy="configuration", fetch=FetchType.LAZY)
+		@OneToMany(mappedBy="configuration", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 		protected List<SpamWord> spamWords;
 		
 }

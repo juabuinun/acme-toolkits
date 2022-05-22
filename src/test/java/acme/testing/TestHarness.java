@@ -15,20 +15,23 @@ package acme.testing;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.function.BiConsumer;
 
+import org.apache.logging.log4j.util.TriConsumer;
 import org.hibernate.internal.util.StringHelper;
 
 import acme.components.formatter.LocalDateTimeFormatter;
 import acme.framework.testing.AbstractTest;
 
 public abstract class TestHarness extends AbstractTest {
-	
+
 	DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
 
 	protected void signIn(final String username, final String password) {
 		assert !StringHelper.isBlank(username);
 		assert !StringHelper.isBlank(password);
-		
+
 		super.navigateHome();
 		super.clickOnMenu("Sign in");
 		super.fillInputBoxIn("username", username);
@@ -54,22 +57,37 @@ public abstract class TestHarness extends AbstractTest {
 		assert !StringHelper.isBlank(email);
 
 		super.navigateHome();
-		super.clickOnMenu("Sign up");	
+		super.clickOnMenu("Sign up");
 		super.fillInputBoxIn("username", username);
 		super.fillInputBoxIn("password", password);
 		super.fillInputBoxIn("confirmation", password);
 		super.fillInputBoxIn("identity.name", name);
 		super.fillInputBoxIn("identity.surname", surname);
-		super.fillInputBoxIn("identity.email", email);		
+		super.fillInputBoxIn("identity.email", email);
 		super.fillInputBoxIn("accept", "true");
 		super.clickOnSubmit("Sign up");
 		super.checkCurrentPath("/master/welcome");
 		super.checkNotLinkExists("Account");
 	}
-	
+
 	protected String parseDateTime(final String string, final Locale locale) {
-		final LocalDateTime ldt = LocalDateTime.parse(string,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		final LocalDateTime ldt = LocalDateTime.parse(string, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 		return ldt.format(LocalDateTimeFormatter.getFormatter(locale));
 	}
 
+	protected void optionalValue(final String field, final String value, final BiConsumer<String, String> callback) {
+		if (value == null) {
+			callback.accept(field, "");
+		} else if (!value.equals("*")) {
+			callback.accept(field, value);
+		}
+	}
+
+	protected void optionalValue(final Integer row, final Integer column, final String value, final TriConsumer<Integer, Integer, String> callback) {
+		if (value == null) {
+			callback.accept(row, column, "");
+		} else if (!value.equals("*")) {
+			callback.accept(row, column, value);
+		}
+	}
 }

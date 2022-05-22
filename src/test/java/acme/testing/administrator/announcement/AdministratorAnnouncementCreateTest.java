@@ -11,13 +11,15 @@ public class AdministratorAnnouncementCreateTest extends TestHarness{
 	@ParameterizedTest
 	@CsvFileSource(resources = "/administrator/announcement/create-positive-announcement.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void positiveAdministratorAnnouncementCreate(final String title, final String body, final String link) {
+	public void positiveAdministratorAnnouncementCreate(final String title, final String body, final String link, final String critical, final String confirm) {
 		super.signIn("administrator", "administrator");
 		
 		super.clickOnMenu("Announcements", "Create");
 
 		super.fillInputBoxIn("title", title);
 		super.fillInputBoxIn("body", body);
+		super.fillInputBoxIn("critical", critical);
+		super.fillInputBoxIn("confirmation", confirm);
 		super.clickOnSubmit("Create");
 
 		super.clickOnMenu("Announcements", "View announcements");
@@ -31,11 +33,13 @@ public class AdministratorAnnouncementCreateTest extends TestHarness{
 	@ParameterizedTest
 	@CsvFileSource(resources = "/administrator/announcement/create-negative-announcement.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void negativeAdministratorAnnouncementCreate(final String title, final String body, final String link) {
+	public void negativeAdministratorAnnouncementCreate(final String title, final String body, final String link, final String critical, final String confirm) {
 		super.clickOnMenu("Chirps", "Create");
 
 		super.fillInputBoxIn("title", title);
 		super.fillInputBoxIn("body", body);
+		super.fillInputBoxIn("critical", critical);
+		super.fillInputBoxIn("confirmation", confirm);
 		super.clickOnSubmit("Create");
 
 		super.checkErrorsExist();

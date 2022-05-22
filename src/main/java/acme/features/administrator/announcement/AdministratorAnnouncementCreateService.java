@@ -1,6 +1,7 @@
 package acme.features.administrator.announcement;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +31,13 @@ public class AdministratorAnnouncementCreateService extends AuthoriseAll<Adminis
 	@Override
 	public void bind(final Request<Announcement> request, final Announcement entity, final Errors errors) {
 		request.bind(entity, errors, BindHelper.getAllFieldNames(SaveAnnouncementDto.class));
-		entity.setCreationDate(LocalDateTime.now());
+		entity.setCreationDate(LocalDateTime.now().minus(1,ChronoUnit.SECONDS));
 	}
 
 	@Override
 	public void unbind(final Request<Announcement> request, final Announcement entity, final Model model) {
 		request.unbind(entity, model, BindHelper.getAllFieldNames(AnnouncementDto.class));
+		model.setAttribute("confirmation", false);
 	}
 
 	@Override
@@ -46,6 +48,8 @@ public class AdministratorAnnouncementCreateService extends AuthoriseAll<Adminis
 	@Override
 	public void validate(final Request<Announcement> request, final Announcement entity, final Errors errors) {
 		this.configService.filter(request, entity, errors);
+		final boolean confirmation = request.getModel().getBoolean("confirmation");
+		errors.state(request, confirmation, "confirmation", "javax.validation.constraints.AssertTrue.message");
 	}
 
 	@Override

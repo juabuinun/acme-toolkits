@@ -1,4 +1,4 @@
-title,body,link
-test-title-1,test-body1,https://infocomcorp.com
-test-title-2,test-body1,
-test-title-2,we add a bunch of words and then the spam filter does not care that it says SEX,https://infocomcorp.com
+title,body,link,critical,confirm
+test-title-1,test-body1,https://infocomcorp.com,true,true
+test-title-2,test-body1,,true,true
+test-title-2,we add a bunch of words and then the spam filter does not care that it says SEX,https://infocomcorp.com,false,true

@@ -17,3 +17,5 @@ any.chirp.list.body = Body
 any.chirp.list.email = Email
 
 any.chirp.create = Create
+
+any.chirp.confirm = Confirm you want to create this chirp

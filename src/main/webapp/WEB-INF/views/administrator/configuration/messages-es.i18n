@@ -5,3 +5,5 @@ config.currency.accept = Divisas permitidas
 config.spam.tresh.strong = Limite spam fuerte
 config.spam.tresh.weak = Limite spam normal
 config.spam = View palabras spam
+
+config.update = Update

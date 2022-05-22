@@ -2,6 +2,7 @@
 package acme.features.any.chirp;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,12 +35,13 @@ public class AnyChirpCreateService implements AbstractCreateService<Any, Chirp> 
 	@Override
 	public void bind(final Request<Chirp> request, final Chirp entity, final Errors errors) {
 		request.bind(entity, errors, "title", "author", "body", "email");
-		entity.setCreationDate(LocalDateTime.now());
+		entity.setCreationDate(LocalDateTime.now().minus(1,ChronoUnit.SECONDS));
 	}
 
 	@Override
 	public void unbind(final Request<Chirp> request, final Chirp entity, final Model model) {
 		request.unbind(entity, model, "title", "author", "body", "email");
+		model.setAttribute("confirmation", false);
 	}
 
 	@Override
@@ -50,6 +52,9 @@ public class AnyChirpCreateService implements AbstractCreateService<Any, Chirp> 
 	@Override
 	public void validate(final Request<Chirp> request, final Chirp entity, final Errors errors) {
 		this.configService.filter(request, entity, errors);
+		
+		final boolean confirmation = request.getModel().getBoolean("confirmation");
+		errors.state(request, confirmation, "confirmation", "javax.validation.constraints.AssertTrue.message");
 	}
 
 	@Override

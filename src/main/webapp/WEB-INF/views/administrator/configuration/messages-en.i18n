@@ -5,3 +5,5 @@ config.currency.accept = Accepted currencies
 config.spam.tresh.strong = Strong spam threshold
 config.spam.tresh.weak = Weak spam threshold
 config.spam = View spam words
+
+config.update = Update

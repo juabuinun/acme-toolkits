@@ -8,3 +8,5 @@
 	<acme:list-column code="spam.strong" path="strong" width="25%"/>
 	<acme:list-column code="spam.language" path="language" width="25%"/>
 </acme:list>
+
+<acme:button code="spam.create" action="/administrator/spam-word/create"/>

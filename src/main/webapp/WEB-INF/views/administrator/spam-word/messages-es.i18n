@@ -3,3 +3,6 @@
 spam.word = Palabra
 spam.strong = Fuerte
 spam.language = Lengua
+
+spam.create = Crear
+spam.delete = Borrar

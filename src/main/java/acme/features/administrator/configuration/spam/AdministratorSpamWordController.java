@@ -14,9 +14,18 @@ public class AdministratorSpamWordController extends AcmeAbstractController<Admi
 
 	@Autowired
 	protected AdministratorSpamWordListService listService;
+	@Autowired
+	protected AdministratorSpamWordCreateService createService;
+	@Autowired
+	protected AdministratorSpamWordShowService showService;
+	@Autowired
+	protected AdministratorSpamWordDeleteService deleteService;
 
 	@PostConstruct
 	protected void initialise() {
 		super.addCommand("list", this.listService);
+		super.addCommand("create", this.createService);
+		super.addCommand("show", this.showService);
+		super.addCommand("delete", this.deleteService);
 	}
 }

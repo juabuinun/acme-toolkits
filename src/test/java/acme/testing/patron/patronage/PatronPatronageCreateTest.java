@@ -34,6 +34,8 @@ public class PatronPatronageCreateTest extends TestHarness {
 		super.checkColumnHasValue(0, 0, code);
 		super.checkColumnHasValue(0, 1, "patronage.status.unlisted");
 		super.checkColumnHasValue(0, 4, budget);
+		
+		super.signOut();
 	}
 
 	@ParameterizedTest
@@ -55,5 +57,7 @@ public class PatronPatronageCreateTest extends TestHarness {
 
 		super.clickOnSubmit("Create");
 		super.checkErrorsExist();
+		
+		super.signOut();
 	}
 }

@@ -7,3 +7,5 @@ admin.announcement.critical = Critical
 admin.announcement.link = Information
 
 admin.announcement.create = Create
+
+admin.announcement.confirm = Confirm you want to make this announcement

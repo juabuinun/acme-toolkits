@@ -1,3 +1,3 @@
-index,title,author,body,email
-0,test-title-0,test-author,test-body,test@test.test
-1,test-title-1,test-author,test-body,
+index,title,author,body,email,confirm
+0,test title,author test,ASDKFJ ASDFASD ASDF,test@test.test,true
+1,with other title,author,ASDF ASDF ASDF ASDF ASDFF ASDFASD FSADF,,true

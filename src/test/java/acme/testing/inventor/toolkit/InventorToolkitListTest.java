@@ -13,9 +13,9 @@ public class InventorToolkitListTest extends TestHarness {
 	@CsvFileSource(resources = "/inventor/toolkit/list-toolkit.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
 	public void inventorToolkitsList(final int index, final String code, final String title, final String published) {
-
-		super.navigateHome();
 		super.signIn("inventor1", "inventor1");
+		super.navigateHome();
+		
 		super.clickOnMenu("Toolkits", "View mine");
 
 		super.checkListingExists();
@@ -24,6 +24,8 @@ public class InventorToolkitListTest extends TestHarness {
 		super.checkColumnHasValue(index, 0, code);
 		super.checkColumnHasValue(index, 1, title);
 		super.checkColumnHasValue(index, 3, published);
+		
+		super.signOut();
 	}
 
 }
