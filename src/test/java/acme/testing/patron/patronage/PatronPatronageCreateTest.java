@@ -32,9 +32,8 @@ public class PatronPatronageCreateTest extends TestHarness {
 		super.sortListing(0, "asc");
 
 		super.checkColumnHasValue(0, 0, code);
-		super.checkColumnHasValue(0, 1, "PROPOSED");
+		super.checkColumnHasValue(0, 1, "patronage.status.unlisted");
 		super.checkColumnHasValue(0, 4, budget);
-		super.checkColumnHasValue(0, 5, "false");
 	}
 
 	@ParameterizedTest

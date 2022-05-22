@@ -23,7 +23,7 @@ public class AnyChirpCreateTest extends TestHarness {
 
 		super.clickOnMenu("Chirps", "View chirps");
 		super.checkListingExists();
-		super.sortListing(0, "asc");
+		super.sortListing(0, "desc");
 
 		super.checkColumnHasValue(0, 1, title);
 		super.checkColumnHasValue(0, 2, author);

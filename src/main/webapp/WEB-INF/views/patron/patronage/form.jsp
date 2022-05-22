@@ -22,8 +22,8 @@
 
 	<acme:input-textbox code="patron.patronage.endDate" path="endDate"
 		placeholder="default.placeholder.moment" />
-	<input type="hidden" id="sponseeId" name="sponseeId"
-		value="${sponseeId}" />
+	
+	<acme:hidden-data path="sponseeId"/>
 	<acme:input-textarea code="patron.patronage.legal" path="legal" />
 	<acme:input-money code="patron.patronage.budget" path="budget" />
 	<acme:input-textbox code="patron.patronage.info" path="info"

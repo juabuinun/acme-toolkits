@@ -20,12 +20,12 @@ public class InventorPatronageModifyTest extends TestHarness {
 		
 		super.sortListing(0, "asc");
 		super.checkColumnHasValue(index, 0, code);
-		super.checkColumnHasValue(index, 1, "PROPOSED");
+		super.checkColumnHasValue(index, 1, "patronage.status.proposed");
 		super.clickOnListingRecord(index);
-		if(state.equals("ACCEPTED")) {
-			super.clickOnButton("Accept");
+		if(state.equals("patronage.status.accepted")) {
+			super.clickOnSubmit("Accept");
 		}else {
-			super.clickOnButton("Deny");
+			super.clickOnSubmit("Deny");
 		}
 		
 		super.clickOnMenu("Patronages","View mine");

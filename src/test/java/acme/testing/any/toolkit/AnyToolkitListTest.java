@@ -12,7 +12,7 @@ public class AnyToolkitListTest extends TestHarness {
 	@ParameterizedTest
 	@CsvFileSource(resources = "/any/toolkit/list-toolkit.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void anyToolkitsList(final int toolkitIndex, final String code, final String title, final String price) {
+	public void anyToolkitsList(final int toolkitIndex, final String code, final String title) {
 
 		super.navigateHome();
 		super.clickOnMenu("Toolkits", "View toolkits");
@@ -22,7 +22,6 @@ public class AnyToolkitListTest extends TestHarness {
 
 		super.checkColumnHasValue(toolkitIndex, 0, code);
 		super.checkColumnHasValue(toolkitIndex, 1, title);
-		super.checkColumnHasValue(toolkitIndex, 2, price);
 	}
 
 }

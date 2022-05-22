@@ -2,6 +2,7 @@
 package acme.entities.patronage;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -58,7 +59,13 @@ public class Patronage extends AbstractEntity {
 	        return null;
 	    }
 	}
-
+	
+	public Patronage() {
+		super();
+		this.status = Status.UNLISTED;
+		this.reports = new ArrayList<>();
+		this.creationDate = LocalDateTime.now();
+	}
 
 	@NotNull
 	@Enumerated(EnumType.STRING)

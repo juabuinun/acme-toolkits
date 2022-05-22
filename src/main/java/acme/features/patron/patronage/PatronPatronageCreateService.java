@@ -1,17 +1,12 @@
-package acme.features.patron.patronage;
 
-import java.time.LocalDateTime;
+package acme.features.patron.patronage;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import acme.components.util.BindHelper;
 import acme.entities.patronage.Patronage;
-import acme.entities.patronage.Patronage.Status;
-import acme.form.patronage.PatronageDto;
-import acme.form.patronage.SavePatronageDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
@@ -26,45 +21,37 @@ import acme.services.patronage.PatronageService;
 
 @Service
 @Transactional
-public class PatronPatronageCreateService extends AuthoriseAll<Patron,Patronage> implements AbstractCreateService<Patron,Patronage>{
+public class PatronPatronageCreateService extends AuthoriseAll<Patron, Patronage> implements AbstractCreateService<Patron, Patronage> {
 
 	@Autowired
-	protected ModelMapper mapper;
-	
+	protected ModelMapper				mapper;
+
 	@Autowired
-	protected PatronageService service;
-	
+	protected PatronageService			service;
+
 	@Autowired
-	protected AcmeConfigurationService configService;
-	
+	protected AcmeConfigurationService	configService;
+
 	@Autowired
-	protected PatronRepository patronRepo;
-	
+	protected PatronRepository			patronRepo;
+
 	@Autowired
-	protected InventorRepository inventorRepo;
-	
+	protected InventorRepository		inventorRepo;
+
+
 	@Override
 	public void bind(final Request<Patronage> request, final Patronage entity, final Errors errors) {
-		entity.setCreationDate(LocalDateTime.now());
-		entity.setStatus(Status.UNLISTED);
-		entity.setSponsor(this.patronRepo.findOnePatronByUserAccountId(PrincipalHelper.get().getAccountId()));
-		entity.setSponsee(this.inventorRepo.findOneInventorByUserAccountId(request.getModel().getInteger("sponseeId")));
-		request.bind(entity, errors, BindHelper.getAllFieldNames(SavePatronageDto.class));
+		this.service.bind(request, entity, errors);
 	}
 
 	@Override
 	public void unbind(final Request<Patronage> request, final Patronage entity, final Model model) {
-		final PatronageDto dto = this.mapper.map(entity, PatronageDto.class);
-
-		request.unbind(dto, model, BindHelper.getAllFieldNames(PatronageDto.class));
-		model.setAttribute("sponseeId", request.getModel().getInteger("sponseeId"));
-		model.setAttribute("sponsorId", PrincipalHelper.get().getAccountId());
-		model.setAttribute("draftMode", true);
+		this.service.unbind(request, entity, model);
 	}
 
 	@Override
 	public Patronage instantiate(final Request<Patronage> request) {
-		return new Patronage();
+		return this.service.instantiate(request, PrincipalHelper.get().getAccountId(), request.getModel().getInteger("sponseeId"));
 	}
 
 	@Override

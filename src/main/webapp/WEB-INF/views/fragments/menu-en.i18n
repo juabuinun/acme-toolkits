@@ -55,7 +55,7 @@ master.menu.chirp.any.list = View chirps
 master.menu.chirp.any.create = Create
 
 ### ANNOUNCEMENT ###
-master.menu.announcements = Announcement
+master.menu.announcements = Announcements
 master.menu.announcements.authenticated.list = View announcements
 master.menu.announcements.admin.create = Create
 

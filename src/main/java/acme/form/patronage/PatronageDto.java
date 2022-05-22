@@ -26,9 +26,5 @@ public class PatronageDto {
 	protected LocalDateTime	endDate;
 
 	protected String		info;
-
-	protected int			sponsorId;
-
-	protected int			sponseeId;
 	
 }

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import acme.components.util.BindHelper;
 import acme.entities.patronage.Patronage;
-import acme.form.patronage.PatronageDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
@@ -36,11 +34,6 @@ public class PatronPatronageShowService extends AuthoriseAll<Patron, Patronage> 
 	@Override
 	@Transactional
 	public void unbind(final Request<Patronage> request, final Patronage entity, final Model model) {
-		final PatronageDto dto = this.mapper.map(entity, PatronageDto.class);
-		dto.setSponsorId(entity.getSponsor().getUserAccount().getId());
-		dto.setSponseeId(entity.getSponsee().getUserAccount().getId());
-		request.unbind(dto, model, BindHelper.getAllFieldNames(PatronageDto.class));
-		
-		model.setAttribute("draftMode", !entity.isPublished());
+		this.service.unbind(request, entity, model);
 	}
 }
