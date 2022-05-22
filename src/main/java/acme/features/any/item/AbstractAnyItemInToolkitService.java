@@ -44,6 +44,8 @@ public abstract class AbstractAnyItemInToolkitService extends AuthoriseAll<Any, 
 
 	@Override
 	public Collection<Item> findMany(final Request<Item> request) {
+		this.counter = 0;
+		this.items = new ArrayList<>();
 		this.items.addAll(this.repo.findByToolkit_idAndItem_itemType(request.getModel().getInteger("masterId"), this.itemType));
 		final List<Item> res = new ArrayList<>();
 		for(int i=0;i<this.items.size();i++) {
@@ -64,6 +66,7 @@ public abstract class AbstractAnyItemInToolkitService extends AuthoriseAll<Any, 
 		dto.setPrice(tiDto.getItem().getPrice());
 		dto.setQuantity(tiDto.getQuantity());
 		request.unbind(dto, model, "id","version","code","price","quantity","name","technology");
+		this.counter++;
 	}
 
 }
