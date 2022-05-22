@@ -16,7 +16,7 @@
 	<acme:input-money code="inventor.toolkit.price" path="price"
 		readonly="true" />
 	<acme:input-textarea code="inventor.toolkit.notes" path="notes" />
-	<acme:input-textbox code="inventor.toolkit.info" path="info" />
+	<acme:input-textbox code="inventor.toolkit.info" path="info" placeholder="default.placeholder.url"/>
 
 	<jstl:choose>
 		<jstl:when test="${draftMode == true}">
@@ -256,9 +256,9 @@
 		</jstl:when>
 		<jstl:when test="${draftMode == false}">
 			<acme:button code="inventor.toolkit.tools"
-				action="/inventor/item/list-tool-toolkit?masterId=${id}" />
+				action="/any/item/list-tool-toolkit?masterId=${id}" />
 			<acme:button code="inventor.toolkit.components"
-				action="/inventor/item/list-component-toolkit?masterId=${id}" />
+				action="/any/item/list-component-toolkit?masterId=${id}" />
 		</jstl:when>
 	</jstl:choose>
 </acme:form>

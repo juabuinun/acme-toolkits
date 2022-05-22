@@ -22,7 +22,7 @@
 
 	<acme:input-textarea code="inventor.patronage.legal" path="legal" />
 	<acme:input-textarea code="inventor.patronage.budget" path="budget" />
-	<acme:input-textarea code="inventor.patronage.info" path="info" />
+	<acme:input-textarea code="inventor.patronage.info" path="info" placeholder="default.placeholder.url"/>
 
 
 	<acme:button code="inventor.patronage.sponsor"

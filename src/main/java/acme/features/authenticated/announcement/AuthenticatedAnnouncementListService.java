@@ -30,7 +30,7 @@ public class AuthenticatedAnnouncementListService extends AuthoriseAll<Authentic
 	@Override
 	@Transactional
 	public void unbind(final Request<Announcement> request, final Announcement entity, final Model model) {
-		request.unbind(entity, model, "title", "creationDate", "body");
+		request.unbind(entity, model, "title", "creationDate", "body","critical");
 	}
 
 }

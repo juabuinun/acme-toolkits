@@ -5,3 +5,5 @@ admin.announcement.moment = Fecha
 admin.announcement.body = Mensaje
 admin.announcement.critical = Importante
 admin.announcement.link = Informacion
+
+admin.announcement.create = Crear

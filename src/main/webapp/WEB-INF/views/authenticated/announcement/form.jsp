@@ -8,5 +8,5 @@
 	<acme:input-textbox code="authenticated.announcement.moment" path="creationDate"/>
 	<acme:input-textbox code="authenticated.announcement.body" path="body"/>
 	<acme:input-textbox code="authenticated.announcement.critical" path="critical"/>
-	<acme:input-textbox code="authenticated.announcement.link" path="link"/>	
+	<acme:input-textbox code="authenticated.announcement.link" path="link" placeholder="default.placeholder.url"/>	
 </acme:form>

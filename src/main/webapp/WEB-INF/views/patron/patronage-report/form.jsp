@@ -11,5 +11,5 @@
 		placeholder="default.placeholder.moment" />
 	<acme:input-textbox code="patron.patronage.report.memorandum"
 		path="memorandum" />
-	<acme:input-textbox code="patron.patronage.report.info" path="info" />
+	<acme:input-textbox code="patron.patronage.report.info" path="info" placeholder="default.placeholder.url"/>
 </acme:form>

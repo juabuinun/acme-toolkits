@@ -7,3 +7,6 @@ item.tool = Tool
 item.component = Component
 
 code.placeholder = ABC-123(-A)
+
+general.boolean.true = Yes
+general.boolean.false = No

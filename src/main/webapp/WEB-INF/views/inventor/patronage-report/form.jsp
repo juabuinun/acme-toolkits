@@ -8,10 +8,10 @@
 	<acme:input-textbox code="inventor.patronage.report.sequence"
 		path="sequenceNumber" readonly="true" />
 	<acme:input-textbox code="inventor.patronage.report.date"
-		path="creationDate" readonly="true" />
+		path="creationDate" readonly="true" placeholder="default.placeholder.moment"/>
 	<acme:input-textbox code="inventor.patronage.report.memorandum"
 		path="memorandum" />
-	<acme:input-textbox code="inventor.patronage.report.info" path="info" />
+	<acme:input-textbox code="inventor.patronage.report.info" path="info" placeholder="default.placeholder.url"/>
 
 	<jstl:if test="${command == 'create' }">
 		<acme:submit code="inventor.patronage.report.create"

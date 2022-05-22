@@ -47,18 +47,7 @@ public class InventorToolkitCreateService extends AuthoriseAll<Inventor, Toolkit
 	public void bind(final Request<Toolkit> request, final Toolkit entity, final Errors errors) {
 		request.bind(entity, errors, BindHelper.getAllFieldNames(SaveToolkitDto.class));
 		
-		entity.getItems().clear();
-		try {
-			this.service.addToolkitItems(entity, request.getModel().getString("binded_components_input"), "component_");
-
-		} catch (final Exception e) {
-			errors.state(request, false, "*", "errors.toolkit.components");
-		}
-		try {
-			this.service.addToolkitItems(entity, request.getModel().getString("binded_tools_input"), "tool_");
-		} catch (final Exception e) {
-			errors.state(request, false, "*", "errors.toolkit.tools");
-		}
+		entity.setOwner(this.inventorRepo.findOneInventorByUserAccountId(PrincipalHelper.get().getAccountId()));
 	}
 
 	@Override
@@ -85,7 +74,20 @@ public class InventorToolkitCreateService extends AuthoriseAll<Inventor, Toolkit
 
 	@Override
 	public void validate(final Request<Toolkit> request, final Toolkit entity, final Errors errors) {
-		this.configService.filter(request, entity, errors);
+		this.configService.filter(request, this.mapper.map(entity, SaveToolkitDto.class), errors);
+		
+		entity.getItems().clear();
+		try {
+			this.service.addToolkitItems(entity, request.getModel().getString("binded_components_input"), "component_");
+
+		} catch (final Exception e) {
+			errors.state(request, false, "*", "errors.toolkit.components");
+		}
+		try {
+			this.service.addToolkitItems(entity, request.getModel().getString("binded_tools_input"), "tool_");
+		} catch (final Exception e) {
+			errors.state(request, false, "*", "errors.toolkit.tools");
+		}
 		
 	}
 

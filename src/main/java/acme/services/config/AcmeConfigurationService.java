@@ -5,9 +5,9 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class AcmeConfigurationService extends AbstractCrudServiceImpl<Configurat
 		}
 		return res;
 	}
-	
+
 	public String getDefaultCurrency() {
 		if (!this.cache.getStatus().equals(CacheStatus.LIVE))
 			this.load();
@@ -66,13 +66,11 @@ public class AcmeConfigurationService extends AbstractCrudServiceImpl<Configurat
 		return super.save(entity);
 	}
 
-
 	public void load() {
 		final Configuration config = this.findOne();
 		this.mapper.map(config, this.cache);
 		this.cache.setStatus(CacheStatus.LIVE);
 	}
-
 
 	public void checkMoney(final Request<?> request, final Errors errors, final Money money, final String fieldName) {
 		if (!this.cache.getStatus().equals(CacheStatus.LIVE))
@@ -82,7 +80,6 @@ public class AcmeConfigurationService extends AbstractCrudServiceImpl<Configurat
 			errors.state(request, Arrays.asList(this.cache.getAcceptedCurrencies().split("\\s*,\\s*")).contains(money.getCurrency().toUpperCase()), fieldName == null ? "*" : fieldName, "errors.money.currency");
 		}
 	}
-
 
 	public void filter(final Request<?> request, final Object object, final Errors errors) {
 		if (!this.cache.getStatus().equals(CacheStatus.LIVE))
@@ -99,19 +96,17 @@ public class AcmeConfigurationService extends AbstractCrudServiceImpl<Configurat
 				final Object value = propertyDesc.getReadMethod().invoke(object);
 
 				if (value instanceof String && !((String) value).isEmpty()) {
-					final List<String> words = Arrays.asList(((String) value).split("\\s+"));
-					wordCount += words.size();
-					for (final String word : words) {
-						for (final SpamWordDto spamWord : this.cache.getSpamWords()) {
-							if (word.toUpperCase().contains(spamWord.getWord().toUpperCase())) {
-								if (spamWord.isStrong()) {
-									strongSpamWordCount++;
-								} else {
-									weakSpamWordCount++;
-								}
-							}
+					wordCount = wordCount + ((String) value).split("\\s+").length;
+					final String str = ((String) value).toUpperCase();
+					for (final SpamWordDto spamWord : this.cache.getSpamWords()) {
+						final int spamCount = StringUtils.countMatches(str, spamWord.getWord().toUpperCase());
+						if(spamCount > 0 && spamWord.isStrong()) {
+							strongSpamWordCount++;
+						}else if(spamCount > 0 && !spamWord.isStrong()) {
+							weakSpamWordCount++;
 						}
 					}
+
 				}
 			}
 

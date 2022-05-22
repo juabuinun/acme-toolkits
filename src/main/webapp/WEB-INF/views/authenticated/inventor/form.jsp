@@ -18,7 +18,7 @@
 <acme:form>
 	<acme:input-textbox code="inventor.company" path="company"/>
 	<acme:input-textbox code="inventor.statement" path="statement"/>
-	<acme:input-textbox code="inventor.info" path="info"/>
+	<acme:input-textbox code="inventor.info" path="info" placeholder="default.placeholder.email"/>
 	
 	<acme:submit test="${command == 'create'}" code="authenticated.provider.form.button.create" action="/authenticated/inventor/create"/>
 	<acme:submit test="${command == 'update'}" code="authenticated.provider.form.button.update" action="/authenticated/inventor/update"/>

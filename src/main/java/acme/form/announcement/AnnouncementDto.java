@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CreateAnnouncementDto {
+public class AnnouncementDto {
 
 	protected String title;
-	protected LocalDateTime creationDate;
 	protected String body;
 	protected Boolean critical;
+	protected LocalDateTime creationDate;
 	protected String link;
 }

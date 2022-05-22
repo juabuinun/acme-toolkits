@@ -15,7 +15,7 @@
 	<acme:input-textbox code="inventor.item.form.description"
 		path="description" />
 	<acme:input-money code="inventor.item.form.price" path="price" />
-	<acme:input-textarea code="inventor.item.form.info" path="info" />
+	<acme:input-textarea code="inventor.item.form.info" path="info" placeholder="default.placeholder.url"/>
 
 	<jstl:if test="${command == 'show' && draftMode == false }">
 		<acme:button code="any.item.toolkit"

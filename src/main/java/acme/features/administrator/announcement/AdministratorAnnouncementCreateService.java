@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import acme.components.util.BindHelper;
 import acme.entities.announcement.Announcement;
-import acme.form.announcement.CreateAnnouncementDto;
+import acme.form.announcement.AnnouncementDto;
+import acme.form.announcement.SaveAnnouncementDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
@@ -28,13 +29,13 @@ public class AdministratorAnnouncementCreateService extends AuthoriseAll<Adminis
 	
 	@Override
 	public void bind(final Request<Announcement> request, final Announcement entity, final Errors errors) {
-		request.bind(entity, errors, BindHelper.getAllFieldNames(CreateAnnouncementDto.class));
+		request.bind(entity, errors, BindHelper.getAllFieldNames(SaveAnnouncementDto.class));
+		entity.setCreationDate(LocalDateTime.now());
 	}
 
 	@Override
 	public void unbind(final Request<Announcement> request, final Announcement entity, final Model model) {
-		request.unbind(entity, model, BindHelper.getAllFieldNames(CreateAnnouncementDto.class));
-		entity.setCreationDate(LocalDateTime.now());
+		request.unbind(entity, model, BindHelper.getAllFieldNames(AnnouncementDto.class));
 	}
 
 	@Override

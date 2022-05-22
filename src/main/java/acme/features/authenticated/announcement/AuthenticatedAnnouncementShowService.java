@@ -28,7 +28,7 @@ public class AuthenticatedAnnouncementShowService extends AuthoriseAll<Authentic
 	@Override
 	@Transactional
 	public void unbind(final Request<Announcement> request, final Announcement entity, final Model model) {
-		request.unbind(entity, model, "title", "moment", "body", "critical", "link");
+		request.unbind(entity, model, "title", "creationDate", "body", "critical", "link");
 	}
 
 }
