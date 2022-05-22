@@ -83,8 +83,9 @@ public class Toolkit extends AbstractEntity {
 		try {
 			final Map<String, Double> prices = new HashMap<>();
 			this.items.stream().forEach(i -> {
-				final Money price = i.getItem().getPrice();
-				price.setAmount(price.getAmount() * i.getQuantity());
+				final Money price = new Money();
+				price.setAmount(i.getItem().getPrice().getAmount() * i.getQuantity());
+				price.setCurrency(i.getItem().getPrice().getCurrency());
 				if (prices.containsKey(price.getCurrency())) {
 					prices.put(price.getCurrency(), prices.get(price.getCurrency()) + price.getAmount());
 				} else {

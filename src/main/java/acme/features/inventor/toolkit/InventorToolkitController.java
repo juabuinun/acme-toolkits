@@ -24,7 +24,7 @@ public class InventorToolkitController extends AcmeAbstractController<Inventor, 
 	@Autowired
 	protected InventorToolkitDeleteService deleteService;
 	@Autowired
-	protected InventorToolkitUpdateService publishService;
+	protected InventorToolkitPublishService publishService;
 
 	@PostConstruct
 	protected void initialise() {
