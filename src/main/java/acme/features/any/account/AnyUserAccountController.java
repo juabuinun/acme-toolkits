@@ -5,12 +5,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import acme.components.custom.controllers.AcmeAbstractController;
+import acme.components.custom.controllers.AbstractAcmeToolkitsController;
 import acme.framework.entities.UserAccount;
 import acme.framework.roles.Any;
 
 @Controller
-public class AnyUserAccountController extends AcmeAbstractController<Any, UserAccount>{
+public class AnyUserAccountController extends AbstractAcmeToolkitsController<Any, UserAccount>{
 
 	@Autowired
 	protected AnyUserAccountListService listService;

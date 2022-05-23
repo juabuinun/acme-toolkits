@@ -240,7 +240,7 @@
 			<!-- the other stuff ========================================================================= -->
 			<jstl:choose>
 				<jstl:when
-					test="${command == 'show' || command=='publish' || command=='delete'}">
+					test="${command == 'show' || command=='publish' || command=='delete' || command == 'update'}">
 					<acme:submit code="inventor.toolkit.update"
 						action="/inventor/toolkit/update" />
 					<acme:submit code="inventor.toolkit.publish"

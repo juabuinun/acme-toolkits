@@ -14,11 +14,11 @@ import acme.framework.helpers.PrincipalHelper;
 import acme.framework.services.AbstractCreateService;
 import acme.repositories.InventorRepository;
 import acme.roles.Inventor;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.item.ItemService;
 
-public abstract class AbstractInventorItemCreateService extends AuthoriseAll<Inventor, Item> implements AbstractCreateService<Inventor, Item> {
+public abstract class AbstractInventorItemCreateService extends AbstractAuthoriseAll<Inventor, Item> implements AbstractCreateService<Inventor, Item> {
 
 	protected Type						itemType;
 

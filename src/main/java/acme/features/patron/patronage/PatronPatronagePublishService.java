@@ -16,13 +16,13 @@ import acme.framework.services.AbstractUpdateService;
 import acme.repositories.InventorRepository;
 import acme.repositories.PatronRepository;
 import acme.roles.Patron;
-import acme.services.AuthoriseOwner;
+import acme.services.AbstractAuthoriseOwner;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.patronage.PatronageService;
 
 @Service
 @Transactional
-public class PatronPatronagePublishService extends AuthoriseOwner<Patron,Patronage> implements AbstractUpdateService<Patron,Patronage>{
+public class PatronPatronagePublishService extends AbstractAuthoriseOwner<Patron,Patronage> implements AbstractUpdateService<Patron,Patronage>{
 
 	@Autowired
 	protected PatronPatronagePublishService() {

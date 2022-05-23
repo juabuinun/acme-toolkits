@@ -5,12 +5,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import acme.components.custom.controllers.AcmeAbstractController;
+import acme.components.custom.controllers.AbstractAcmeToolkitsController;
 import acme.entities.patronage.Patronage;
 import acme.roles.Inventor;
 
 @Controller
-public class InventorPatronageController extends AcmeAbstractController<Inventor, Patronage>{
+public class InventorPatronageController extends AbstractAcmeToolkitsController<Inventor, Patronage>{
 
 	@Autowired
 	protected InventorPatronageListService listService;

@@ -59,12 +59,12 @@ import acme.framework.services.ServiceWrapper;
  * @param <E>
  */
 @Controller
-public abstract class RedefinedAbstractController<R extends UserRole, E> implements RedefinedController<R,E> {
+public abstract class AbstractRedefinedController<R extends UserRole, E> implements RedefinedController<R,E> {
 
-	private static final Logger logger = LoggerFactory.getLogger(RedefinedAbstractController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractRedefinedController.class);
 	
 	@Autowired
-	protected RedefinedAbstractController<R, E>		self;
+	protected AbstractRedefinedController<R, E>		self;
 
 	protected Class<R>						roleClazz;
 	protected Class<E>						entityClazz;
@@ -140,12 +140,12 @@ public abstract class RedefinedAbstractController<R extends UserRole, E> impleme
 	// Constructor ------------------------------------------------------------
 
 	@SuppressWarnings("unchecked")
-	protected RedefinedAbstractController() {
+	protected AbstractRedefinedController() {
 		Class<?>[] types;
 		PropertyNamingStrategy.KebabCaseStrategy translator;
 		String roleName, entityName;
 
-		types = GenericTypeResolver.resolveTypeArguments(this.getClass(), RedefinedAbstractController.class);
+		types = GenericTypeResolver.resolveTypeArguments(this.getClass(), AbstractRedefinedController.class);
 
 		if (types == null || types.length != 2) {
 			System.err.printf("I'm sorry, %s cannot be instantiated.%n", this.getClass().getName());
@@ -175,7 +175,7 @@ public abstract class RedefinedAbstractController<R extends UserRole, E> impleme
 		String requestTemplate;
 
 		try {
-			requestHandler = RedefinedAbstractController.class.getMethod( //
+			requestHandler = AbstractRedefinedController.class.getMethod( //
 				"handleRequest", //
 				String.class, //
 				Map.class, //
@@ -224,10 +224,10 @@ public abstract class RedefinedAbstractController<R extends UserRole, E> impleme
 		servletMethod = servletRequest.getMethod();
 		servletUrl = servletRequest.getRequestURI();
 
-		RedefinedAbstractController.logger.debug("DISPATCHING {} {}", servletMethod, servletUrl);
-		RedefinedAbstractController.logger.debug("Command: {}", command);
-		RedefinedAbstractController.logger.debug("Model:   {}", model);
-		RedefinedAbstractController.logger.debug("Locale:  {}", locale.getLanguage());
+		AbstractRedefinedController.logger.debug("DISPATCHING {} {}", servletMethod, servletUrl);
+		AbstractRedefinedController.logger.debug("Command: {}", command);
+		AbstractRedefinedController.logger.debug("Model:   {}", model);
+		AbstractRedefinedController.logger.debug("Locale:  {}", locale.getLanguage());
 
 		try {
 			// HINT: let's start a new transaction.
@@ -319,15 +319,15 @@ public abstract class RedefinedAbstractController<R extends UserRole, E> impleme
 				this.commitTransaction();
 			}
 			result = this.buildPanicView(request, response, oops);
-			RedefinedAbstractController.logger.error("Error handling request",oops);
+			AbstractRedefinedController.logger.error("Error handling request",oops);
 		}
 
 		// HINT: must always return a 'ModelAndView' object, be it the user-defined one or a panic one.
 
 		assert result != null;
 
-		RedefinedAbstractController.logger.debug("SERVING {} {}", servletMethod, servletUrl);
-		RedefinedAbstractController.logger.debug("Result: {}", result);
+		AbstractRedefinedController.logger.debug("SERVING {} {}", servletMethod, servletUrl);
+		AbstractRedefinedController.logger.debug("Result: {}", result);
 
 		return result;
 	}

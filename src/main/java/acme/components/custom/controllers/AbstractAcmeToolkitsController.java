@@ -35,9 +35,9 @@ import acme.framework.roles.UserRole;
  */
 @Primary
 @Controller
-public abstract class AcmeAbstractController<R extends UserRole, E> extends RedefinedAbstractController<R, E> {
+public abstract class AbstractAcmeToolkitsController<R extends UserRole, E> extends AbstractRedefinedController<R, E> {
 
-	private static final Logger logger = LoggerFactory.getLogger(AcmeAbstractController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractAcmeToolkitsController.class);
 
 	@Override
 	public ModelAndView handleRequest( //
@@ -64,10 +64,10 @@ public abstract class AcmeAbstractController<R extends UserRole, E> extends Rede
 		servletMethod = servletRequest.getMethod();
 		servletUrl = servletRequest.getRequestURI();
 
-		AcmeAbstractController.logger.debug("DISPATCHING {} {}", servletMethod, servletUrl);
-		AcmeAbstractController.logger.debug("Command: {}", command);
-		AcmeAbstractController.logger.debug("Model:   {}", model);
-		AcmeAbstractController.logger.debug("Locale:  {}", locale.getLanguage());
+		AbstractAcmeToolkitsController.logger.debug("DISPATCHING {} {}", servletMethod, servletUrl);
+		AbstractAcmeToolkitsController.logger.debug("Command: {}", command);
+		AbstractAcmeToolkitsController.logger.debug("Model:   {}", model);
+		AbstractAcmeToolkitsController.logger.debug("Locale:  {}", locale.getLanguage());
 
 		try {
 			// HINT: let's start a new transaction.
@@ -153,7 +153,7 @@ public abstract class AcmeAbstractController<R extends UserRole, E> extends Rede
 			}
 			result = this.buildPanicView(request, response, oops);
 			oops.printStackTrace();
-			AcmeAbstractController.logger.error("Error on custom controller", oops);
+			AbstractAcmeToolkitsController.logger.error("Error on custom controller", oops);
 //			throw new RuntimeException("Error on custom controller",oops);
 		}
 
@@ -161,8 +161,8 @@ public abstract class AcmeAbstractController<R extends UserRole, E> extends Rede
 
 		assert result != null;
 
-		AcmeAbstractController.logger.debug("SERVING {} {}", servletMethod, servletUrl);
-		AcmeAbstractController.logger.debug("Result: {}", result);
+		AbstractAcmeToolkitsController.logger.debug("SERVING {} {}", servletMethod, servletUrl);
+		AbstractAcmeToolkitsController.logger.debug("Result: {}", result);
 
 		return result;
 	}

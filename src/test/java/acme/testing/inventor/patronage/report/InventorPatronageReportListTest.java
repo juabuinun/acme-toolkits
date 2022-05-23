@@ -19,9 +19,11 @@ public class InventorPatronageReportListTest extends TestHarness {
 		super.navigateHome();
 
 		super.clickOnMenu("Patronages", "View mine");
+		super.checkListingExists();
 		super.sortListing(0, "desc");
 		this.clickOnListingRecord(reportIndex);
 		super.clickOnButton("View reports");
+		super.checkListingExists();
 
 		super.sortListing(1, "asc");
 	

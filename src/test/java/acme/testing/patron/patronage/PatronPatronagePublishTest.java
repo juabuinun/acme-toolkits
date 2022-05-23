@@ -10,12 +10,13 @@ public class PatronPatronagePublishTest extends TestHarness{
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/patron/patronage/publish-patronage.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(100)
 	public void positivePatronPatronagePublish(final int index,  final String end, final String legal, final String budget, final String info) {
 		super.signIn("patron4", "patron4");
 
 		super.navigateHome();
 		super.clickOnMenu("Patronages", "View mine");
+		super.checkListingExists();
 		super.sortListing(0, "desc");
 		super.clickOnListingRecord(index);
 		super.optionalValue("endDate", end, (i,v)-> super.fillInputBoxIn(i, v));

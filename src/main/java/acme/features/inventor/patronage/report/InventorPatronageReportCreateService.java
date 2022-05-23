@@ -21,13 +21,13 @@ import acme.framework.controllers.Request;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.services.AbstractCreateService;
 import acme.roles.Inventor;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.patronage.PatronageService;
 import acme.services.patronagereport.PatronageReportService;
 
 @Service
 @Transactional
-public class InventorPatronageReportCreateService extends AuthoriseAll<Inventor, PatronageReport> implements AbstractCreateService<Inventor, PatronageReport> {
+public class InventorPatronageReportCreateService extends AbstractAuthoriseAll<Inventor, PatronageReport> implements AbstractCreateService<Inventor, PatronageReport> {
 
 	protected Patronage					patronage;
 

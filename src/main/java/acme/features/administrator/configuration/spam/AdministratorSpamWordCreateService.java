@@ -13,12 +13,12 @@ import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Administrator;
 import acme.framework.services.AbstractCreateService;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.config.AcmeConfigurationService;
 
 @Service
 @Transactional
-public class AdministratorSpamWordCreateService extends AuthoriseAll<Administrator,SpamWord> implements AbstractCreateService<Administrator,SpamWord>{
+public class AdministratorSpamWordCreateService extends AbstractAuthoriseAll<Administrator,SpamWord> implements AbstractCreateService<Administrator,SpamWord>{
 
 	@Autowired
 	protected AcmeConfigurationService service;

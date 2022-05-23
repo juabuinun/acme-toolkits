@@ -15,12 +15,12 @@ import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Administrator;
 import acme.framework.services.AbstractCreateService;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.announcement.AnnouncementService;
 import acme.services.config.AcmeConfigurationService;
 
 @Service
-public class AdministratorAnnouncementCreateService extends AuthoriseAll<Administrator,Announcement> implements AbstractCreateService<Administrator,Announcement>{
+public class AdministratorAnnouncementCreateService extends AbstractAuthoriseAll<Administrator,Announcement> implements AbstractCreateService<Administrator,Announcement>{
 
 	@Autowired
 	protected AnnouncementService service;

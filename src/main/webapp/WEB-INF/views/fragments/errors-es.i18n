@@ -1,5 +1,10 @@
 errors.spam = Spam detectedo
+errors.spam.error = Hubo un fallo en el filtro de contenido
+
 errors.unique = Debe ser unico
 errors.patronage.date = Debe ser al menos un mes desde hoy
 errors.money.positive = Debe ser positivo
 errors.money.currency = Divisa no es valida
+
+errors.toolkit.components = No se pudieron anadir los componentes
+errors.toolkit.tools = No se pudieron anadir las herramientas

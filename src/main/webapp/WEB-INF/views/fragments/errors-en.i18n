@@ -1,5 +1,10 @@
 errors.spam = Spam detected
+errors.spam.error = There was an issue with the content filter
+
 errors.unique = Must be unique
 errors.patronage.date = Must be at least a month from now
 errors.money.positive = Must be positive
 errors.money.currency = Currency not valid
+
+errors.toolkit.components = Components could not be selected
+errors.toolkit.tools = Tools could not be selected

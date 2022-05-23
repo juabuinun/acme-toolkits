@@ -5,12 +5,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import acme.components.custom.controllers.AcmeAbstractController;
+import acme.components.custom.controllers.AbstractAcmeToolkitsController;
 import acme.form.administrator.AdminDashboard;
 import acme.framework.roles.Administrator;
 
 @Controller
-public class AdministratorDashboardController extends AcmeAbstractController<Administrator, AdminDashboard> {
+public class AdministratorDashboardController extends AbstractAcmeToolkitsController<Administrator, AdminDashboard> {
 
 	@Autowired
 	protected AdministratorDashboardShowService showService;

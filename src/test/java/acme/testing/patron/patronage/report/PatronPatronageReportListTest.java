@@ -12,23 +12,25 @@ public class PatronPatronageReportListTest extends TestHarness {
 	@ParameterizedTest
 	@CsvFileSource(resources = "/patron/patronage/report/list-patronage-report.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void patronPatronageReportList(final int patronageIndex, final int recordIndex, final String creationDate, final String sequenceNumber,final String memorandum) {
+	public void patronPatronageReportList(final int patronageIndex, final int index, final String date, final String sequence, final String memorandum) {
 
 		super.signIn("patron1", "patron1");
 
 		super.navigateHome();
 
 		super.clickOnMenu("Patronages", "View mine");
-		
+		super.checkListingExists();
 		super.sortListing(0, "desc");
-		this.clickOnListingRecord(patronageIndex);
+		
+		super.clickOnListingRecord(patronageIndex);
 		super.clickOnButton("View reports");
-
+		
+		super.checkListingExists();
 		super.sortListing(0, "asc");
-	
-		super.checkColumnHasValue(recordIndex, 0, sequenceNumber);
-		super.checkColumnHasValue(recordIndex, 1, creationDate);
-		this.clickOnListingRecord(recordIndex);
+
+		super.checkColumnHasValue(index, 0, sequence);
+		super.checkColumnHasValue(index, 1, date);
+		this.clickOnListingRecord(index);
 
 		super.checkFormExists();
 		super.checkInputBoxHasValue("memorandum", memorandum);

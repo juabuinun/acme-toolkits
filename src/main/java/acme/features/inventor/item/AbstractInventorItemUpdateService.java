@@ -13,11 +13,11 @@ import acme.framework.helpers.PrincipalHelper;
 import acme.framework.services.AbstractUpdateService;
 import acme.repositories.InventorRepository;
 import acme.roles.Inventor;
-import acme.services.AuthoriseOwner;
+import acme.services.AbstractAuthoriseOwner;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.item.ItemService;
 
-public abstract class AbstractInventorItemUpdateService extends AuthoriseOwner<Inventor, Item> implements AbstractUpdateService<Inventor, Item> {
+public abstract class AbstractInventorItemUpdateService extends AbstractAuthoriseOwner<Inventor, Item> implements AbstractUpdateService<Inventor, Item> {
 
 	protected Type						itemType;
 

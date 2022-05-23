@@ -11,11 +11,11 @@ import acme.framework.controllers.Request;
 import acme.framework.roles.Administrator;
 import acme.framework.services.AbstractDeleteService;
 import acme.repositories.SpamWordRepository;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 
 @Service
 @Transactional
-public class AdministratorSpamWordDeleteService extends AuthoriseAll<Administrator,SpamWord> implements AbstractDeleteService<Administrator,SpamWord>{
+public class AdministratorSpamWordDeleteService extends AbstractAuthoriseAll<Administrator,SpamWord> implements AbstractDeleteService<Administrator,SpamWord>{
 
 	@Autowired
 	protected SpamWordRepository repo;

@@ -13,10 +13,12 @@ public class PatronPatronageCreateTest extends TestHarness {
 	@CsvFileSource(resources = "/patron/patronage/create-positive-patronage.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
 	public void positivePatronPatronageCreate(final int userIndex, final String code, final String end, final String legal, final String budget, final String info) {
-		super.signIn("patron1", "patron1");
+		super.signIn("patron3", "patron3");
 
 		super.navigateHome();
 		super.clickOnMenu("Users", "View users");
+		super.checkListingExists();
+		super.sortListing(0, "asc");
 		super.clickOnListingRecord(userIndex);
 		super.clickOnButton("Sponsor");
 
@@ -29,8 +31,8 @@ public class PatronPatronageCreateTest extends TestHarness {
 		super.clickOnSubmit("Create");
 
 		super.clickOnMenu("Patronages", "View mine");
+		super.checkListingExists();
 		super.sortListing(0, "asc");
-
 		super.checkColumnHasValue(0, 0, code);
 		super.checkColumnHasValue(0, 1, "patronage.status.unlisted");
 		super.checkColumnHasValue(0, 4, budget);
@@ -44,8 +46,8 @@ public class PatronPatronageCreateTest extends TestHarness {
 	public void negativePatronPatronageCreate(final int userIndex, final String code, final String end, final String legal, final String budget, final String info) {
 		super.signIn("patron1", "patron1");
 
-		super.navigateHome();
 		super.clickOnMenu("Users", "View users");
+		super.checkListingExists();
 		super.clickOnListingRecord(userIndex);
 		super.clickOnButton("Sponsor");
 

@@ -16,11 +16,11 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractListService;
 import acme.roles.Inventor;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.item.ItemService;
 
 @Service
-public class InventorComponentListService extends AuthoriseAll<Inventor, Item> implements AbstractListService<Inventor, Item> {
+public class InventorComponentListService extends AbstractAuthoriseAll<Inventor, Item> implements AbstractListService<Inventor, Item> {
 
 	@Autowired
 	protected ItemService service;

@@ -15,13 +15,13 @@ import acme.framework.services.AbstractCreateService;
 import acme.repositories.InventorRepository;
 import acme.repositories.PatronRepository;
 import acme.roles.Patron;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.patronage.PatronageService;
 
 @Service
 @Transactional
-public class PatronPatronageCreateService extends AuthoriseAll<Patron, Patronage> implements AbstractCreateService<Patron, Patronage> {
+public class PatronPatronageCreateService extends AbstractAuthoriseAll<Patron, Patronage> implements AbstractCreateService<Patron, Patronage> {
 
 	@Autowired
 	protected ModelMapper				mapper;

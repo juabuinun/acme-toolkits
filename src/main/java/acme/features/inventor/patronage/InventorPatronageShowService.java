@@ -11,11 +11,11 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
 import acme.roles.Inventor;
-import acme.services.AuthoriseOwner;
+import acme.services.AbstractAuthoriseOwner;
 import acme.services.patronage.PatronageService;
 
 @Service
-public class InventorPatronageShowService extends AuthoriseOwner<Inventor,Patronage> implements AbstractShowService<Inventor, Patronage> {
+public class InventorPatronageShowService extends AbstractAuthoriseOwner<Inventor,Patronage> implements AbstractShowService<Inventor, Patronage> {
 
 	@Autowired
 	protected PatronageService service;

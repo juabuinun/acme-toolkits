@@ -13,12 +13,12 @@ import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Administrator;
 import acme.framework.services.AbstractUpdateService;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.config.AcmeConfigurationService;
 
 @Service
 @Transactional
-public class AdministratorConfigurationUpdateService extends AuthoriseAll<Administrator, Configuration> implements AbstractUpdateService<Administrator, Configuration> {
+public class AdministratorConfigurationUpdateService extends AbstractAuthoriseAll<Administrator, Configuration> implements AbstractUpdateService<Administrator, Configuration> {
 
 	@Autowired
 	protected AcmeConfigurationService service;

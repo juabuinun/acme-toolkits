@@ -1,21 +1,14 @@
 
 package acme.features.inventor.toolkit;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import acme.components.util.BindHelper;
-import acme.entities.item.Item.Type;
 import acme.entities.toolkit.Toolkit;
-import acme.form.toolkit.DetailToolkitDto;
 import acme.form.toolkit.SaveToolkitDto;
-import acme.form.toolkititem.ToolkitItemDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
@@ -23,13 +16,13 @@ import acme.framework.helpers.PrincipalHelper;
 import acme.framework.services.AbstractCreateService;
 import acme.repositories.InventorRepository;
 import acme.roles.Inventor;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.toolkit.ToolkitService;
 
 @Service
 @Transactional
-public class InventorToolkitCreateService extends AuthoriseAll<Inventor, Toolkit> implements AbstractCreateService<Inventor, Toolkit> {
+public class InventorToolkitCreateService extends AbstractAuthoriseAll<Inventor, Toolkit> implements AbstractCreateService<Inventor, Toolkit> {
 
 	@Autowired
 	protected ToolkitService			service;
@@ -52,19 +45,7 @@ public class InventorToolkitCreateService extends AuthoriseAll<Inventor, Toolkit
 
 	@Override
 	public void unbind(final Request<Toolkit> request, final Toolkit entity, final Model model) {
-		final DetailToolkitDto dto = this.mapper.map(entity, DetailToolkitDto.class);
-
-		dto.setAvailableComponents(this.service.findAvaliableItems(entity, Type.COMPONENT));
-		dto.setBindedComponents(this.mapper.map(entity.getItems().stream().filter(i -> i.getItem().getItemType().equals(Type.COMPONENT)).collect(Collectors.toList()), new TypeToken<List<ToolkitItemDto>>() {
-		}.getType()));
-
-		dto.setAvailableTools(this.service.findAvaliableItems(entity, Type.TOOL));
-		dto.setBindedTools(this.mapper.map(entity.getItems().stream().filter(i -> i.getItem().getItemType().equals(Type.TOOL)).collect(Collectors.toList()), new TypeToken<List<ToolkitItemDto>>() {
-		}.getType()));
-
-		request.unbind(dto, model, BindHelper.getAllFieldNames(DetailToolkitDto.class));
-
-		model.setAttribute("draftMode", !entity.isPublished());
+		this.service.unbind(request, entity, model);
 	}
 
 	@Override

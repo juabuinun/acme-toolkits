@@ -6,12 +6,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import acme.components.custom.controllers.AcmeAbstractController;
+import acme.components.custom.controllers.AbstractAcmeToolkitsController;
 import acme.entities.patronagereport.PatronageReport;
 import acme.roles.Patron;
 
 @Controller
-public class PatronPatronageReportController extends AcmeAbstractController<Patron, PatronageReport> {
+public class PatronPatronageReportController extends AbstractAcmeToolkitsController<Patron, PatronageReport> {
 
 	@Autowired
 	protected PatronPatronageReportListService	listService;

@@ -5,7 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import acme.components.custom.controllers.AcmeAbstractController;
+import acme.components.custom.controllers.AbstractAcmeToolkitsController;
 import acme.entities.item.Item;
 import acme.features.any.item.component.AnyComponentInToolkitListService;
 import acme.features.any.item.component.AnyComponentListService;
@@ -14,7 +14,7 @@ import acme.features.any.item.tool.AnyToolListService;
 import acme.framework.roles.Any;
 
 @Controller
-public class AnyItemController extends AcmeAbstractController<Any, Item>{
+public class AnyItemController extends AbstractAcmeToolkitsController<Any, Item>{
 
 	@Autowired
 	protected AnyToolListService toolListService;

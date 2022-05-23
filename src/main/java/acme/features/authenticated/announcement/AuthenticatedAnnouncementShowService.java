@@ -10,11 +10,11 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Authenticated;
 import acme.framework.services.AbstractShowService;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.announcement.AnnouncementService;
 
 @Service
-public class AuthenticatedAnnouncementShowService extends AuthoriseAll<Authenticated, Announcement> implements AbstractShowService<Authenticated, Announcement> {
+public class AuthenticatedAnnouncementShowService extends AbstractAuthoriseAll<Authenticated, Announcement> implements AbstractShowService<Authenticated, Announcement> {
 
 	@Autowired
 	protected AnnouncementService service;

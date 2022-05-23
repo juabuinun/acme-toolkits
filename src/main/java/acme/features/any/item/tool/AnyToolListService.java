@@ -17,11 +17,11 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractListService;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.item.ItemService;
 
 @Service
-public class AnyToolListService extends AuthoriseAll<Any,Item> implements AbstractListService<Any, Item> {
+public class AnyToolListService extends AbstractAuthoriseAll<Any,Item> implements AbstractListService<Any, Item> {
 
 	@Autowired
 	protected ItemService service;

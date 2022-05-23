@@ -16,12 +16,12 @@ import acme.framework.controllers.Request;
 import acme.framework.services.AbstractDeleteService;
 import acme.repositories.InventorRepository;
 import acme.roles.Inventor;
-import acme.services.AuthoriseOwner;
+import acme.services.AbstractAuthoriseOwner;
 import acme.services.item.ItemService;
 
 @Service
 @Transactional
-public class InventorItemDeleteService extends AuthoriseOwner<Inventor, Item> implements AbstractDeleteService<Inventor, Item> {
+public class InventorItemDeleteService extends AbstractAuthoriseOwner<Inventor, Item> implements AbstractDeleteService<Inventor, Item> {
 
 	@Autowired
 	protected ModelMapper			mapper;

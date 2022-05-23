@@ -1,0 +1,8 @@
+body,expect
+one million,false
+One \n Million,false
+ONE MILLION,false
+OnE   MiLLiOn,false
+One Millionaire,true
+One or two millions,true
+One DIG million,true

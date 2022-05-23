@@ -19,6 +19,7 @@ public class InventorPatronageReportCreateTest extends TestHarness {
 		super.navigateHome();
 
 		super.clickOnMenu("Patronages", "View mine");
+		super.checkListingExists();
 		super.sortListing(0, "desc");
 		this.clickOnListingRecord(patronageIndex);
 		super.clickOnButton("Create report");
@@ -32,6 +33,8 @@ public class InventorPatronageReportCreateTest extends TestHarness {
 		
 		super.checkFormExists();
 		super.clickOnButton("View reports");
+		
+		super.checkListingExists();
 		super.sortListing(0, "desc");
 		super.clickOnListingRecord(0);
 		
@@ -52,8 +55,9 @@ public class InventorPatronageReportCreateTest extends TestHarness {
 		super.navigateHome();
 
 		super.clickOnMenu("Patronages", "View mine");
+		super.checkListingExists();
 		super.sortListing(0, "desc");
-		this.clickOnListingRecord(patronageIndex);
+		super.clickOnListingRecord(patronageIndex);
 		super.clickOnButton("Create report");
 		
 		super.checkFormExists();

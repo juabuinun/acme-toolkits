@@ -15,13 +15,13 @@ import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractUpdateService;
 import acme.roles.Inventor;
-import acme.services.AuthoriseOwner;
+import acme.services.AbstractAuthoriseOwner;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.patronage.PatronageService;
 
 @Service
 @Transactional
-public class InventorPatronageModifyService extends AuthoriseOwner<Inventor, Patronage> implements AbstractUpdateService<Inventor, Patronage> {
+public class InventorPatronageModifyService extends AbstractAuthoriseOwner<Inventor, Patronage> implements AbstractUpdateService<Inventor, Patronage> {
 
 	Status status;
 

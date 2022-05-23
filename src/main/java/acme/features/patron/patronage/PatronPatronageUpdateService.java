@@ -12,13 +12,13 @@ import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractUpdateService;
 import acme.roles.Patron;
-import acme.services.AuthoriseOwner;
+import acme.services.AbstractAuthoriseOwner;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.patronage.PatronageService;
 
 @Service
 @Transactional
-public class PatronPatronageUpdateService extends AuthoriseOwner<Patron,Patronage> implements AbstractUpdateService<Patron,Patronage>{
+public class PatronPatronageUpdateService extends AbstractAuthoriseOwner<Patron,Patronage> implements AbstractUpdateService<Patron,Patronage>{
 
 	@Autowired
 	protected PatronPatronageUpdateService() {

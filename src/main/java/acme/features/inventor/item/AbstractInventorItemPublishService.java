@@ -15,7 +15,7 @@ import acme.framework.helpers.PrincipalHelper;
 import acme.framework.services.AbstractUpdateService;
 import acme.repositories.InventorRepository;
 import acme.roles.Inventor;
-import acme.services.AuthoriseOwner;
+import acme.services.AbstractAuthoriseOwner;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.item.ItemService;
 
@@ -23,7 +23,7 @@ import acme.services.item.ItemService;
  * Has to be abstract bc cant fetch item type from post
  *
  */
-public abstract class AbstractInventorItemPublishService extends AuthoriseOwner<Inventor, Item> implements AbstractUpdateService<Inventor, Item> {
+public abstract class AbstractInventorItemPublishService extends AbstractAuthoriseOwner<Inventor, Item> implements AbstractUpdateService<Inventor, Item> {
 
 	Type								itemType;
 

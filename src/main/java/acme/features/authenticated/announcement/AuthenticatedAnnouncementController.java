@@ -6,12 +6,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import acme.components.custom.controllers.AcmeAbstractController;
+import acme.components.custom.controllers.AbstractAcmeToolkitsController;
 import acme.entities.announcement.Announcement;
 import acme.framework.roles.Authenticated;
 
 @Controller
-public class AuthenticatedAnnouncementController extends AcmeAbstractController<Authenticated, Announcement> {
+public class AuthenticatedAnnouncementController extends AbstractAcmeToolkitsController<Authenticated, Announcement> {
 
 	@Autowired
 	protected AuthenticatedAnnouncementListService		listService;

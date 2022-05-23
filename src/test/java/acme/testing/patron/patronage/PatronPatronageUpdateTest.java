@@ -16,6 +16,7 @@ public class PatronPatronageUpdateTest extends TestHarness{
 
 		super.navigateHome();
 		super.clickOnMenu("Patronages", "View mine");
+		super.checkListingExists();
 		super.sortListing(0, "desc");
 		super.clickOnListingRecord(index);
 		super.optionalValue("endDate", end, (i,v)-> super.fillInputBoxIn(i, v));
@@ -43,9 +44,13 @@ public class PatronPatronageUpdateTest extends TestHarness{
 
 		super.navigateHome();
 		super.clickOnMenu("Patronages", "View mine");
+		
+		super.checkListingExists();
 		super.sortListing(0, "desc");
+		super.checkListingExists();
 		super.clickOnListingRecord(index);
 		super.optionalValue("endDate", end, (i,v)-> super.fillInputBoxIn(i, v));
+		super.optionalValue("budget", budget, (i,v)-> super.fillInputBoxIn(i, v));
 		super.optionalValue("legal", legal, (i,v)-> super.fillInputBoxIn(i, v));
 		super.optionalValue("info", info, (i,v)-> super.fillInputBoxIn(i, v));
 

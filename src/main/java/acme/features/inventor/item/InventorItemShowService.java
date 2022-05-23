@@ -11,11 +11,11 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
 import acme.roles.Inventor;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.item.ItemService;
 
 @Service
-public class InventorItemShowService extends AuthoriseAll<Inventor,Item> implements AbstractShowService<Inventor,Item>{
+public class InventorItemShowService extends AbstractAuthoriseAll<Inventor,Item> implements AbstractShowService<Inventor,Item>{
 
 	@Autowired
 	protected ItemService service;

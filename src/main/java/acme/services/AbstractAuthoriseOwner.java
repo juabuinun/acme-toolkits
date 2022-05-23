@@ -11,14 +11,14 @@ import acme.framework.helpers.PrincipalHelper;
 import acme.framework.roles.UserRole;
 import acme.framework.services.AuthoriseMethod;
 
-public abstract class AuthoriseOwner<U extends UserRole,E> implements AuthoriseMethod<U, E> {
+public abstract class AbstractAuthoriseOwner<U extends UserRole,E> implements AuthoriseMethod<U, E> {
 
 	protected String ownerFieldName;
 	
 	protected E entity;
 
 	@Autowired
-	protected AuthoriseOwner(final String ownerFieldName) {
+	protected AbstractAuthoriseOwner(final String ownerFieldName) {
 		this.ownerFieldName = ownerFieldName;
 	}
 

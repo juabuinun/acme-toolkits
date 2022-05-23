@@ -13,11 +13,11 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractShowService;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.toolkit.ToolkitService;
 
 @Service
-public class AnyToolkitShowService extends AuthoriseAll<Any, Toolkit> implements AbstractShowService<Any, Toolkit> {
+public class AnyToolkitShowService extends AbstractAuthoriseAll<Any, Toolkit> implements AbstractShowService<Any, Toolkit> {
 
 	@Autowired
 	protected ModelMapper mapper;

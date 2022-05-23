@@ -15,13 +15,13 @@ import acme.framework.services.AbstractDeleteService;
 import acme.repositories.InventorRepository;
 import acme.repositories.PatronRepository;
 import acme.roles.Patron;
-import acme.services.AuthoriseOwner;
+import acme.services.AbstractAuthoriseOwner;
 import acme.services.config.AcmeConfigurationService;
 import acme.services.patronage.PatronageService;
 
 @Service
 @Transactional
-public class PatronPatronageDeleteService extends AuthoriseOwner<Patron, Patronage> implements AbstractDeleteService<Patron, Patronage> {
+public class PatronPatronageDeleteService extends AbstractAuthoriseOwner<Patron, Patronage> implements AbstractDeleteService<Patron, Patronage> {
 
 	protected PatronPatronageDeleteService() {
 		super("sponsor");

@@ -14,11 +14,11 @@ import acme.framework.controllers.Request;
 import acme.framework.roles.Administrator;
 import acme.framework.services.AbstractShowService;
 import acme.repositories.SpamWordRepository;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 
 @Service
 @Transactional
-public class AdministratorSpamWordShowService extends AuthoriseAll<Administrator,SpamWord> implements AbstractShowService<Administrator,SpamWord>{
+public class AdministratorSpamWordShowService extends AbstractAuthoriseAll<Administrator,SpamWord> implements AbstractShowService<Administrator,SpamWord>{
 
 	@Autowired
 	protected SpamWordRepository repo;

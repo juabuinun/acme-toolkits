@@ -5,9 +5,13 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,17 +77,17 @@ public class AcmeConfigurationService extends AbstractCrudServiceImpl<Configurat
 	}
 
 	public void checkMoney(final Request<?> request, final Errors errors, final Money money, final String fieldName) {
-		if (!this.cache.getStatus().equals(CacheStatus.LIVE))
-			this.load();
 		if (money != null) {
-			errors.state(request, money.getAmount() >= 0, fieldName == null ? "*" : fieldName, "errors.money.positive");
-			errors.state(request, Arrays.asList(this.cache.getAcceptedCurrencies().split("\\s*,\\s*")).contains(money.getCurrency().toUpperCase()), fieldName == null ? "*" : fieldName, "errors.money.currency");
+			if (!this.cache.getStatus().equals(CacheStatus.LIVE))
+				this.load();
+			final List<String> acceptedCurrencies = Arrays.asList(this.cache.getAcceptedCurrencies().split("\\s*,\\s*"));
+			
+			errors.state(request, money.getAmount() >= 0, fieldName == null ? "*" : fieldName, "errors.money.positive");			
+			errors.state(request, acceptedCurrencies.contains(money.getCurrency()), fieldName, "errors.money.currency");
 		}
 	}
 
 	public void filter(final Request<?> request, final Object object, final Errors errors) {
-		if (!this.cache.getStatus().equals(CacheStatus.LIVE))
-			this.load();
 		Integer wordCount = 0;
 		Integer weakSpamWordCount = 0;
 		Integer strongSpamWordCount = 0;
@@ -91,18 +95,26 @@ public class AcmeConfigurationService extends AbstractCrudServiceImpl<Configurat
 		BeanInfo beanInfo;
 		try {
 			beanInfo = Introspector.getBeanInfo(object.getClass());
-
+			final Set<String> fieldNames = new HashSet<>();
 			for (final PropertyDescriptor propertyDesc : beanInfo.getPropertyDescriptors()) {
 				final Object value = propertyDesc.getReadMethod().invoke(object);
 
 				if (value instanceof String && !((String) value).isEmpty()) {
 					wordCount = wordCount + ((String) value).split("\\s+").length;
 					final String str = ((String) value).toUpperCase();
+					if (!this.cache.getStatus().equals(CacheStatus.LIVE))
+						this.load();
 					for (final SpamWordDto spamWord : this.cache.getSpamWords()) {
-						final int spamCount = StringUtils.countMatches(str, spamWord.getWord().toUpperCase());
-						if(spamCount > 0 && spamWord.isStrong()) {
+						int count = 0;
+						final String patternn = String.format("%s%s%s", "([\\s\\t\\r\\n]+|^)", spamWord.getWord().toUpperCase().replaceAll("\\s+", "[\\\\s\\\\t\\\\r\\\\n]+"), "($|[\\s\\t\\r\\n]+)");
+						final Matcher matcher = Pattern.compile(patternn).matcher(str);
+						while (matcher.find()) {
+							count++;
+							fieldNames.add(propertyDesc.getName());
+						}
+						if (count > 0 && spamWord.isStrong()) {
 							strongSpamWordCount++;
-						}else if(spamCount > 0 && !spamWord.isStrong()) {
+						} else if (count > 0 && !spamWord.isStrong()) {
 							weakSpamWordCount++;
 						}
 					}
@@ -112,10 +124,16 @@ public class AcmeConfigurationService extends AbstractCrudServiceImpl<Configurat
 
 			AcmeConfigurationService.logger.info("SpamFilterService  - Word count: {}", wordCount);
 			AcmeConfigurationService.logger.info("SpamFilterService  - Spam word count: (weak:{}, strong:{})", weakSpamWordCount, strongSpamWordCount);
+			final boolean isAllowed = (this.cache.getStrongSpamThreshold() <= 0 && this.cache.getWeakSpamThreshold() <= 0) ? Boolean.TRUE
+				: ((strongSpamWordCount / (wordCount * 1.0)) < (this.cache.getStrongSpamThreshold() / 100.0) && (weakSpamWordCount / (wordCount * 1.0)) < (this.cache.getWeakSpamThreshold() / 100.0));
+			if (!isAllowed) {
+				for (final String fieldName : fieldNames) {
+					errors.state(request, false, fieldName, "errors.spam");
+				}
+			}
 
-			errors.state(request, (strongSpamWordCount / (wordCount * 1.0)) < (this.cache.getStrongSpamThreshold() / 100.0), "*", "errors.spam");
-			errors.state(request, (weakSpamWordCount / (wordCount * 1.0)) < (this.cache.getWeakSpamThreshold() / 100.0), "*", "errors.spam");
 		} catch (final Exception e) {
+			errors.state(request, false, "*", "errors.spam.error");
 			AcmeConfigurationService.logger.error("Error running spam filter", e);
 		}
 	}

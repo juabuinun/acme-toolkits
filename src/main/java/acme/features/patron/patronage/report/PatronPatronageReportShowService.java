@@ -10,11 +10,11 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
 import acme.roles.Patron;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.patronagereport.PatronageReportService;
 
 @Service
-public class PatronPatronageReportShowService extends AuthoriseAll<Patron,PatronageReport> implements AbstractShowService<Patron,PatronageReport>{
+public class PatronPatronageReportShowService extends AbstractAuthoriseAll<Patron,PatronageReport> implements AbstractShowService<Patron,PatronageReport>{
 
 	@Autowired
 	protected PatronageReportService service;

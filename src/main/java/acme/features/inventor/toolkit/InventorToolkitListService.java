@@ -16,12 +16,12 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractListService;
 import acme.roles.Inventor;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 import acme.services.toolkit.ToolkitService;
 
 @Service
 @Transactional
-public class InventorToolkitListService extends AuthoriseAll<Inventor,Toolkit> implements AbstractListService<Inventor,Toolkit>{
+public class InventorToolkitListService extends AbstractAuthoriseAll<Inventor,Toolkit> implements AbstractListService<Inventor,Toolkit>{
 
 	@Autowired
 	protected ModelMapper mapper;

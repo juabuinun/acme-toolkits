@@ -17,9 +17,9 @@ import acme.framework.controllers.Request;
 import acme.framework.roles.Any;
 import acme.framework.services.AbstractListService;
 import acme.repositories.ToolkitItemRepository;
-import acme.services.AuthoriseAll;
+import acme.services.AbstractAuthoriseAll;
 
-public abstract class AbstractAnyItemInToolkitService extends AuthoriseAll<Any, Item> implements AbstractListService<Any, Item> {
+public abstract class AbstractAnyItemInToolkitService extends AbstractAuthoriseAll<Any, Item> implements AbstractListService<Any, Item> {
 
 	protected Type itemType;
 	
