@@ -24,6 +24,7 @@ import acme.framework.helpers.HttpMethodHelper;
 import acme.framework.roles.Any;
 import acme.framework.roles.Authenticated;
 import acme.framework.roles.UserRole;
+import acme.framework.services.ServiceWrapper;
 
 /**
  * Custom working of the abstract controller
@@ -53,8 +54,7 @@ public abstract class AbstractAcmeToolkitsController<R extends UserRole, E> exte
 		String baseCommand;
 		Request<E> request;
 		Response<E> response;
-		//use custom wrapper
-		CustomServiceWrapper<R, E> service;
+		ServiceWrapper<R, E> service;
 
 		result = null;
 		request = null;
@@ -94,24 +94,32 @@ public abstract class AbstractAcmeToolkitsController<R extends UserRole, E> exte
 				model, locale, //
 				servletRequest, servletResponse);
 
-			// HINT: let's make sure that the principal has the appropriate role.
-			this.checkRoles(request, locale);
-			
-			// HINT: let's request authorisation from the service.
+			// HINT: let's create a service wrapper.
 
 			service = new CustomServiceWrapper<R, E>(this.commandManager.getService(command));
+
+			// HINT: let's make sure that the principal has the appropriate role.
+
+			if (this.roleClazz.equals(Any.class))
+				;
+			else if (this.roleClazz.equals(Authenticated.class))
+				Assert.state(request.getPrincipal().isAuthenticated(), locale, "default.error.not-authorised");
+			else
+				Assert.state(request.getPrincipal().hasRole(this.roleClazz), locale, "default.error.not-authorised");
+			request.getPrincipal().setActiveRole(this.roleClazz);
+
+			// HINT: let's request authorisation from the service.
+
 			Assert.state(service.authorise(request), locale, "default.error.not-authorised");
 
 			// HINT: let's dispatch the request building on the HTTP method used.
-			// HINT: realise that the dispatcher method is invoked through the 'self' reference to this
-			// HINT+ controller because they must be executed within the current transaction.
 
 			switch (request.getMethod()) {
 			case GET:
-				response = this.self.doGet(request, service);
+				response = this.doGet(request, service);
 				break;
 			case POST:
-				response = this.self.doPost(request, service);
+				response = this.doPost(request, service);
 				break;
 			default:
 				Assert.state(false, locale, "default.error.endpoint-unavailable");
@@ -120,19 +128,20 @@ public abstract class AbstractAcmeToolkitsController<R extends UserRole, E> exte
 			assert response != null;
 			response.getModel().setDefaultContext();
 
-			// HINT: let's commit or rollback the transaction depending on whether there are errors or not in the response.
-			// HINT+ note that the 'onSuccess' and the 'onFailure' methods must be executed in fresh transactions.
+			// HINT: let's commit or roll the transaction back depending on whether there are errors or not in the response.
+			// HINT+ Note that the 'onSuccess' and the 'onFailure' methods must be executed in fresh transactions.
 
 			if (!response.hasErrors()) {
 				this.commitTransaction();
 				this.startTransaction();
 				service.onSuccess(request, response);
+				this.commitTransaction();
 			} else {
 				this.rollbackTransaction();
 				this.startTransaction();
 				service.onFailure(request, response, null);
+				this.commitTransaction();
 			}
-			this.commitTransaction();
 
 			// HINT: let's build the requested view and let's add some predefined attributes to the model.
 
@@ -140,26 +149,29 @@ public abstract class AbstractAcmeToolkitsController<R extends UserRole, E> exte
 			result.addObject("command", command);
 			result.addObject("principal", request.getPrincipal());
 		} catch (final Throwable oops) {
-			// HINT: if a throwable is caught, then the current transaction must be rollbacked, if any,
+			// HINT: if a throwable is caught, then the current transaction must be rolled back, if any,
 			// HINT: the service must execute the 'onFailure' method, and the panic view must be returned.
 
-			if (this.isTransactionActive()) {
-				this.rollbackTransaction();
+			try {
+				if (this.isTransactionActive()) {
+					this.rollbackTransaction();
+				}
+			} catch (final Throwable ouch) {
 			}
-			if (service != null) {
-				this.startTransaction();
-				service.onFailure(request, response, oops);
-				this.commitTransaction();
+			try {
+				if (service != null) {
+					this.startTransaction();
+					service.onFailure(request, response, oops);
+					this.commitTransaction();
+				}
+			} catch (final Throwable ouch) {
 			}
 			result = this.buildPanicView(request, response, oops);
-			oops.printStackTrace();
-			AbstractAcmeToolkitsController.logger.error("Error on custom controller", oops);
-//			throw new RuntimeException("Error on custom controller",oops);
 		}
 
-		// HINT: must always return a 'ModelAndView' object, be it the user-defined one or a panic one.
-
 		assert result != null;
+
+		// HINT: finally, let's perform some logging and return the resulting model and view.
 
 		AbstractAcmeToolkitsController.logger.debug("SERVING {} {}", servletMethod, servletUrl);
 		AbstractAcmeToolkitsController.logger.debug("Result: {}", result);
@@ -167,15 +179,6 @@ public abstract class AbstractAcmeToolkitsController<R extends UserRole, E> exte
 		return result;
 	}
 	
-	protected void checkRoles(final Request<E> request, final Locale locale) {
-		if (this.roleClazz.equals(Any.class))
-			;
-		else if (this.roleClazz.equals(Authenticated.class))
-			Assert.state(request.getPrincipal().isAuthenticated(), locale, "default.error.not-authorised");
-		else
-			Assert.state(request.getPrincipal().hasRole(this.roleClazz), locale, "default.error.not-authorised");
-		request.getPrincipal().setActiveRole(this.roleClazz);
-	}
 	
 	
 

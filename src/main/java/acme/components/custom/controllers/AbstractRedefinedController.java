@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,67 +57,87 @@ import acme.framework.services.ServiceWrapper;
  * @param <E>
  */
 @Controller
-public abstract class AbstractRedefinedController<R extends UserRole, E> implements RedefinedController<R,E> {
+public abstract class AbstractRedefinedController<R extends UserRole, E> {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractRedefinedController.class);
-	
-	@Autowired
-	protected AbstractRedefinedController<R, E>		self;
-
-	protected Class<R>						roleClazz;
-	protected Class<E>						entityClazz;
-
-	protected String						listViewName;
-	protected String						formViewName;
-	protected String						requestPath;
-
-	protected CommandManager<R, E>			commandManager;
-
-	@Autowired
-	protected RequestMappingHandlerMapping	handlerMapping;
-
 	// Transaction management ------------------------------------------------.
 
 	@Autowired
-	protected PlatformTransactionManager	transactionManager;
-	protected TransactionStatus				transactionStatus;
+	protected PlatformTransactionManager				transactionManager;
+	protected ThreadLocal<DefaultTransactionDefinition>	transactionDefinition;
+	protected ThreadLocal<TransactionStatus>			transactionStatus;
 
 
 	protected void startTransaction() {
-		TransactionDefinition transactionDefinition;
+		String name;
+		DefaultTransactionDefinition localDefinition;
+		TransactionStatus localStatus;
 
-		transactionDefinition = new DefaultTransactionDefinition();
-		this.transactionStatus = this.transactionManager.getTransaction(transactionDefinition);
+		name = UUID.randomUUID().toString();		
+		AbstractRedefinedController.logger.debug("Starting transaction {}", name);
+		
+		localDefinition = new DefaultTransactionDefinition();
+		localDefinition.setName(name);		
+		localStatus = this.transactionManager.getTransaction(localDefinition);
+		
+		this.transactionDefinition.set(localDefinition);
+		this.transactionStatus.set(localStatus);
 	}
 
 	protected void commitTransaction() {
 		assert this.isTransactionActive();
-
-		this.transactionManager.commit(this.transactionStatus);
-		this.transactionStatus = null;
+		
+		String name;
+		DefaultTransactionDefinition localDefinition;
+		TransactionStatus localStatus;
+		
+		localDefinition = this.transactionDefinition.get();
+		name = localDefinition.getName();
+		AbstractRedefinedController.logger.debug("Committing transaction {}", name);
+		
+		localStatus = this.transactionStatus.get();
+		this.transactionStatus.remove();
+		this.transactionDefinition.remove();		
+		
+		this.transactionManager.commit(localStatus);		
 	}
-
 
 	protected void rollbackTransaction() {
 		assert this.isTransactionActive();
-
-		this.transactionManager.rollback(this.transactionStatus);
-		this.transactionStatus = null;
+		
+		String name;
+		DefaultTransactionDefinition localDefinition;
+		TransactionStatus localStatus;
+		
+		localDefinition = this.transactionDefinition.get();
+		name = localDefinition.getName();
+		AbstractRedefinedController.logger.debug("Rolling transaction {} back", name);
+		
+		localDefinition = this.transactionDefinition.get();
+		localStatus = this.transactionStatus.get();
+		this.transactionStatus.remove();
+		this.transactionDefinition.remove();
+		
+		this.transactionManager.rollback(localStatus);		
 	}
-
 
 	protected boolean isTransactionActive() {
 		boolean result;
+		TransactionStatus localStatus;
 
-		result = this.transactionStatus != null && !this.transactionStatus.isCompleted();
+		localStatus = this.transactionStatus.get();
+		result = localStatus != null && !localStatus.isCompleted();
 
 		return result;
 	}
 
 	// Command Management -----------------------------------------------------
 
-	@Override
-	public void addCommand(final String command, final AbstractService<R, E> service) {
+
+	protected CommandManager<R, E> commandManager;
+
+
+	protected void addCommand(final String command, final AbstractService<R, E> service) {
 		assert !StringHelper.isBlank(command);
 		assert !this.commandManager.isRegistered(command);
 		assert service != null;
@@ -127,8 +145,7 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 		this.commandManager.addCommand(command, service);
 	}
 
-	@Override
-	public void addCommand(final String command, final String baseCommand, final AbstractService<R, E> service) {
+	protected void addCommand(final String command, final String baseCommand, final AbstractService<R, E> service) {
 		assert !StringHelper.isBlank(command);
 		assert !StringHelper.isBlank(baseCommand);
 		assert !this.commandManager.isRegistered(command);
@@ -139,6 +156,18 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 
 	// Constructor ------------------------------------------------------------
 
+
+	@Autowired
+	protected RequestMappingHandlerMapping	handlerMapping;
+
+	protected Class<R>						roleClazz;
+	protected Class<E>						entityClazz;
+
+	protected String						listViewName;
+	protected String						formViewName;
+	protected String						requestPath;
+
+
 	@SuppressWarnings("unchecked")
 	protected AbstractRedefinedController() {
 		Class<?>[] types;
@@ -146,13 +175,7 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 		String roleName, entityName;
 
 		types = GenericTypeResolver.resolveTypeArguments(this.getClass(), AbstractRedefinedController.class);
-
-		if (types == null || types.length != 2) {
-			System.err.printf("I'm sorry, %s cannot be instantiated.%n", this.getClass().getName());
-			System.err.printf("I can't resolve its generic types.%n");
-			System.exit(1);
-		}
-
+		assert types != null && types.length == 2;
 		this.roleClazz = (Class<R>) types[0];
 		this.entityClazz = (Class<E>) types[1];
 
@@ -162,12 +185,12 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 
 		this.listViewName = String.format("%s/%s/list", roleName, entityName);
 		this.formViewName = String.format("%s/%s/form", roleName, entityName);
-
-		this.commandManager = new CommandManager<R, E>();
-
 		this.requestPath = String.format("/%s/%s/", roleName, entityName);
+		
+		this.transactionDefinition = new ThreadLocal<DefaultTransactionDefinition>();
+		this.transactionStatus = new ThreadLocal<TransactionStatus>();
+		this.commandManager = new CommandManager<R, E>();
 	}
-
 
 	@PostConstruct
 	protected void initialiseRequestMapping() {
@@ -200,7 +223,6 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 
 	// Handler ----------------------------------------------------------------
 
-	@Override
 	public ModelAndView handleRequest( //
 		@PathVariable("command") final String command, //
 		@RequestParam final Map<String, Object> model, //
@@ -254,6 +276,10 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 				model, locale, //
 				servletRequest, servletResponse);
 
+			// HINT: let's create a service wrapper.
+
+			service = new ServiceWrapper<R, E>(this.commandManager.getService(command));
+
 			// HINT: let's make sure that the principal has the appropriate role.
 
 			if (this.roleClazz.equals(Any.class))
@@ -266,19 +292,16 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 
 			// HINT: let's request authorisation from the service.
 
-			service = new ServiceWrapper<R, E>(this.commandManager.getService(command));
 			Assert.state(service.authorise(request), locale, "default.error.not-authorised");
 
 			// HINT: let's dispatch the request building on the HTTP method used.
-			// HINT: realise that the dispatcher method is invoked through the 'self' reference to this
-			// HINT+ controller because they must be executed within the current transaction.
 
 			switch (request.getMethod()) {
 			case GET:
-				response = this.self.doGet(request, service);
+				response = this.doGet(request, service);
 				break;
 			case POST:
-				response = this.self.doPost(request, service);
+				response = this.doPost(request, service);
 				break;
 			default:
 				Assert.state(false, locale, "default.error.endpoint-unavailable");
@@ -287,19 +310,20 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 			assert response != null;
 			response.getModel().setDefaultContext();
 
-			// HINT: let's commit or rollback the transaction depending on whether there are errors or not in the response.
-			// HINT+ note that the 'onSuccess' and the 'onFailure' methods must be executed in fresh transactions.
+			// HINT: let's commit or roll the transaction back depending on whether there are errors or not in the response.
+			// HINT+ Note that the 'onSuccess' and the 'onFailure' methods must be executed in fresh transactions.
 
 			if (!response.hasErrors()) {
 				this.commitTransaction();
 				this.startTransaction();
 				service.onSuccess(request, response);
+				this.commitTransaction();
 			} else {
 				this.rollbackTransaction();
 				this.startTransaction();
 				service.onFailure(request, response, null);
+				this.commitTransaction();
 			}
-			this.commitTransaction();
 
 			// HINT: let's build the requested view and let's add some predefined attributes to the model.
 
@@ -307,24 +331,29 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 			result.addObject("command", command);
 			result.addObject("principal", request.getPrincipal());
 		} catch (final Throwable oops) {
-			// HINT: if a throwable is caught, then the current transaction must be rollbacked, if any,
+			// HINT: if a throwable is caught, then the current transaction must be rolled back, if any,
 			// HINT: the service must execute the 'onFailure' method, and the panic view must be returned.
 
-			if (this.isTransactionActive()) {
-				this.rollbackTransaction();
+			try {
+				if (this.isTransactionActive()) {
+					this.rollbackTransaction();
+				}
+			} catch (final Throwable ouch) {
 			}
-			if (service != null) {
-				this.startTransaction();
-				service.onFailure(request, response, oops);
-				this.commitTransaction();
+			try {
+				if (service != null) {
+					this.startTransaction();
+					service.onFailure(request, response, oops);
+					this.commitTransaction();
+				}
+			} catch (final Throwable ouch) {
 			}
 			result = this.buildPanicView(request, response, oops);
-			AbstractRedefinedController.logger.error("Error handling request",oops);
 		}
 
-		// HINT: must always return a 'ModelAndView' object, be it the user-defined one or a panic one.
-
 		assert result != null;
+
+		// HINT: finally, let's perform some logging and return the resulting model and view.
 
 		AbstractRedefinedController.logger.debug("SERVING {} {}", servletMethod, servletUrl);
 		AbstractRedefinedController.logger.debug("Result: {}", result);
@@ -332,8 +361,6 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 		return result;
 	}
 
-	@Override
-	@Transactional(TxType.MANDATORY)
 	public Response<E> doGet(final Request<E> request, final ServiceWrapper<R, E> service) {
 		assert request != null;
 		assert service != null;
@@ -391,19 +418,17 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 			break;
 		}
 
-		// HINT: unless an exception is thrown, the previous statements must produce a view name, a model, and an errors object.
-
 		assert !StringHelper.isBlank(view);
 		assert model != null;
 		assert errors != null;
+
+		// HINT: finally, let's assemble a response and return it.
 
 		result = new Response<E>(view, model, errors);
 
 		return result;
 	}
 
-	@Override
-	@Transactional(TxType.MANDATORY)
 	public Response<E> doPost(final Request<E> request, final ServiceWrapper<R, E> service) {
 		assert request != null;
 		assert service != null;
@@ -435,7 +460,7 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 		}
 		assert entity != null;
 
-		// HINT: the second step cares of performing the command on the entity fetched by the previous step.
+		// HINT: the second step cares of performing the command on the entity prepared by the previous step.
 
 		model = new Model();
 		errors = new Errors();
@@ -479,12 +504,8 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 			}
 			break;
 		case "delete":
-			// HINT: dealing with a DELETE request involves validating that the entity can be deleted
-			// HINT+ and then invoking the service to delete the entity.
-			service.validate(request, entity, errors);
-			if (!errors.hasErrors()) {
-				service.delete(request, entity);
-			}
+			// HINT: dealing with a DELETE request is straightforward.
+			service.delete(request, entity);
 			break;
 		default:
 			Assert.state(false, request.getLocale(), "default.error.endpoint-unavailable");
@@ -494,13 +515,11 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 		assert model != null;
 		assert errors != null;
 
+		// HINT: the third step cares of computing the resulting view and dealing with errors.
+
 		if (request.getBaseCommand().equals("perform")) {
-			// HINT: if we're dealing with a PERFORM request, then we return the same view and
-			// HINT+ reset the model if there are any errors.
+			// HINT: if we're dealing with a PERFORM request, then we return the same view.
 			view = this.formViewName;
-			//			if (errors.hasErrors()) {
-			//				model.append(request.getModel());
-			//			}
 		} else if (!errors.hasErrors()) {
 			// HINT: if there aren't any errors, then we must redirect to the referrer view, which cares of
 			// HINT+ returning to the appropriate listing or /master/welcome.
@@ -513,12 +532,11 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 			request.transferErroneousAttributes(errors, model);
 		}
 
-		// HINT: unless an exception is thrown, the previous statements must produce a view name, a model,
-		// HINT+ and an errors object.
-
 		assert !StringHelper.isBlank(view);
 		assert model != null;
 		assert errors != null;
+
+		// HINT: the final step assembles the response and returns it.
 
 		result = new Response<E>(view, model, errors);
 
@@ -526,7 +544,6 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 	}
 
 	// Internal methods -------------------------------------------------------
-
 
 	protected ModelAndView buildRequestedView(final Request<E> request, final Response<E> response) {
 		ModelAndView result;
@@ -544,7 +561,6 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 			result.addObject(key, value);
 		}
 
-		// INFO: errors are not bound if the model is a list, which prevents editing lists inline.
 		if (response.hasErrors()) {
 			for (final Entry<String, List<String>> entry : response.getErrors()) {
 				String name;
@@ -561,8 +577,6 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 		return result;
 	}
 
-	
-
 	protected ModelAndView buildPanicView(final Request<E> request, final Response<E> response, final Throwable oops) {
 		ModelAndView result;
 
@@ -573,4 +587,5 @@ public abstract class AbstractRedefinedController<R extends UserRole, E> impleme
 
 		return result;
 	}
+
 }
