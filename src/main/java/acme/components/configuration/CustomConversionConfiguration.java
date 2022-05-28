@@ -7,6 +7,7 @@ import org.springframework.format.FormatterRegistry;
 import acme.components.formatter.BooleanFormatter;
 import acme.components.formatter.CustomLocalisedMoneyFormatter;
 import acme.components.formatter.ItemTypeFormatter;
+import acme.components.formatter.LocalDateFormatter;
 import acme.components.formatter.LocalDateTimeFormatter;
 import acme.components.formatter.PatronageStatusFormatter;
 import acme.framework.configuration.ConversionConfiguration;
@@ -23,11 +24,13 @@ public class CustomConversionConfiguration extends ConversionConfiguration{
 		final PatronageStatusFormatter statusFormatter = new PatronageStatusFormatter();
 		final ItemTypeFormatter itemTypeFormatter = new ItemTypeFormatter();
 		final BooleanFormatter booleanFormatter = new BooleanFormatter();
+		final LocalDateFormatter localDateFormatter = new LocalDateFormatter();
 		registry.addFormatter(localDateTimeFormatter);
 		registry.addFormatter(customMoneyFormatter);
 		registry.addFormatter(statusFormatter);
 		registry.addFormatter(itemTypeFormatter);
 		registry.addFormatter(booleanFormatter);
+		registry.addFormatter(localDateFormatter);
 	}
 
 }

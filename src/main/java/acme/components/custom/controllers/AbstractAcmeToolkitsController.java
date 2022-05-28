@@ -167,6 +167,7 @@ public abstract class AbstractAcmeToolkitsController<R extends UserRole, E> exte
 			} catch (final Throwable ouch) {
 			}
 			result = this.buildPanicView(request, response, oops);
+			AbstractAcmeToolkitsController.logger.error(oops.getMessage(), oops);
 		}
 
 		assert result != null;
