@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,7 @@ import acme.entities.patronage.Patronage;
 @Transactional(readOnly = true)
 public class PatronageDashboardRepositoryImpl implements PatronageDashboardRepository {
 
-	@Autowired
+	@PersistenceContext
 	protected EntityManager entityManager;
 
 

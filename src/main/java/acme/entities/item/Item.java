@@ -71,7 +71,7 @@ public class Item extends AbstractEntity {
 	@NotBlank
 	protected String			name;
 
-	@Pattern(regexp = "[A-Z]{3}-[0-9]{3}(-[A-Z])?$")
+	@Pattern(regexp = "^[A-Z]{3}-[0-9]{3}(-[A-Z])?$")
 	@NotNull
 	@Column(unique = true)
 	protected String			code;
