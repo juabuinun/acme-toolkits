@@ -61,6 +61,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<mainClass>acme.Launcher</mainClass>
+					<!-- extra -->
+					<includeSystemScope>true</includeSystemScope>
 				</configuration>
 			</plugin>
 			<!-- 
@@ -89,6 +91,30 @@
 					</configuration>
 				</plugin> 
 			-->
+			<!-- 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>install-external</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>${project.basedir}/libs/Acme-Framework-22.7-22.7-boot.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>Acme</groupId>
+							<artifactId>Acme-Framework-22.7</artifactId>
+							<version>22.7</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+-->
+
 		</plugins>
 		<resources>
 			<resource>
@@ -103,6 +129,13 @@
 	</build>
 
 	<dependencies>
+		<!-- 
+		<dependency>
+			<groupId>Acme</groupId>
+			<artifactId>Acme-Framework-22.7</artifactId>
+			<version>22.7</version>
+		</dependency>
+		-->
 		<!-- Application server -->
 
 		<dependency>
