@@ -13,6 +13,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import acme.components.Specifications;
 import acme.components.util.BindHelper;
@@ -84,6 +85,7 @@ public class ToolkitService extends AbstractCrudServiceImpl<Toolkit, ToolkitRepo
 		for (int i = 0; i < jsonComponentArray.length(); i++) {
 			final JSONObject jsonObj = jsonComponentArray.getJSONObject(i);
 			final BasicToolkitItemDto toolkitItem = new BasicToolkitItemDto();
+			Assert.isTrue(jsonObj.getInt("quantity") > 0, "Quantity must be greater than zero");
 			toolkitItem.setQuantity(jsonObj.getInt("quantity"));
 			toolkitItem.setId(Integer.valueOf(jsonObj.getString("id").replace(prefix, "")));
 			toolkitItems.add(toolkitItem);
