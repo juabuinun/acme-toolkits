@@ -1,7 +1,6 @@
 
 package acme.features.patron.patronage;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +19,6 @@ public class PatronPatronageShowService extends AbstractAuthoriseAll<Patron, Pat
 
 	@Autowired
 	protected PatronageService	service;
-
-	@Autowired
-	protected ModelMapper		mapper;
 
 
 	@Override

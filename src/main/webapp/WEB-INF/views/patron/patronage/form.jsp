@@ -18,10 +18,10 @@
 
 	<acme:input-textbox code="patron.patronage.creationDate"
 		path="creationDate" readonly="true"
-		placeholder="default.placeholder.moment" />
+		placeholder="general.placeholder.date" />
 
 	<acme:input-textbox code="patron.patronage.endDate" path="endDate"
-		placeholder="default.placeholder.moment" />
+		placeholder="general.placeholder.date" />
 	
 	<acme:hidden-data path="sponseeId"/>
 	<acme:input-textarea code="patron.patronage.legal" path="legal" />

@@ -37,7 +37,7 @@ public class LocalDateTimeFormatter implements Formatter<LocalDateTime> {
 	}
 	
 	public static DateTimeFormatter getFormatter(final Locale locale) {
-		return DateTimeFormatter.ofPattern(MessageHelper.getMessage("default.format.moment", null, DateTimeFormatter.ISO_LOCAL_DATE_TIME.toString(), locale));
+		return DateTimeFormatter.ofPattern(MessageHelper.getMessage("general.datetime.format", null, DateTimeFormatter.ISO_LOCAL_DATE_TIME.toString(), locale));
 	}
 
 }

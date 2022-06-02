@@ -1,7 +1,6 @@
 
 package acme.features.patron.patronage;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +11,8 @@ import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.controllers.Response;
 import acme.framework.services.AbstractDeleteService;
-import acme.repositories.InventorRepository;
-import acme.repositories.PatronRepository;
 import acme.roles.Patron;
 import acme.services.AbstractAuthoriseOwner;
-import acme.services.config.AcmeConfigurationService;
 import acme.services.patronage.PatronageService;
 
 @Service
@@ -27,21 +23,9 @@ public class PatronPatronageDeleteService extends AbstractAuthoriseOwner<Patron,
 		super("sponsor");
 	}
 
-
-	@Autowired
-	protected ModelMapper				mapper;
-
 	@Autowired
 	protected PatronageService			service;
 
-	@Autowired
-	protected AcmeConfigurationService	configService;
-
-	@Autowired
-	protected PatronRepository			patronRepo;
-
-	@Autowired
-	protected InventorRepository		inventorRepo;
 
 
 	@Override

@@ -13,6 +13,7 @@ import acme.form.patronage.SavePatronageDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
+import acme.framework.datatypes.Money;
 import acme.framework.helpers.PrincipalHelper;
 import acme.repositories.InventorRepository;
 import acme.repositories.PatronRepository;
@@ -50,7 +51,7 @@ public class PatronageService extends AbstractCrudServiceImpl<Patronage, Patrona
 		this.configService.filter(request, entity, errors);
 		this.configService.checkMoney(request, errors, entity.getBudget(), "budget");
 		errors.state(request, entity.getCode() == null ? Boolean.TRUE : this.isCodeUnique(entity), "code", "errors.unique");
-		errors.state(request, entity.getEndDate() == null ? Boolean.TRUE : entity.getEndDate().isAfter(entity.getCreationDate().plus(1, ChronoUnit.MONTHS)), "endDate", "errors.patronage.date");
+		errors.state(request, entity.getEndDate() == null ? Boolean.TRUE : entity.getEndDate().plus(1,ChronoUnit.DAYS).isAfter(entity.getCreationDate().plus(1, ChronoUnit.MONTHS)), "endDate", "errors.patronage.date");
 	}
 
 	public void unbind(final Request<Patronage> request, final Patronage entity, final Model model) {
@@ -64,6 +65,10 @@ public class PatronageService extends AbstractCrudServiceImpl<Patronage, Patrona
 		final Patronage res= new Patronage();
 		res.setSponsor(this.patronRepo.findOnePatronByUserAccountId(sponsorId));
 		res.setSponsee(this.inventorRepo.findOneInventorByUserAccountId(sponseeId));
+		final Money price = new Money();
+		price.setCurrency(this.configService.getDefaultCurrency());
+		price.setAmount(0d);
+		res.setBudget(price);
 		return res;
 	}
 

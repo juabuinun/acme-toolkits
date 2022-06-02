@@ -1,7 +1,7 @@
 
 package acme.entities.patronage;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class Patronage extends AbstractEntity {
 		super();
 		this.status = Status.UNLISTED;
 		this.reports = new ArrayList<>();
-		this.creationDate = LocalDateTime.now();
+		this.creationDate = LocalDate.now();
 	}
 
 	@NotNull
@@ -84,10 +84,10 @@ public class Patronage extends AbstractEntity {
 	protected Money			budget;
 
 	@NotNull
-	protected LocalDateTime	creationDate;
+	protected LocalDate	creationDate;
 
 	@NotNull
-	protected LocalDateTime	endDate;
+	protected LocalDate	endDate;
 
 	@URL
 	protected String		info;

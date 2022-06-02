@@ -30,14 +30,14 @@ public class LocalDateFormatter implements Formatter<LocalDate> {
 
 	protected DateTimeFormatter getFormatterForProfile(final Locale locale) {
 		if (System.getProperty("spring.profiles.active").contains("populator") || System.getProperty("spring.profiles.active").contains("testing")) {
-			return DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+			return DateTimeFormatter.ISO_LOCAL_DATE;
 		} else {
 			return LocalDateFormatter.getFormatter(locale);
 		}
 	}
 	
 	public static DateTimeFormatter getFormatter(final Locale locale) {
-		return DateTimeFormatter.ofPattern(MessageHelper.getMessage("default.format.moment.short", null, DateTimeFormatter.ISO_LOCAL_DATE.toString(), locale));
+		return DateTimeFormatter.ofPattern(MessageHelper.getMessage("general.date.format", null, DateTimeFormatter.ISO_LOCAL_DATE.toString(), locale));
 	}
 
 }

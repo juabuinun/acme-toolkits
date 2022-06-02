@@ -10,3 +10,8 @@ code.placeholder = ABC-123(-A)
 
 general.boolean.true = Si
 general.boolean.false = No
+
+general.date.format = dd/MM/yyyy 
+general.datetime.format = dd/MM/yyyy HH:mm
+
+general.placeholder.date = dd/mm/yyyy

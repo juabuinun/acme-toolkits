@@ -1,7 +1,6 @@
 
 package acme.features.patron.patronage;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +11,8 @@ import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.helpers.PrincipalHelper;
 import acme.framework.services.AbstractCreateService;
-import acme.repositories.InventorRepository;
-import acme.repositories.PatronRepository;
 import acme.roles.Patron;
 import acme.services.AbstractAuthoriseAll;
-import acme.services.config.AcmeConfigurationService;
 import acme.services.patronage.PatronageService;
 
 @Service
@@ -24,19 +20,7 @@ import acme.services.patronage.PatronageService;
 public class PatronPatronageCreateService extends AbstractAuthoriseAll<Patron, Patronage> implements AbstractCreateService<Patron, Patronage> {
 
 	@Autowired
-	protected ModelMapper				mapper;
-
-	@Autowired
 	protected PatronageService			service;
-
-	@Autowired
-	protected AcmeConfigurationService	configService;
-
-	@Autowired
-	protected PatronRepository			patronRepo;
-
-	@Autowired
-	protected InventorRepository		inventorRepo;
 
 
 	@Override
@@ -52,6 +36,7 @@ public class PatronPatronageCreateService extends AbstractAuthoriseAll<Patron, P
 	@Override
 	public Patronage instantiate(final Request<Patronage> request) {
 		return this.service.instantiate(request, PrincipalHelper.get().getAccountId(), request.getModel().getInteger("sponseeId"));
+		
 	}
 
 	@Override

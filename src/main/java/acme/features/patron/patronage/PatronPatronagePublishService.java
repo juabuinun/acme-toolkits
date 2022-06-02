@@ -1,8 +1,7 @@
 package acme.features.patron.patronage;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,11 +12,8 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractUpdateService;
-import acme.repositories.InventorRepository;
-import acme.repositories.PatronRepository;
 import acme.roles.Patron;
 import acme.services.AbstractAuthoriseOwner;
-import acme.services.config.AcmeConfigurationService;
 import acme.services.patronage.PatronageService;
 
 @Service
@@ -30,19 +26,8 @@ public class PatronPatronagePublishService extends AbstractAuthoriseOwner<Patron
 	}
 	
 	@Autowired
-	protected ModelMapper		mapper;
-	
-	@Autowired
 	protected PatronageService service;
 	
-	@Autowired
-	protected AcmeConfigurationService configService;
-	
-	@Autowired
-	protected PatronRepository patronRepo;
-	
-	@Autowired
-	protected InventorRepository inventorRepo;
 
 	@Override
 	public boolean authorise(final Request<Patronage> request) {
@@ -72,7 +57,7 @@ public class PatronPatronagePublishService extends AbstractAuthoriseOwner<Patron
 
 	@Override
 	public void update(final Request<Patronage> request, final Patronage entity) {
-		entity.setCreationDate(LocalDateTime.now());
+		entity.setCreationDate(LocalDate.now());
 		entity.setStatus(Status.PROPOSED);
 		this.service.save(entity);
 	}
