@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -35,6 +36,7 @@ public class Configuration extends AbstractEntity{
 
 		// Attributes -------------------------------------------------------------
 		@NotBlank
+		@Size(max=3)
 		protected String defaultCurrency;
 		
 		@NotBlank
