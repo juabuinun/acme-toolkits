@@ -31,7 +31,7 @@ public class InventorPatronageModifyTest extends TestHarness {
 		}
 		
 		super.clickOnMenu("Patronages","View mine");
-		
+		super.checkListingExists();
 		super.sortListing(0, "asc");
 		super.checkColumnHasValue(index, 0, code);
 		super.checkColumnHasValue(index, 1, state);
