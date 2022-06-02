@@ -16,7 +16,7 @@ public class AuthenticatedAnnouncementListTest extends TestHarness{
 	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/authenticated/announcement/list-announcement.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(6)
 	public void authenticatedAnnouncementList(final String title, final String creationDate, final String body) {
 
 		super.signIn("patron1", "patron1");

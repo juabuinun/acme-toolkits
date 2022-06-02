@@ -11,7 +11,7 @@ public class PatronPatronageReportListTest extends TestHarness {
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/patron/patronage/report/list-patronage-report.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(9)
 	public void patronPatronageReportList(final int patronageIndex, final int index, final String date, final String sequence, final String memorandum) {
 
 		super.signIn("patron1", "patron1");

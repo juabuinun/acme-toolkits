@@ -11,7 +11,7 @@ public class InventorPatronageModifyTest extends TestHarness {
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/inventor/patronage/modify-patronage.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(15)
 	public void inventorPatronageModify(final int index, final String code, final String state) {
 		super.signIn("inventor1", "inventor1");
 		

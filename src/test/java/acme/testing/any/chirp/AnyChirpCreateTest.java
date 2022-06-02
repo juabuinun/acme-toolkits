@@ -11,7 +11,7 @@ public class AnyChirpCreateTest extends TestHarness {
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/any/chirp/create-positive-chirp.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(2)
 	public void positiveAnyChirpCreate(final int index, final String title, final String author, final String body, final String email, final String confirm) {
 		super.clickOnMenu("Chirps", "Create");
 
@@ -34,7 +34,7 @@ public class AnyChirpCreateTest extends TestHarness {
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/any/chirp/create-negative-chirp.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(3)
 	public void negativeAnyChirpCreate(final int index, final String title, final String author, final String body, final String email, final String confirm) {
 		super.clickOnMenu("Chirps", "Create");
 

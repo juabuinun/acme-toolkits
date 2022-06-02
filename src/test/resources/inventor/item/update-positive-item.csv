@@ -1,0 +1,4 @@
+index,itemType,name,technology,description,price,info
+0,item.tool,Publish piece,*,*,EUR 1.00,https://acme.com
+0,item.component,Publish rubber,"Lorem ipsum dolor sit amet,consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m",*,*,
+1,item.component,Publish hose,*,"Lorem ipsum dolor sit amet,consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,nascetur ridiculus mus. Donec quam felis,ultricies nec,pellentesque eu,pretium quis,",*,

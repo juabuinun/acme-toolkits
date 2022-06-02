@@ -1,0 +1,6 @@
+itemType,name,code,technology,description,price,info
+item.tool,TEST TOOL 1,AAA-000,TEST TECHNOLOGY,DESCRIPTION,EUR 1.00,https://acme.com
+item.tool,TEST TOOL 2,bad format,TEST TECHNOLOGY,DESCRIPTION,EUR 1.00,https://acme.com
+item.tool,TEST TOOL 3,TOO-003,TEST TECHNOLOGY,DESCRIPTION,EUR -1.00,https://acme.com
+item.component,TEST COMPONENT 3,ZOM-003,SEX SEX SEX SEX,DESCRIPTION,EUR 1.00,https://acme.com
+item.component,"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean ma",ZOM-003,test technology,DESCRIPTION,EUR 1.00,https://acme.com

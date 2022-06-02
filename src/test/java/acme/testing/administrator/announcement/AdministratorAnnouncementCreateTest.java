@@ -11,7 +11,7 @@ public class AdministratorAnnouncementCreateTest extends TestHarness {
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/administrator/announcement/create-positive-announcement.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(7)
 	public void positiveAdministratorAnnouncementCreate(final String title, final String body, final String link, final String critical, final String confirm) {
 		super.signIn("administrator", "administrator");
 
@@ -35,7 +35,7 @@ public class AdministratorAnnouncementCreateTest extends TestHarness {
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/administrator/announcement/create-negative-announcement.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(8)
 	public void negativeAdministratorAnnouncementCreate(final String title, final String body, final String link, final String critical, final String confirm) {
 		super.signIn("administrator", "administrator");
 

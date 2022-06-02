@@ -10,7 +10,7 @@ public class PatronPatronageUpdateTest extends TestHarness{
 
 	@ParameterizedTest
 	@CsvFileSource(resources = "/patron/patronage/update-positive-patronage.csv", encoding = "utf-8", numLinesToSkip = 1)
-	@Order(10)
+	@Order(20)
 	public void positivePatronPatronagePublish(final int index,  final String end, final String legal, final String budget, final String info) {
 		super.signIn("patron4", "patron4");
 
