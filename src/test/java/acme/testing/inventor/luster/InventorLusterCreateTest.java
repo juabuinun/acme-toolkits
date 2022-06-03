@@ -12,6 +12,8 @@ import acme.testing.TestHarness;
 
 public class InventorLusterCreateTest extends TestHarness {
 
+	public static LocalDate referenceDate = LocalDate.parse("2022-06-10");
+	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/inventor/chimpum/create-positive-chimpum.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
@@ -33,8 +35,8 @@ public class InventorLusterCreateTest extends TestHarness {
 		super.fillInputBoxIn("budget", budget);
 		super.fillInputBoxIn("info", info);
 		
-		super.fillInputBoxIn("startDate", LocalDate.now().plusDays(Long.valueOf(start)).format(DateTimeFormatter.ISO_LOCAL_DATE));
-		super.fillInputBoxIn("endDate", LocalDate.now().plusDays(Long.valueOf(end)).format(DateTimeFormatter.ISO_LOCAL_DATE));
+		super.fillInputBoxIn("startDate", InventorLusterCreateTest.referenceDate.plusDays(Long.valueOf(start)).format(DateTimeFormatter.ISO_LOCAL_DATE));
+		super.fillInputBoxIn("endDate", InventorLusterCreateTest.referenceDate.plusDays(Long.valueOf(end)).format(DateTimeFormatter.ISO_LOCAL_DATE));
 		
 		super.clickOnSubmit("Create");
 		
@@ -60,6 +62,8 @@ public class InventorLusterCreateTest extends TestHarness {
 	public void negativeInventorLusterCreate(final int itemIndex, final String title, final String description, final String start, final String end, final String budget, final String info) {
 		super.signIn("inventor1", "inventor1");
 
+		
+		
 		super.navigateHome();
 		super.clickOnMenu("Components", "View mine");
 
@@ -75,8 +79,8 @@ public class InventorLusterCreateTest extends TestHarness {
 		super.fillInputBoxIn("budget", budget);
 		super.fillInputBoxIn("info", info);
 		
-		super.fillInputBoxIn("startDate", LocalDate.now().plusDays(Long.valueOf(start)).format(DateTimeFormatter.ISO_LOCAL_DATE));
-		super.fillInputBoxIn("endDate", LocalDate.now().plusDays(Long.valueOf(end)).format(DateTimeFormatter.ISO_LOCAL_DATE));
+		super.fillInputBoxIn("startDate", InventorLusterCreateTest.referenceDate.plusDays(Long.valueOf(start)).format(DateTimeFormatter.ISO_LOCAL_DATE));
+		super.fillInputBoxIn("endDate", InventorLusterCreateTest.referenceDate.plusDays(Long.valueOf(end)).format(DateTimeFormatter.ISO_LOCAL_DATE));
 		
 		super.clickOnSubmit("Create");
 		
