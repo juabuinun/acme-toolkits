@@ -94,3 +94,7 @@ master.menu.administrator.config = System configuration
 master.menu.patron.dashboard = View patron dashboard
 master.menu.admin.dashboard = View admin dashboard
 
+##CHIMPUMS ##
+master.menu.chimpum = Chimpums
+master.menu.chimpum.list = View mine
+

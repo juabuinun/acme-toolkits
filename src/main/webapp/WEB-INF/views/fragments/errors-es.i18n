@@ -8,3 +8,6 @@ errors.money.currency = Divisa no es valida
 
 errors.toolkit.components = No se pudieron anadir los componentes
 errors.toolkit.tools = No se pudieron anadir las herramientas
+
+errors.date.start.ahead.month = Debe empezar en al menos un mes
+errors.date.end.ahead.week = Debe durar al menos una semana

@@ -2,6 +2,7 @@
 package acme.entities.chimpum;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -33,6 +35,9 @@ public class Chimpum extends AbstractEntity {
 	*/
 	private static final long serialVersionUID = -6605709675337645584L;
 
+//	@ManyToOne(optional = false)
+//	@NotNull
+//	protected Inventor owner;
 
 	@NotBlank
 	@Column(unique = true)
@@ -40,9 +45,12 @@ public class Chimpum extends AbstractEntity {
 
 	@NotNull
 	@Past
+	protected LocalDateTime creationDate;
+	
+	@NotNull
 	protected LocalDate	startDate;
 
-	@NotBlank
+	@NotNull
 	protected LocalDate	endDate;
 
 	@NotBlank
@@ -53,6 +61,7 @@ public class Chimpum extends AbstractEntity {
 	@Size(max = 255)
 	protected String	description;
 
+	@Valid
 	@NotNull
 	protected Money		budget;
 

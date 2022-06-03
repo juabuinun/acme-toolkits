@@ -15,3 +15,7 @@ general.date.format = dd/MM/yyyy
 general.datetime.format = dd/MM/yyyy HH:mm
 
 general.placeholder.date = dd/mm/yyyy
+
+general.duration.years = anos
+general.duration.months = meses
+general.duration.days = dias

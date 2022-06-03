@@ -19,3 +19,6 @@ inventor.item.form.publish = Publicar
 inventor.item.form.delete = Borrar
 
 inventor.item.list.published = Publicado
+
+item.chimpum = Ver chimpums
+item.chimpum.create = Crear chimpum

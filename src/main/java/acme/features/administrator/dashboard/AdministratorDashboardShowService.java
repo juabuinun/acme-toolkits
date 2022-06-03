@@ -8,6 +8,7 @@ import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.roles.Administrator;
 import acme.framework.services.AbstractShowService;
+import acme.repositories.chimpum.ChimpumAdvancedRepository;
 
 @Service
 public class AdministratorDashboardShowService implements AbstractShowService<Administrator, AdminDashboard> {
@@ -15,6 +16,8 @@ public class AdministratorDashboardShowService implements AbstractShowService<Ad
 	@Autowired
 	protected AdministratorDashboardRepository repository;
 
+	@Autowired 
+	protected ChimpumAdvancedRepository chimpumRepo;
 
 	@Override
 	public boolean authorise(final Request<AdminDashboard> request) {
@@ -23,15 +26,18 @@ public class AdministratorDashboardShowService implements AbstractShowService<Ad
 
 	@Override
 	public void unbind(final Request<AdminDashboard> request, final AdminDashboard entity, final Model model) {
-
-
-		request.unbind(entity, model, "");
-
+		request.unbind(entity, model, "chimpumRatio","chimpumMinBudget","chimpumMaxBudget","chimpumAvgBudget","chimpumStdevBudget");
 	}
 
 	@Override
 	public AdminDashboard findOne(final Request<AdminDashboard> request) {
-		return null;
+		final AdminDashboard res = new AdminDashboard();
+		res.setChimpumRatio("1:1");
+		res.setChimpumMinBudget(this.chimpumRepo.findMinBudget());
+		res.setChimpumMaxBudget(this.chimpumRepo.findMaxBudget());
+		res.setChimpumAvgBudget(this.chimpumRepo.findAvgBudget());
+		res.setChimpumStdevBudget(this.chimpumRepo.findStdevBudget());
+		return res;
 	}
 
 

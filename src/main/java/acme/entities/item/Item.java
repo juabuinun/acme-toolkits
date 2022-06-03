@@ -19,6 +19,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
+import acme.entities.chimpum.Chimpum;
 import acme.entities.toolkititem.ToolkitItem;
 import acme.framework.datatypes.Money;
 import acme.framework.entities.AbstractEntity;
@@ -104,4 +105,7 @@ public class Item extends AbstractEntity {
 
 	@OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
 	protected List<ToolkitItem>	toolkits;
+	
+	@OneToMany(mappedBy = "item", fetch=FetchType.LAZY)
+	protected List<Chimpum> chimpums;
 }

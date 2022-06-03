@@ -1,0 +1,15 @@
+chimpum.code = Code
+chimpum.title = Title
+chimpum.description = Description
+chimpum.date.creation = Creation date
+chimpum.date.start = Start date (inclusive)
+chimpum.date.end = End date (inclusive)
+chimpum.duration = Duration
+chimpum.budget = Budget
+chimpum.info = Info
+
+chimpum.create = Create
+chimpum.update = Update
+chimpum.delete = Delete
+
+chimpum.item = View item

@@ -8,3 +8,6 @@ errors.money.currency = Currency not valid
 
 errors.toolkit.components = Components could not be selected
 errors.toolkit.tools = Tools could not be selected
+
+errors.date.start.ahead.month = Should start at least one month ahead
+errors.date.end.ahead.week = Duration must be at least one week

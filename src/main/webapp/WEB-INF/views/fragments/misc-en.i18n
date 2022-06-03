@@ -15,3 +15,7 @@ general.date.format = yyyy/MM/dd
 general.datetime.format = yyyy/MM/dd HH:mm
 
 general.placeholder.date = yyyy/mm/dd
+
+general.duration.years = years
+general.duration.months = months
+general.duration.days = days

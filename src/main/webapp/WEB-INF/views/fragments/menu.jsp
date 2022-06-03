@@ -89,8 +89,13 @@
 				access="hasRole('Inventor')" action="/inventor/patronage/list-mine" />
 			<acme:menu-suboption code="master.menu.patronage.patron.list"
 				access="hasRole('Patron')" action="/patron/patronage/list-mine" />
-
-
+		</acme:menu-option>
+		
+		<!-- CHIMPUMS -->
+		<acme:menu-option code="master.menu.chimpum"
+			access="hasRole('Inventor')">
+			<acme:menu-suboption code="master.menu.chimpum.list"
+				action="/inventor/chimpum/list-mine" />
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator"

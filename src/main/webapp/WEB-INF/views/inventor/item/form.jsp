@@ -9,17 +9,19 @@
 		readonly="true" />
 	<acme:input-textbox code="inventor.item.form.code" path="code"
 		placeholder="code.placeholder"
-		readonly="${command !='create-component' && command != 'create-tool'}"/>
+		readonly="${command !='create-component' && command != 'create-tool'}" />
 	<acme:input-textbox code="inventor.item.form.name" path="name" />
 	<acme:input-textbox code="inventor.item.form.tech" path="technology" />
 	<acme:input-textbox code="inventor.item.form.description"
 		path="description" />
 	<acme:input-money code="inventor.item.form.price" path="price" />
-	<acme:input-textarea code="inventor.item.form.info" path="info" placeholder="default.placeholder.url"/>
+	<acme:input-textarea code="inventor.item.form.info" path="info"
+		placeholder="default.placeholder.url" />
 
 	<jstl:if test="${command == 'show' && draftMode == false }">
 		<acme:button code="any.item.toolkit"
 			action="/any/toolkit/list-item?itemId=${id}" />
+
 	</jstl:if>
 	<jstl:choose>
 		<jstl:when test="${itemType == 'TOOL'}">
@@ -54,6 +56,12 @@
 					test="${draftMode == true && command=='create-component'}">
 					<acme:submit code="inventor.item.form.create"
 						action="/inventor/item/create-component" />
+				</jstl:when>
+				<jstl:when test="${draftMode == false && command=='show'}">
+					<acme:button code="item.chimpum"
+						action="/inventor/chimpum/list-by-item?itemId=${id}" />
+					<acme:button code="item.chimpum.create"
+						action="/inventor/chimpum/create?itemId=${id}" />
 				</jstl:when>
 			</jstl:choose>
 		</jstl:when>
