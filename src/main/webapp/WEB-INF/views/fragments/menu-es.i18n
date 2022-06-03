@@ -93,5 +93,5 @@ master.menu.patron.dashboard = Ver tablero patrocinador
 master.menu.admin.dashboard = Ver tablero administrador
 
 ##CHIMPUMS ##
-master.menu.chimpum = Lusters
-master.menu.chimpum.list = Mis lusters
+master.menu.luster = Lusters
+master.menu.luster.list = Mis lusters
