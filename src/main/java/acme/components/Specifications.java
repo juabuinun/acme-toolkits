@@ -13,8 +13,8 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import acme.entities.chimpum.Chimpum;
 import acme.entities.item.Item;
+import acme.entities.luster.Luster;
 import acme.entities.patronage.Patronage;
 import acme.entities.patronage.Patronage.Status;
 import acme.entities.patronagereport.PatronageReport;
@@ -196,15 +196,15 @@ public class Specifications {
 	
 	// ######################## CHIMPUM
 	
-	public static Specification<Chimpum> inventorFindAllChimpums(final Inventor inventor) {
-		return new Specification<Chimpum>() {
+	public static Specification<Luster> inventorFindAllChimpums(final Inventor inventor) {
+		return new Specification<Luster>() {
 
 			private static final long serialVersionUID = 69L;
 
 
 			@Override
-			public Predicate toPredicate(final Root<Chimpum> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
-				final Join<Chimpum,Item> chimpumItem = root.join("item", JoinType.INNER);
+			public Predicate toPredicate(final Root<Luster> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
+				final Join<Luster,Item> chimpumItem = root.join("item", JoinType.INNER);
 				return cb.equal(chimpumItem.get("owner"), inventor);
 			}
 		};

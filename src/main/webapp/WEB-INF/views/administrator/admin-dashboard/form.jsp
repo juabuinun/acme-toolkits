@@ -5,15 +5,15 @@
 
 <form>
 	<div class="form-group">
-		<label><acme:message code="patron.dashboard.accepted" /></label>
+		<label><acme:message code="admin.dashboard.luster" /></label>
 		<div>
-			<label> <acme:message code="patron.dashboard.num" />
+			<label> <acme:message code="admin.dashboard.luster.ratio" />
 			</label> <input value="<acme:print value="${chimpumRatio}"/>" type="text"
 				class="form-control" readonly />
 		</div>
 		<div class="col">
 			<div class="row">
-				<label> <acme:message code="patron.dashboard.min" /></label>
+				<label> <acme:message code="admin.dashboard.luster.min" /></label>
 			</div>
 			<jstl:forEach items="${chimpumMinBudget}" var="var">
 				<div class="row">
@@ -24,7 +24,7 @@
 		</div>
 		<div class="col">
 			<div class="row">
-				<label> <acme:message code="patron.dashboard.max" /></label>
+				<label> <acme:message code="admin.dashboard.luster.max" /></label>
 			</div>
 			<jstl:forEach items="${chimpumMaxBudget}" var="var">
 				<div class="row">
@@ -35,7 +35,7 @@
 		</div>
 		<div class="col">
 			<div class="row">
-				<label> <acme:message code="patron.dashboard.avg" /></label>
+				<label> <acme:message code="admin.dashboard.luster.avg" /></label>
 			</div>
 			<jstl:forEach items="${chimpumAvgBudget}" var="var">
 				<div class="row">
@@ -46,7 +46,7 @@
 		</div>
 		<div class="col">
 			<div class="row">
-				<label> <acme:message code="patron.dashboard.stdev" /></label>
+				<label> <acme:message code="admin.dashboard.luster.stdev" /></label>
 			</div>
 			<jstl:forEach items="${chimpumStdevBudget}" var="var">
 				<div class="row">

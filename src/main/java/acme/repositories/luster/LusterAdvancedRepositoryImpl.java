@@ -1,4 +1,4 @@
-package acme.repositories.chimpum;
+package acme.repositories.luster;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import acme.datatypes.CustomMoney;
-import acme.entities.chimpum.Chimpum;
+import acme.entities.luster.Luster;
 
 @Repository
 @Transactional(readOnly = true)
-public class ChimpumAdvancedRepositoryImpl implements ChimpumAdvancedRepository{
+public class LusterAdvancedRepositoryImpl implements LusterAdvancedRepository{
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -27,7 +27,7 @@ public class ChimpumAdvancedRepositoryImpl implements ChimpumAdvancedRepository{
 	public List<CustomMoney> findMaxBudget() {
 		final CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		final CriteriaQuery<CustomMoney> query = cb.createQuery(CustomMoney.class);
-		final Root<Chimpum> root = query.from(Chimpum.class);
+		final Root<Luster> root = query.from(Luster.class);
 
 		final Expression<Double> expression = cb.max(root.get("budget").get("amount"));
 
@@ -46,7 +46,7 @@ public class ChimpumAdvancedRepositoryImpl implements ChimpumAdvancedRepository{
 	public List<CustomMoney> findMinBudget() {
 		final CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		final CriteriaQuery<CustomMoney> query = cb.createQuery(CustomMoney.class);
-		final Root<Chimpum> root = query.from(Chimpum.class);
+		final Root<Luster> root = query.from(Luster.class);
 		final Expression<Double> expression = cb.min(root.get("budget").get("amount"));
 
 //		final Principal principal = PrincipalHelper.get();
@@ -65,7 +65,7 @@ public class ChimpumAdvancedRepositoryImpl implements ChimpumAdvancedRepository{
 	public List<CustomMoney> findAvgBudget() {
 		final CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		final CriteriaQuery<CustomMoney> query = cb.createQuery(CustomMoney.class);
-		final Root<Chimpum> root = query.from(Chimpum.class);
+		final Root<Luster> root = query.from(Luster.class);
 
 //		final Join<Patronage,Patron> patronagePatron = root.join("sponsor", JoinType.INNER);
 //		final Join<Patron,UserAccount> patronUser = patronagePatron.join("userAccount", JoinType.INNER);
@@ -88,7 +88,7 @@ public class ChimpumAdvancedRepositoryImpl implements ChimpumAdvancedRepository{
 			res.setCurrency(avg.getCurrency());
 			final CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 			final CriteriaQuery<Double> query = cb.createQuery(Double.class);
-			final Root<Chimpum> root = query.from(Chimpum.class);
+			final Root<Luster> root = query.from(Luster.class);
 			final Expression<Double> diffWithAvg = cb.diff(root.get("budget").get("amount"), avg.getAmount());
 
 //			final Join<Patronage,Patron> patronagePatron = root.join("sponsor", JoinType.INNER);
@@ -101,7 +101,7 @@ public class ChimpumAdvancedRepositoryImpl implements ChimpumAdvancedRepository{
 			final Double sum = this.entityManager.createQuery(query).getSingleResult();
 
 			final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-			final Root<Chimpum> rootCount = countQuery.from(Chimpum.class);
+			final Root<Luster> rootCount = countQuery.from(Luster.class);
 			
 			
 			countQuery.select(cb.count(rootCount));

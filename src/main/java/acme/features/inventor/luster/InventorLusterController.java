@@ -1,5 +1,5 @@
 
-package acme.features.inventor.chimpum;
+package acme.features.inventor.luster;
 
 import javax.annotation.PostConstruct;
 
@@ -7,24 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import acme.components.custom.controllers.AbstractAcmeToolkitsController;
-import acme.entities.chimpum.Chimpum;
+import acme.entities.luster.Luster;
 import acme.roles.Inventor;
 
 @Controller
-public class InventorChimpumController extends AbstractAcmeToolkitsController<Inventor, Chimpum> {
+public class InventorLusterController extends AbstractAcmeToolkitsController<Inventor, Luster> {
 
 	@Autowired
-	protected InventorChimpumCreateService		createService;
+	protected InventorLusterCreateService		createService;
 	@Autowired
-	protected InventorChimpumUpdateService		updateService;
+	protected InventorLusterUpdateService		updateService;
 	@Autowired
-	protected InventorChimpumDeleteService		deleteService;
+	protected InventorLusterDeleteService		deleteService;
 	@Autowired
-	protected InventorChimpumShowService		showService;
+	protected InventorLusterShowService		showService;
 	@Autowired
-	protected InventorChimpumListService		listService;
+	protected InventorLusterListService		listService;
 	@Autowired
-	protected InventorChimpumListByItemService	listByItemService;
+	protected InventorLusterListByItemService	listByItemService;
 
 
 	@PostConstruct

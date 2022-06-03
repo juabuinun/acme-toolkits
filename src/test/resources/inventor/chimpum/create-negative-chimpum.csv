@@ -1,7 +1,7 @@
-itemIndex,code,title,description,start,end,budget,info
-2,TESTCODE88,,TESTDESCRIPTION,31,38,EUR 22.22,
-2,TESTCODE99,TESTTITLE,dagadf,31,32,EUR 1.00,https://acme.test
-2,TESTCODE11,TESTTITLE,,60,120,EUR 1.00,https://acme.test
-2,222222,TESTTITLE,description,7,120,EUR 1.00,https://acme.test
-2,4444444,TESTTITLE,description,32,120,EUR -1.00,https://acme.test
-2,222222,TESTTITLE,description,7,120,EUR 0.00,https://acme.test
+itemIndex,title,description,start,end,budget,info
+2,,TESTDESCRIPTION,31,38,EUR 22.22,
+2,TESTTITLE,dagadf,31,32,EUR 1.00,https://acme.test
+2,TESTTITLE,,60,120,EUR 1.00,https://acme.test
+2,TESTTITLE,description,7,120,EUR 1.00,https://acme.test
+2,TESTTITLE,description,32,120,EUR -1.00,https://acme.test
+2,TESTTITLE,description,7,120,EUR 0.00,https://acme.test

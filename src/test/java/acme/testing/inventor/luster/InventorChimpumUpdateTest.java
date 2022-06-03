@@ -1,4 +1,4 @@
-package acme.testing.inventor.chimpum;
+package acme.testing.inventor.luster;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,12 +9,12 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 import acme.testing.TestHarness;
 
-public class InventorChimpumDeleteTest extends TestHarness{
+public class InventorChimpumUpdateTest extends TestHarness{
 
 	@ParameterizedTest
-	@CsvFileSource(resources = "/inventor/chimpum/delete-chimpum.csv", encoding = "utf-8", numLinesToSkip = 1)
+	@CsvFileSource(resources = "/inventor/chimpum/update-positive-chimpum.csv", encoding = "utf-8", numLinesToSkip = 1)
 	@Order(10)
-	public void inventorChimpumDelete(final int index, final String title, final String description, final String end, final String budget, final String info) {
+	public void positiveInventorChimpumUpdate(final int index, final String title, final String description, final String end, final String budget, final String info) {
 		super.signIn("inventor1", "inventor1");
 
 		super.navigateHome();
@@ -38,9 +38,16 @@ public class InventorChimpumDeleteTest extends TestHarness{
 		}
 		super.optionalValue("endDate", endStr, (i,v)-> super.fillInputBoxIn(i, v));
 		
-		super.clickOnSubmit("Delete");
+		super.clickOnSubmit("Update");
 		
-		super.checkNotErrorsExist();
+		super.navigateHome();
+		super.clickOnMenu("Chimpums", "View mine");
+
+		super.checkListingExists();
+		super.sortListing(0, "desc");
+		
+		super.optionalValue(index, 2, title, (r,c,v) -> super.checkColumnHasValue(r, c, v));
+		super.optionalValue(index, 4, budget, (r,c,v) -> super.checkColumnHasValue(r, c, v));
 		super.signOut();
 	}
 }

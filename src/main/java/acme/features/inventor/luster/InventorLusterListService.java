@@ -1,4 +1,4 @@
-package acme.features.inventor.chimpum;
+package acme.features.inventor.luster;
 
 import java.util.Collection;
 
@@ -6,28 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import acme.entities.chimpum.Chimpum;
+import acme.entities.luster.Luster;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractListService;
 import acme.roles.Inventor;
 import acme.services.AbstractAuthoriseAll;
-import acme.services.chimpum.ChimpumService;
+import acme.services.luster.LusterService;
 
 @Service
 @Transactional
-public class InventorChimpumListService extends AbstractAuthoriseAll<Inventor,Chimpum> implements AbstractListService<Inventor,Chimpum>{
+public class InventorLusterListService extends AbstractAuthoriseAll<Inventor,Luster> implements AbstractListService<Inventor,Luster>{
 
 	@Autowired
-	protected ChimpumService service;
+	protected LusterService service;
 
 	@Override
-	public Collection<Chimpum> findMany(final Request<Chimpum> request) {
+	public Collection<Luster> findMany(final Request<Luster> request) {
 		return this.service.findAllByPrincipalInventor();
 	}
 
 	@Override
-	public void unbind(final Request<Chimpum> request, final Chimpum entity, final Model model) {
+	public void unbind(final Request<Luster> request, final Luster entity, final Model model) {
 		this.service.unbind(request, entity, model);
 	}
 

@@ -1,4 +1,4 @@
-package acme.form.chimpum;
+package acme.form.luster;
 
 import java.time.LocalDate;
 
@@ -6,12 +6,10 @@ import acme.framework.datatypes.Money;
 import lombok.Data;
 
 @Data
-public class NewChimpumDto {
+public class SaveLusterDto {
 
 	int id;
 	int version;
-	protected String code;
-	protected LocalDate startDate;
 	protected LocalDate endDate;
 	protected String title;
 	protected String description;

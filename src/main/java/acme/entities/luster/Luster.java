@@ -1,12 +1,11 @@
 
-package acme.entities.chimpum;
+package acme.entities.luster;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -15,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.URL;
@@ -28,7 +28,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class Chimpum extends AbstractEntity {
+public class Luster extends AbstractEntity {
 
 	/**
 	* 
@@ -40,7 +40,7 @@ public class Chimpum extends AbstractEntity {
 //	protected Inventor owner;
 
 	@NotBlank
-	@Column(unique = true)
+	@Pattern(regexp ="^\\w{2}[0-9]{2}[0-9]{2}[0-9]{2}\\w{2}$")
 	protected String	code;
 
 	@NotNull

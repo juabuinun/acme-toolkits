@@ -8,11 +8,11 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-patron.dashboard.accepted = CHIMPUMS
+admin.dashboard.luster = LUSTERS
 
 
-patron.dashboard.num = Amount
-patron.dashboard.min = Min. budget
-patron.dashboard.max = Max. budget
-patron.dashboard.avg = Avg. budget
-patron.dashboard.stdev = Std. deviation
+admin.dashboard.luster.ratio = Ratio of components with lusters to items without lusters
+admin.dashboard.luster.min = Min. budget
+admin.dashboard.luster.max = Max. budget
+admin.dashboard.luster.avg = Avg. budget
+admin.dashboard.luster.stdev = Std. deviation

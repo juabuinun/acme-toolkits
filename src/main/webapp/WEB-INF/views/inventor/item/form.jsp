@@ -57,12 +57,18 @@
 					<acme:submit code="inventor.item.form.create"
 						action="/inventor/item/create-component" />
 				</jstl:when>
-				<jstl:when test="${draftMode == false && command=='show'}">
-					<acme:button code="item.chimpum"
-						action="/inventor/chimpum/list-by-item?itemId=${id}" />
-					<acme:button code="item.chimpum.create"
-						action="/inventor/chimpum/create?itemId=${id}" />
+				<jstl:when
+					test="${draftMode == false && command=='show' && hasLuster == true}">
+					<acme:button code="item.luster"
+						action="/inventor/luster/list-by-item?itemId=${id}" />
+
 				</jstl:when>
+				<jstl:when
+					test="${draftMode == false && command=='show' && hasLuster == false}">
+					<acme:button code="item.luster.create"
+						action="/inventor/luster/create?itemId=${id}" />
+				</jstl:when>
+				
 			</jstl:choose>
 		</jstl:when>
 	</jstl:choose>

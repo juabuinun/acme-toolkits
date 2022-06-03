@@ -1,53 +1,53 @@
-package acme.features.inventor.chimpum;
+package acme.features.inventor.luster;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import acme.entities.chimpum.Chimpum;
+import acme.entities.luster.Luster;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractDeleteService;
 import acme.roles.Inventor;
-import acme.services.chimpum.ChimpumService;
+import acme.services.luster.LusterService;
 
 @Service
 @Transactional
-public class InventorChimpumDeleteService implements AbstractDeleteService<Inventor,Chimpum>{
+public class InventorLusterDeleteService implements AbstractDeleteService<Inventor,Luster>{
 
-	Chimpum entity;
+	Luster entity;
 	
 	@Autowired
-	protected ChimpumService service;
+	protected LusterService service;
 	
 	@Override
-	public boolean authorise(final Request<Chimpum> request) {
+	public boolean authorise(final Request<Luster> request) {
 		return this.service.authorise(request, i->this.entity = i);
 	}
 
 	@Override
-	public void bind(final Request<Chimpum> request, final Chimpum entity, final Errors errors) {
+	public void bind(final Request<Luster> request, final Luster entity, final Errors errors) {
 		this.service.bind(request, entity, errors);
 	}
 
 	@Override
-	public void unbind(final Request<Chimpum> request, final Chimpum entity, final Model model) {
+	public void unbind(final Request<Luster> request, final Luster entity, final Model model) {
 		//do nothing
 	}
 
 	@Override
-	public Chimpum findOne(final Request<Chimpum> request) {
+	public Luster findOne(final Request<Luster> request) {
 		return this.entity;
 	}
 
 	@Override
-	public void validate(final Request<Chimpum> request, final Chimpum entity, final Errors errors) {
+	public void validate(final Request<Luster> request, final Luster entity, final Errors errors) {
 		//do nothing
 	}
 
 	@Override
-	public void delete(final Request<Chimpum> request, final Chimpum entity) {
+	public void delete(final Request<Luster> request, final Luster entity) {
 		this.service.delete(entity.getId());
 	}
 

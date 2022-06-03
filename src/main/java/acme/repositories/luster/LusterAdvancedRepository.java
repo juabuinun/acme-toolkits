@@ -1,4 +1,4 @@
-package acme.repositories.chimpum;
+package acme.repositories.luster;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import acme.datatypes.CustomMoney;
 
 @NoRepositoryBean
-public interface ChimpumAdvancedRepository {
+public interface LusterAdvancedRepository {
 
 	List<CustomMoney> findMaxBudget();
 

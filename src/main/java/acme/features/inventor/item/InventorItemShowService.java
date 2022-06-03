@@ -10,6 +10,7 @@ import acme.form.item.ItemDto;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.services.AbstractShowService;
+import acme.repositories.luster.LusterJpaRepository;
 import acme.roles.Inventor;
 import acme.services.AbstractAuthoriseAll;
 import acme.services.item.ItemService;
@@ -19,6 +20,9 @@ public class InventorItemShowService extends AbstractAuthoriseAll<Inventor,Item>
 
 	@Autowired
 	protected ItemService service;
+	
+	@Autowired
+	protected LusterJpaRepository lusterRepo;
 
 	@Override
 	@Transactional
@@ -31,6 +35,7 @@ public class InventorItemShowService extends AbstractAuthoriseAll<Inventor,Item>
 	public void unbind(final Request<Item> request, final Item entity, final Model model) {
 		request.unbind(entity, model, BindHelper.getAllFieldNames(ItemDto.class));
 		model.setAttribute("draftMode", !entity.isPublished());
+		model.setAttribute("hasLuster", this.lusterRepo.countByItem_id(entity.getId())>0);
 	}
 
 }

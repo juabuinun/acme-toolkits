@@ -1,0 +1,15 @@
+luster.code = Codigo
+luster.title = Titulo
+luster.description = Descripcion
+luster.date.creation = Fecha creacion
+luster.date.start = Fecha inicio (inclusiva)
+luster.date.end = Fecha fin (inclusiva)
+luster.duration = Duracion
+luster.budget = Presupuesto
+luster.info = Informacion
+
+luster.create = Crear
+luster.update = Editar
+luster.delete = Borrar
+
+luster.item = Ver componente

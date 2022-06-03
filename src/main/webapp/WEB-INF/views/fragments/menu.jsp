@@ -92,10 +92,10 @@
 		</acme:menu-option>
 		
 		<!-- CHIMPUMS -->
-		<acme:menu-option code="master.menu.chimpum"
+		<acme:menu-option code="master.menu.luster"
 			access="hasRole('Inventor')">
-			<acme:menu-suboption code="master.menu.chimpum.list"
-				action="/inventor/chimpum/list-mine" />
+			<acme:menu-suboption code="master.menu.luster.list"
+				action="/inventor/luster/list-mine" />
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator"
