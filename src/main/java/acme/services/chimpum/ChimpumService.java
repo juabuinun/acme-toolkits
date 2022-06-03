@@ -142,4 +142,9 @@ public class ChimpumService extends AbstractCrudServiceImpl<Chimpum, ChimpumJpaR
 	//		final Inventor principal = this.roleRepo.findOneInventorByUserAccountId(PrincipalHelper.get().getAccountId());
 	//		chimpum.setOwner(principal);
 	//	}
+	
+//	public String generateCode() {
+//		final String res ="";
+//		String datePart
+//	}
 }

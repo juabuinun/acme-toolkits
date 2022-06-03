@@ -55,4 +55,35 @@ public class InventorChimpumCreateTest extends TestHarness {
 		super.checkColumnHasValue(0, 4, budget);
 		super.signOut();
 	}
+	
+	@ParameterizedTest
+	@CsvFileSource(resources = "/inventor/chimpum/create-negative-chimpum.csv", encoding = "utf-8", numLinesToSkip = 1)
+	@Order(10)
+	public void negativeInventorChimpumCreate(final int itemIndex, final String code, final String title, final String description, final String start, final String end, final String budget, final String info) {
+		super.signIn("inventor1", "inventor1");
+
+		super.navigateHome();
+		super.clickOnMenu("Components", "View mine");
+
+		super.checkListingExists();
+		super.sortListing(0, "desc");
+		super.clickOnListingRecord(itemIndex);
+
+		super.clickOnButton("Create chimpum");
+		super.checkFormExists();
+		
+		super.fillInputBoxIn("code", code);
+		super.fillInputBoxIn("title", title);
+		super.fillInputBoxIn("description", description);
+		super.fillInputBoxIn("budget", budget);
+		super.fillInputBoxIn("info", info);
+		
+		super.fillInputBoxIn("startDate", LocalDate.now().plusDays(Long.valueOf(start)).format(DateTimeFormatter.ISO_LOCAL_DATE));
+		super.fillInputBoxIn("endDate", LocalDate.now().plusDays(Long.valueOf(end)).format(DateTimeFormatter.ISO_LOCAL_DATE));
+		
+		super.clickOnSubmit("Create");
+		
+		super.checkErrorsExist();
+		super.signOut();
+	}
 }
